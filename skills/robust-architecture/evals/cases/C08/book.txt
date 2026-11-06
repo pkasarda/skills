@@ -1,0 +1,6 @@
+POST /book
+1.Read available_seats from transactional SQL database.
+2.Call third-party charge endpoint.
+3.Decrement seats and insert booking in DB transaction.
+4.Return success.
+

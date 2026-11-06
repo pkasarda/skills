@@ -1,0 +1,26 @@
+{
+  "condition": "B",
+  "cases": [
+    {
+      "id": "C01",
+      "answer": "Keep `publish` as the owner; both `web_publish` and `cli_publish` already delegate to it, so a microservice adds deployment/operational cost without a need to move ownership. Remove the authorization read/write gap by making the publication `UPDATE` conditional on `EXISTS` for an active membership matching the note's `org_id` and `actor_id`, all in the same statement. Treat zero updated rows as a refusal (or preserve an existing distinction for missing notes/status); derive org scope from the note, never caller input. The guarded write is the authority: a revocation committed first blocks publication, while a publication serialized first takes effect before revocation. Verify with real SQLite connections: pause after the current check, commit revocation on the second connection, resume, and assert the note remains unpublished; also exercise both adapters through the shared owner. A mock-only check would not establish SQLite serialization. No implementation/runtime result is claimed here. Tradeoff: one guarded statement is smaller than a service or broader transaction protocol and keeps both callers converged; exact refusal mapping for other update predicates is unspecified by the supplied files."
+    },
+    {
+      "id": "C06",
+      "answer": "No architecture work is needed: this is local presentation copy in `finish`. Change only stderr's `Saved` text to `Exported`; preserve the `json.dumps` call and stdout bytes. Verify captured stdout is byte-for-byte identical for a representative path and stderr is exactly `Exported\n`. No broader caller or persistence contract is shown, and no implementation was tested."
+    }
+  ],
+  "files_read": [
+    "/tmp/architecture-skill-build/robust-architecture/SKILL.md",
+    "/tmp/architecture-skill-build/robust-architecture/references/boundary-checks.md",
+    "/tmp/robust-architecture-evals/cases/C01/REQUEST.md",
+    "/tmp/robust-architecture-evals/cases/C01/FACTS.md",
+    "/tmp/robust-architecture-evals/cases/C01/notes.py",
+    "/tmp/robust-architecture-evals/cases/C01/adapters.py",
+    "/tmp/robust-architecture-evals/cases/C06/REQUEST.md",
+    "/tmp/robust-architecture-evals/cases/C06/cli.py"
+  ],
+  "checks_run": [
+    "Read-only inspection of only C01 and C06 public case files plus the required skill and boundary reference; no tests run because these are proposals only."
+  ]
+}

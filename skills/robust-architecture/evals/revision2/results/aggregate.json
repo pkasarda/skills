@@ -1,0 +1,64 @@
+{
+  "per_case": [
+    {
+      "case": "D02",
+      "version": "v1",
+      "passed": 3,
+      "total": 4,
+      "critical_passed": 1,
+      "critical_total": 2
+    },
+    {
+      "case": "D02",
+      "version": "v2",
+      "passed": 3,
+      "total": 4,
+      "critical_passed": 2,
+      "critical_total": 2
+    },
+    {
+      "case": "C08",
+      "version": "v2",
+      "passed": 4,
+      "total": 4,
+      "critical_passed": 3,
+      "critical_total": 3
+    },
+    {
+      "case": "C08",
+      "version": "v1",
+      "passed": 4,
+      "total": 4,
+      "critical_passed": 3,
+      "critical_total": 3
+    },
+    {
+      "case": "D03",
+      "version": "v2",
+      "passed": 3,
+      "total": 4,
+      "critical_passed": 3,
+      "critical_total": 3
+    }
+  ],
+  "v2_passed": 10,
+  "v2_total": 12,
+  "v2_critical_passed": 8,
+  "v2_critical_total": 8,
+  "candidate_critical_gate": true,
+  "noncritical_gaps": [
+    {
+      "case": "D02",
+      "criterion": "D02.4",
+      "critical": false,
+      "reason": "No explicit current valid feed preservation check or guarantee"
+    },
+    {
+      "case": "D03",
+      "criterion": "D03.4",
+      "critical": false,
+      "reason": "No concurrent-order verification or explicit scanner cancellation limit"
+    }
+  ],
+  "scope": "Targeted proposal regression/transfer in resumed contexts; not a new complete paired benchmark or runtime verification."
+}

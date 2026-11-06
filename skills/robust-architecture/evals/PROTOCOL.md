@@ -1,0 +1,11 @@
+# Behavioral evaluation
+
+Evaluate decisions and discovery separately. Use one public case per fresh model context and condition for a primary comparison. Keep the same model, effort, task and output budget; change only whether the candidate instructions are supplied. Keep rubrics and condition keys away from responders. Preserve candidate instruction hashes, raw outputs and source inputs.
+
+Before semantic scoring, validate case identity and source fidelity. A proposal answering another case is a harness/execution failure; do not advertise a resulting score gap as improved architecture. An independent judge receives opaque per-case response labels, actual source and frozen criteria. Require exact answer evidence and assess consequences and acceptable alternatives, not headings or keywords. `score.py` validates that evidence and aggregates judgments; it does not grade semantics.
+
+Each case has four behavioral criteria with explicit critical flags. Any unresolved critical failure in the candidate blocks the tested version regardless of total. If a rubric is ambiguous, retain its original results and record a revision before new predictions. Correct an observed instruction weakness narrowly, preserve the previous version, then rerun affected cases and an independently designed transfer. Identify resumed contexts when platform limits prevent fresh ones; do not relabel targeted regression as a new paired benchmark.
+
+Public inputs are under `cases/` and `discovery/repos/`. Frozen rubrics, historical versions and keys are operator artifacts, not responder context. The structured suite covers authorization enforcement, history, retry identity, SDK lifetime, real-time work, local-copy restraint, desktop recovery and uncertain external effects. Discovery inputs use vague requests and repositories containing contracts, stale notes and incomplete green tests.
+
+Read [RESULTS.md](RESULTS.md) for the measured runs and limits. Recompute historical structured scores with `python3 score.py`; reproduce five intentionally faulty fixture mechanisms with `python3 fixture_probes.py`, preferably in an isolated copy. New model runs use the public tasks, not the old answers. A small synthetic sample cannot establish statistical superiority, runtime correctness or a guarantee on arbitrary projects.

@@ -1,0 +1,11 @@
+{
+  "id": "C05",
+  "case_summary": "The plugin's render callback drops audio while synchronously locking, fetching configuration over HTTP, allocating scratch storage, and writing telemetry.",
+  "answer": "Keep the audio callback as a bounded real-time processor. Move HTTP/config parsing to a control thread, validate settings there, and publish a fixed-size immutable snapshot through a bounded, nonblocking latest-value handoff; the callback checks once and otherwise keeps its previous snapshot. Allocate scratch storage before rendering. Send telemetry through a preallocated bounded queue for a background consumer, with an explicit drop policy when full. This keeps the callback independent of network availability and avoids waiting, allocation, and synchronous I/O; coalescing is appropriate because intermediate parameter states need not be preserved. A lock-free handoff adds synchronization complexity, so keep it narrow and prove its ownership/lifetime rules rather than sharing mutable config or using callback-side reference counting. Verify with static/code-level checks that the callback path has no locks, allocation, network calls, or blocking I/O; stress parameter changes and offline/network stalls; then measure worst-case callback duration and xruns on the target plugin host at 128 frames/48 kHz under representative CPU load. Desktop functional tests alone cannot establish the approximately 2.67 ms deadline or host-specific behavior. Kafka and service separation add no justified boundary without independent-service requirements.",
+  "files_read": [
+    "/tmp/robust-architecture-evals/cases/C05/REQUEST.md",
+    "/tmp/robust-architecture-evals/cases/C05/FACTS.md",
+    "/tmp/robust-architecture-evals/cases/C05/render.cpp"
+  ],
+  "checks_run": ["Read the three public C05 case files; no tests or measurements were run."]
+}

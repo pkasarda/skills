@@ -1,0 +1,1 @@
+Database cannot include provider in its transaction. Provider may charge then time out before response. Provider supports caller-supplied idempotency key and lookup by key; lookup may temporarily fail.

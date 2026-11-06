@@ -1,0 +1,1 @@
+A public download SDK keeps reading after the consumer stops and memory grows for a slow consumer. The caller retains the iterator for progress UI. Design a bounded resource contract. This library has no service/database and owns the source it opens.

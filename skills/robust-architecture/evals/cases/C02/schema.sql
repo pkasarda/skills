@@ -1,0 +1,3 @@
+CREATE TABLE people(id INTEGER PRIMARY KEY, team_id INTEGER);
+CREATE TABLE releases(id INTEGER PRIMARY KEY, actor_id INTEGER, signed_at TEXT);
+

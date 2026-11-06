@@ -1,0 +1,30 @@
+{
+  "id": "D03",
+  "criteria": [
+    {
+      "id": "D03.1",
+      "critical": true,
+      "description": "Discover from the mounted scan and revision paths that late results can mutate current clearance and create a release notice for a superseded revision, despite the contract."
+    },
+    {
+      "id": "D03.2",
+      "critical": true,
+      "description": "Ensure current-revision applicability is enforced at the transactional mutation/publication boundary for both clearance and notice, including a revision racing completion; a check or notification-only guard alone is insufficient."
+    },
+    {
+      "id": "D03.3",
+      "critical": true,
+      "description": "Preserve valid completed scan history associated with its submitted revision, including superseded results; do not erase or relabel historical results as current to solve the race."
+    },
+    {
+      "id": "D03.4",
+      "critical": false,
+      "description": "Propose controlled late-completion and revision/concurrent-order verification covering both current effects, historical record, and a legitimate current scan; acknowledge external scanner cancellation limit and keep solution proportional."
+    }
+  ],
+  "acceptable_alternatives": [
+    "An atomic transaction with a guarded update and notice insertion tied to the same successful revision check",
+    "A correctly serialized transaction that checks revision and writes both effects under the same serialization boundary",
+    "A design preventing revision while a scan is unresolved only if it explicitly addresses the scanner cancellation limitation and preserves the stated revision workflow; no particular pattern or service is mandatory"
+  ]
+}

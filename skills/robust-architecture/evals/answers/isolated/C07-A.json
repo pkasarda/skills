@@ -1,0 +1,11 @@
+{
+  "id": "C07",
+  "case_summary": "Add pause/resume to a desktop image exporter while ensuring process crashes cannot expose partial output or silently lose completed exports.",
+  "answer": "Evidence: export() decodes, resizes, then writes directly to the final path; work is one image at a time, pause/cancel are checked only between images, and there is no durable job state. The request leaves run identity and resume semantics unspecified. Smallest justified design: keep the worker and sequential loop. Write each image to a unique temporary file beside its destination, close/flush it, then atomically replace the final path only after encoding succeeds; this preserves an existing destination until replacement is ready. Persist a small per-run manifest containing the ordered source list, destination mapping, settings, and completed item outcomes. On restart, resume the same manifest and safely redo an item whose output committed just before its completion record; deterministic output and atomic replacement make that crash window idempotent. Check pause between images and persist the current position; a long-running image finishes before pause takes effect. Require an explicit new run when source list, settings, or destinations differ, and resolve duplicate derived filenames before processing. Tradeoff: pause is boundary-based, and a manifest adds local bookkeeping; it avoids introducing a database/service. Verify termination during temp write preserves the old destination, termination after replacement resumes without partial output or skipped work, replacement confirmation still applies, and pause/resume preserves order. Exact durability depends on filesystem rename/flush guarantees; no platform/runtime details or existing UI behavior beyond the brief were available.",
+  "files_read": [
+    "/tmp/robust-architecture-evals/cases/C07/REQUEST.md",
+    "/tmp/robust-architecture-evals/cases/C07/FACTS.md",
+    "/tmp/robust-architecture-evals/cases/C07/export.py"
+  ],
+  "checks_run": []
+}

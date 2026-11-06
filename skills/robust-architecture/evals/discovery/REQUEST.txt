@@ -1,0 +1,1 @@
+Pozri sa na tento malý projekt a povedz mi, či má rozumnú a robustnú architektúru a čo by si upravil ako prvé. Zdroj nemeň. Svoje závery opri o to, čo skutočne nájdeš; nepredpokladaj, že dokumentácia a zelené testy všetko dokazujú.

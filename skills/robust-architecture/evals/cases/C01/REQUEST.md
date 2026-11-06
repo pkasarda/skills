@@ -1,0 +1,1 @@
+A two-process team notes application has a web adapter and a scheduled CLI adapter. Both call publish in notes.py. A user revoked during publication can still publish a note. Recommend the smallest robust correction; should we extract a Publication microservice? Use the actual owner and all relevant callers. Proposal only, no writes.

@@ -1,0 +1,1 @@
+A desktop image exporter processes up to500 selected local images, one image at a time on a worker thread. Add pause/resume simply, and make sure a crash/restart cannot silently lose or corrupt a completed export. Pause/cancel currently checked between images; an image can take minutes. Destination may exist and UI asks whether to replace. No database/background service.

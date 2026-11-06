@@ -1,0 +1,15 @@
+{
+  "id": "C03",
+  "case_summary": "The label-job enqueue contract must distinguish retrying one order from creating a new identical order, including under concurrent requests and revoked access.",
+  "answer": "`enqueue.py` treats `(account_id, payload_hash)` as identity: identical intentional orders collapse, while its lookup-then-insert can race. Replace that identity with a client-supplied operation ID scoped to the authenticated account, and make `(account_id, operation_id)` the database uniqueness boundary. Keep a canonical payload hash as a fingerprint: on conflict, return the existing job only when the fingerprint matches and the caller still passes normal current read/refusal policy; reject reuse with a different payload. Authenticate and authorize before looking up or returning a replay. Web and CLI must reuse the same operation ID for retries of one intention and generate a fresh one for each new order. This provides one accepted database job per intention, not exactly-once physical printing. Preserve operation IDs for the promised retry horizon; if records are pruned, retries after that horizon may create another job, so retention is a product contract to set. The existing account-scoped unique constraint is simpler but encodes payload equality, not intent; no separate service or outbox is justified by this acceptance-only scope. Verify with the real database seam: concurrent same-ID/same-payload requests yield one ID; a fresh ID with identical payload yields a distinct job; same-ID/different-payload is refused; and replay after access revocation is refused without disclosing the job. Static files do not establish these outcomes or client adoption; implementation and execution remain unverified.",
+  "files_read": [
+    "/tmp/robust-architecture-evals/cases/C03/REQUEST.md",
+    "/tmp/robust-architecture-evals/cases/C03/FACTS.md",
+    "/tmp/robust-architecture-evals/cases/C03/enqueue.py",
+    "/tmp/robust-architecture-evals/cases/C03/schema.sql",
+    "/tmp/architecture-skill-build/robust-architecture/SKILL.md",
+    "/tmp/architecture-skill-build/robust-architecture/references/boundary-checks.md",
+    "/tmp/architecture-skill-build/robust-architecture/evals/PROTOCOL.md"
+  ],
+  "checks_run": ["Static review of the supplied request, facts, enqueue function, and schema; no implementation or database execution."]
+}

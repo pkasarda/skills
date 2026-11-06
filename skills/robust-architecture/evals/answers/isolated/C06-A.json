@@ -1,0 +1,7 @@
+{
+  "id": "C06",
+  "case_summary": "The task asks whether changing the CLI's human-readable stderr success text from Saved to Exported requires architecture work, while preserving its machine-consumed JSON stdout byte-for-byte.",
+  "answer": "No architecture work is justified. In cli.py, finish(path) emits compact JSON to stdout and the separate literal Saved to stderr. The smallest intervention is to replace only that stderr literal with Exported. Verify by capturing both streams for a representative path: stderr must equal Exported plus its existing newline, and stdout must match the pre-change JSON bytes exactly. This is a local copy change; no callers, fixtures, or interfaces need redesign.",
+  "files_read": ["/tmp/robust-architecture-evals/cases/C06/REQUEST.md", "/tmp/robust-architecture-evals/cases/C06/cli.py"],
+  "checks_run": ["Read the request and cli.py; no execution or edits performed."]
+}

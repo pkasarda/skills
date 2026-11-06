@@ -1,0 +1,30 @@
+{
+  "id": "D03",
+  "answer": "The shape is proportionate for a single-depot service: a few functions and SQLite are enough, and the scanner is the only external boundary. The result owner is incorrect, though. `complete` records history but updates clearance without checking `revision`, and inserts a release notice for every clear result. A probe with parcel revision 2 and completion revision 1 left clearance as `clear` and inserted a notice for revision 1, despite the contract allowing only the current revision to affect either. First, make completion one SQLite transaction that always records the valid result in history, then updates clearance with `WHERE id=? AND revision=?`; insert a clear release notice only if that guarded update affected one row. A stale result then remains historical evidence without changing current state or producing a release. This fixes the rule at its shared completion owner and needs no new service or abstraction. Add a discriminating regression case for stale clear completion, alongside current clear completion; verify history survives both and only the current one changes clearance/creates a notice. The existing schema has no constraints or request identity, and the contract does not say whether scanner callbacks can be duplicated or multiple scans may share a revision. If retries/replays exist, define scan identity and deduplication before adding uniqueness; do not assume `(parcel_id, revision)` identifies an intention. The supplied code does not show queue durability, scanner acknowledgement semantics, or downstream notice delivery, so end-to-end recovery remains unverified.",
+  "files_read": [
+    "/tmp/robust-architecture-evals/revision2/D03/REQUEST.md",
+    "/tmp/robust-architecture-evals/revision2/D03/README.md",
+    "/tmp/robust-architecture-evals/revision2/D03/contracts.md",
+    "/tmp/robust-architecture-evals/revision2/D03/schema.sql",
+    "/tmp/robust-architecture-evals/revision2/D03/commands.py",
+    "/tmp/robust-architecture-evals/revision2/D03/worker.py",
+    "/tmp/robust-architecture-evals/revision2/D03/tests/test_inspection.py",
+    "/tmp/architecture-skill-build/robust-architecture/SKILL.md",
+    "/tmp/architecture-skill-build/robust-architecture/references/boundary-checks.md",
+    "/tmp/architecture-skill-build/robust-architecture/references/foundations.md"
+  ],
+  "checks_run": [
+    {
+      "command": "python -m unittest discover -s tests",
+      "outcome": "Could not run: `python` executable is unavailable."
+    },
+    {
+      "command": "python3 -m unittest discover -s tests",
+      "outcome": "Passed: 1 test."
+    },
+    {
+      "command": "python3 in-memory SQLite probe: parcel revision 2; complete revision 1 with clear; inspect parcel, history, notices",
+      "outcome": "Reproduced violation: parcel remained revision 2 but clearance became clear, and release_notices gained (1, 1); history recorded (1, 1, clear)."
+    }
+  ]
+}

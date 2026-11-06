@@ -1,0 +1,122 @@
+[
+  {
+    "id": "C01",
+    "condition": "A",
+    "case_summary": "Fix a publication authorization race in the shared notes owner used by web and scheduled CLI adapters.",
+    "completed_utc": "2026-11-06T19:38:08.229137+00:00"
+  },
+  {
+    "id": "C01",
+    "condition": "B",
+    "case_summary": "Recommend how to prevent revoked users from publishing notes through two adapters that share one SQLite owner.",
+    "completed_utc": "2026-11-06T19:38:01.353233+00:00"
+  },
+  {
+    "id": "C02",
+    "condition": "A",
+    "case_summary": "Preserve the team that authorized each release signature despite later team changes, while leaving unsupported legacy history unknown.",
+    "completed_utc": "2026-11-06T19:38:03.948398+00:00"
+  },
+  {
+    "id": "C02",
+    "condition": "B",
+    "case_summary": "The release list misattributes past approvals by joining each signature to the signer's mutable current team.",
+    "completed_utc": "2026-11-06T19:39:09.934668+00:00"
+  },
+  {
+    "id": "C03",
+    "condition": "A",
+    "case_summary": "Change label-job enqueue identity so retries reuse one logical job while separate identical orders create separate jobs.",
+    "completed_utc": "2026-11-06T19:38:58.366061+00:00"
+  },
+  {
+    "id": "C03",
+    "condition": "B",
+    "case_summary": "The label-job enqueue contract must distinguish retrying one order from creating a new identical order, including under concurrent requests and revoked access.",
+    "completed_utc": "2026-11-06T19:39:17.654209+00:00"
+  },
+  {
+    "id": "C04",
+    "condition": "A",
+    "case_summary": "A download SDK must stop source reads promptly on early exit while bounding memory and handling slow consumers.",
+    "completed_utc": "2026-11-06T19:39:59.426631+00:00"
+  },
+  {
+    "id": "C04",
+    "condition": "B",
+    "case_summary": "The download SDK must bound memory and promptly release its owned reader when a slow or early-stopping consumer exits.",
+    "completed_utc": "2026-11-06T19:40:06.929327+00:00"
+  },
+  {
+    "id": "C05",
+    "condition": "A",
+    "case_summary": "The plugin's render callback drops audio while synchronously locking, fetching configuration over HTTP, allocating scratch storage, and writing telemetry.",
+    "completed_utc": "2026-11-06T19:40:09.346550+00:00"
+  },
+  {
+    "id": "C05",
+    "condition": "B",
+    "case_summary": "Propose boundaries and proof for an audio plugin whose 128-frame render callback drops audio under a 2.67 ms deadline.",
+    "completed_utc": "2026-11-06T19:41:16.695110+00:00"
+  },
+  {
+    "id": "C06",
+    "condition": "A",
+    "case_summary": "The task asks whether changing the CLI's human-readable stderr success text from Saved to Exported requires architecture work, while preserving its machine-consumed JSON stdout byte-for-byte.",
+    "completed_utc": "2026-11-06T19:40:50.126048+00:00"
+  },
+  {
+    "id": "C06",
+    "condition": "B",
+    "case_summary": "The request changes the CLI's human stderr success text from Saved to Exported while preserving its machine-consumed stdout JSON byte-for-byte.",
+    "completed_utc": "2026-11-06T19:41:03.125518+00:00"
+  },
+  {
+    "id": "C07",
+    "condition": "A",
+    "case_summary": "Add pause/resume to a desktop image exporter while ensuring process crashes cannot expose partial output or silently lose completed exports.",
+    "completed_utc": "2026-11-06T19:41:58.841009+00:00"
+  },
+  {
+    "id": "C07",
+    "condition": "B",
+    "case_summary": "A desktop exporter needs pause/resume during long image processing and crash-safe completion for up to 500 locally selected images.",
+    "completed_utc": "2026-11-06T19:42:11.613708+00:00"
+  },
+  {
+    "id": "C08",
+    "condition": "A",
+    "case_summary": "Design one-seat booking that avoids double booking and double charging despite concurrent retries and ambiguous provider timeouts, while confronting the demand for an immediate definitive answer.",
+    "completed_utc": "2026-11-06T19:42:16.369417+00:00"
+  },
+  {
+    "id": "C08",
+    "condition": "B",
+    "case_summary": "Design one-seat booking and charging that avoids duplicate bookings or charges across retries and provider timeouts while the business requires immediate definitive answers.",
+    "completed_utc": "2026-11-06T19:43:22.134033+00:00"
+  },
+  {
+    "id": "C09",
+    "condition": "A",
+    "case_summary": "A transport logger must resume recording after power loss and ensure exports never silently omit readings the display called recorded.",
+    "completed_utc": "2026-11-06T19:43:09.935790+00:00"
+  },
+  {
+    "id": "C09",
+    "condition": "B",
+    "case_summary": "A transport logger must resume sampling after power loss and ensure exports do not omit readings represented as recorded on its display.",
+    "completed_utc": "2026-11-06T19:43:34.962368+00:00"
+  },
+  {
+    "id": "C10",
+    "condition": "A",
+    "case_summary": "Assess a safe CLI design for reproducing monthly invoices and regenerating any month when mutable source files and sent-copy history are currently lost.",
+    "completed_utc": "2026-11-06T19:44:01.702814+00:00"
+  },
+  {
+    "id": "C10",
+    "condition": "B",
+    "case_summary": "A local invoice CLI must reproduce past monthly invoices and regenerate any month despite overwritten source data, mutable prices, and editable outputs.",
+    "completed_utc": "2026-11-06T19:44:14.220458+00:00"
+  }
+]

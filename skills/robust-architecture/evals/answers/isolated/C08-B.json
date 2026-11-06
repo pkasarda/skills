@@ -1,0 +1,13 @@
+{
+  "id": "C08",
+  "case_summary": "Design one-seat booking and charging that avoids duplicate bookings or charges across retries and provider timeouts while the business requires immediate definitive answers.",
+  "answer": "The current flow races because availability is read before charging, and a provider timeout cannot establish whether a charge happened. These requirements conflict: during provider and lookup outages, the service cannot truthfully return definitive success or failure immediately. Resolve this product conflict; the smallest safe contract returns `pending` immediately.\n\nIn one SQL transaction, claim the sole seat and create a booking intent under a client-supplied stable idempotency key unique per customer intention; duplicates return that booking's state. One booking owner records `pending`, `confirmed`, or `failed` and controls the seat claim. Charge with a stable provider key tied to the booking. Record success or definite decline. On timeout, keep the seat claimed and booking pending; retry lookup (and only permitted same-key charge retries), then record the result. Do not release or compensate an ambiguous charge without a business rule; retain it for reconciliation if automatic progress stops.\n\nThis adds durable intent and recovery, but no new service: SQL state and a periodic worker suffice. A definitive response requires provider certainty, with no bounded answer during outages.\n\nVerify concurrent distinct keys (one seat claim), duplicate retries, charge-success-then-timeout, failed lookup, and crash after provider charge but before local update; assert one charge and eventual reconciliation. Hold duration, pending UX, recovery deadline/manual owner, and compensation cost need product decisions. Completion depends on lookup recovering.",
+  "files_read": [
+    "/tmp/robust-architecture-evals/cases/C08/REQUEST.md",
+    "/tmp/robust-architecture-evals/cases/C08/PROVIDER.md",
+    "/tmp/robust-architecture-evals/cases/C08/book.txt",
+    "/tmp/architecture-skill-build/robust-architecture/SKILL.md",
+    "/tmp/architecture-skill-build/robust-architecture/references/boundary-checks.md"
+  ],
+  "checks_run": ["Validated JSON syntax and confirmed the proposal is under 250 words."]
+}

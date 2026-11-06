@@ -1,0 +1,1 @@
+Concurrent requests and client retries occur. The owned web and CLI clients can be changed together. Authentication supplies account_id; clients can submit an operation identity. A replay under revoked access must not bypass normal read/refusal policy.

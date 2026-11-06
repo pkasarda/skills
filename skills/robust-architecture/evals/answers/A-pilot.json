@@ -1,0 +1,25 @@
+{
+  "condition": "A",
+  "cases": [
+    {
+      "id": "C01",
+      "answer": "Keep `publish` in `notes.py` as the single owner; both `web_publish` and `cli_publish` already call it (`adapters.py:3-7`), and the facts give no need for a separately deployed/scaled service. Fix the time-of-check/time-of-use gap there: keep deriving org scope from the note (`notes.py:2`), then make the publication UPDATE conditional on an active membership for `(actor_id, notes.org_id)` at write time, using a correlated `EXISTS` (and the note id). Treat zero affected rows as `forbidden`; do not authorize from a user-supplied org id. The current separate membership read at `notes.py:3` followed by an unconditional write at line 7 permits revocation during `after_check` to be bypassed. A guarded write is the smallest correction and lets SQLite serialize the authorization predicate with the mutation. Regression check: use `after_check` to deactivate the membership between the preliminary read and write; expect `forbidden` and unchanged note status; also retain a still-member success check. This is a recommendation only; no implementation or database concurrency run was performed."
+    },
+    {
+      "id": "C06",
+      "answer": "No architecture work is needed. Change only the stderr literal at `cli.py:5` from `Saved` to `Exported`; leave the compact JSON print at line 4 untouched. Verify captured stdout remains byte-for-byte `finish`'s existing JSON output and stderr is exactly `Exported\n`. This is a source-level recommendation; no execution was performed."
+    }
+  ],
+  "files_read": [
+    "/tmp/robust-architecture-evals/cases/C01/REQUEST.md",
+    "/tmp/robust-architecture-evals/cases/C01/FACTS.md",
+    "/tmp/robust-architecture-evals/cases/C01/notes.py",
+    "/tmp/robust-architecture-evals/cases/C01/adapters.py",
+    "/tmp/robust-architecture-evals/cases/C06/REQUEST.md",
+    "/tmp/robust-architecture-evals/cases/C06/cli.py"
+  ],
+  "checks_run": [
+    "Read only requested C01 and C06 case files and inspected source line numbers.",
+    "No tests or runtime checks run; recommendations only."
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "id": "C04",
+  "case_summary": "A download SDK must stop source reads promptly on early exit while bounding memory and handling slow consumers.",
+  "answer": "Replace the producer task and unbounded queue with a pull-based async iterator that performs one bounded reader.read(max_bytes) per __anext__, so the consumer's pace applies backpressure and memory is bounded by the configured read size plus one returned chunk. Make the download an async context manager: `async with stream(factory) as iterator`, and close the owned reader in `__aexit__` on normal completion, break, exception, or cancellation; make closure idempotent and reject further reads afterward. The caller may retain the iterator for progress UI, but after leaving the context it is closed, so cleanup does not depend on generator finalization. Set a conservative maximum chunk size well below the 200 MB budget (for example 1 MiB), and document that consumers must iterate within the context. This is simpler than coordinating a pump, queue, and task cancellation, and preserves streaming of 20 GB sources. Tradeoff: consumers must adopt explicit context management; a forgotten or excessively long context retains the reader. Verify early break with a retained iterator closes promptly, slow consumption causes no reads ahead, and cancellation/read failure still closes the reader; assert peak buffered bytes stay within the read limit. These are proposed checks, not run here.",
+  "files_read": [
+    "/tmp/robust-architecture-evals/cases/C04/REQUEST.md",
+    "/tmp/robust-architecture-evals/cases/C04/FACTS.md",
+    "/tmp/robust-architecture-evals/cases/C04/consumer.py",
+    "/tmp/robust-architecture-evals/cases/C04/download.py"
+  ],
+  "checks_run": ["Inspected only the four public C04 files; no tests or implementation checks run."]
+}

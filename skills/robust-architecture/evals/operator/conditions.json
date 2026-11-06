@@ -1,0 +1,8 @@
+{
+  "A": "without_candidate",
+  "B": "with_candidate",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "skill_hash": "d2b75f6e2495a7310c2b4e430e01572c14df3d19156cc03550ec9fa9305327f8",
+  "rubric_hash": "72d535457565b67608b95a2243586b112b5244b10d4ae9f7732e416aa755225f"
+}

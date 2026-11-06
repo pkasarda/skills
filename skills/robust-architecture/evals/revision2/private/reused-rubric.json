@@ -1,0 +1,53 @@
+[
+  {
+    "id": "D02",
+    "criteria": [
+      {
+        "id": "D02.1",
+        "critical": true,
+        "description": "Discover account-unscoped cache and stale async result publication after close/account switch; following only initial load is insufficient."
+      },
+      {
+        "id": "D02.2",
+        "critical": true,
+        "description": "Address both identity/scope of cached/published result and ownership/cancellation/late-result fencing; cancellation or a cache-key change alone is insufficient."
+      },
+      {
+        "id": "D02.3",
+        "critical": false,
+        "description": "Trace actual login/panel/refresh/cache path against privacy/lifetime contract and propose a controlled switch/late-completion regression beyond existing happy test."
+      },
+      {
+        "id": "D02.4",
+        "critical": false,
+        "description": "Keep local solution proportional, distinguish source/probe evidence from unrun implementation and explicitly preserve currently valid feed while avoiding cross-account display."
+      }
+    ]
+  },
+  {
+    "id": "C08",
+    "criteria": [
+      {
+        "id": "C08.1",
+        "description": "Explicitly reject guaranteed immediate definitive result in every timeout; payment outcome can remain temporarily unknowable.",
+        "critical": true
+      },
+      {
+        "id": "C08.2",
+        "description": "Protect last seat at database concurrency boundary and explain unresolved-payment seat state; surface hold-duration decision.",
+        "critical": true
+      },
+      {
+        "id": "C08.3",
+        "description": "Persist stable operation/provider identity across retries and recover by lookup without another charge; local transaction is not cross-provider atomic.",
+        "critical": true
+      },
+      {
+        "id": "C08.4",
+        "description": "Expose concrete availability/compensation/pending tradeoff and product decision rather than silently picking impossible guarantees.",
+        "critical": false
+      }
+    ],
+    "acceptable_alternatives": "Reserve seat thenpending, or explicitly accepted refund/compensation policy; no universal distributed transaction/event bus requirement."
+  }
+]

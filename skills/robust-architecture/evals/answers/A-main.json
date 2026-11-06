@@ -1,0 +1,66 @@
+{
+  "condition": "A",
+  "cases": [
+    {
+      "id": "C02",
+      "answer": "Add a nullable `approving_team_id` snapshot to each release and populate it from the team whose membership authorized the signer when the signature is committed; query that column instead of joining the person's current team (`read.sql:1-2`; current schema has only `actor_id` and `signed_at`, `schema.sql:2`). Keep legacy values unknown/null: `FACTS.md` says there is no trustworthy historical log, so backfilling from today's `people.team_id` would invent facts. This is a narrow history field for the stated question, not a permission grant; continue evaluating present access separately. Check a signature then move the person and confirm old/new releases report the signing-time team, and legacy releases render “unknown” (or equivalent). The evidence does not establish a team table/FK or an existing signature transaction, so choose the appropriate FK and atomic write boundary from the real schema before implementation."
+    },
+    {
+      "id": "C03",
+      "answer": "Replace payload-based identity with a client-supplied operation/idempotency key scoped by authenticated `account_id`; keep the payload hash only to detect reuse of one key for a different request. The current lookup and unique constraint collapse distinct identical orders (`enqueue.py:4-7`, `schema.sql:1`). Enforce `UNIQUE(account_id, operation_id)` and atomically insert or resolve the winner under concurrent retries. Same key and same payload returns the same logical job; same key with different payload is a conflict; a new intentional order uses a new key even for identical payload. On replay, apply the normal current read/refusal policy before returning job details, as required by the facts. Verify simultaneous same-key acceptance creates one job, distinct keys create two identical-payload jobs, mismatched reuse conflicts, and revoked access is refused. This guarantees database acceptance identity only, not exactly-once physical printing."
+    },
+    {
+      "id": "C04",
+      "answer": "Make the stream a scoped async resource: expose it through an async context manager whose exit cancels/awaits any producer and closes the reader in `finally`; require the caller to leave that scope on break, cancellation, or error. In the simplest version, remove the producer task and read/yield one bounded chunk at a time, so a slow consumer supplies backpressure instead of accumulating the current unbounded queue (`download.py:5-15`). The consumer example breaks while retaining the iterator (`consumer.py:1-5`), so generator finalization alone is not a prompt-close contract. Verify early break while retaining the handle closes the reader promptly, as do cancellation and consumer exceptions; verify a slow consumer does not increase buffered chunks. A 200 MB ceiling is only supportable if `reader.read()` returns bounded chunks and decode-side buffering also respects a limit; neither is specified, so define/measure those bounds before claiming the full memory budget."
+    },
+    {
+      "id": "C05",
+      "answer": "Keep rendering and processing in the plugin, but make the audio callback real-time safe: remove the mutex, HTTP fetch, vector allocation, and synchronous telemetry write from `render` (`render.cpp:2-6`). Fetch/validate configuration and emit telemetry on a worker; publish a prebuilt, bounded snapshot for the callback to consume without blocking, allowing intermediate settings to coalesce as the facts permit. Preallocate scratch for the supported block size. Preserve the last valid snapshot when network access fails. A Kafka service adds an unsupported network dependency and does not solve the callback deadline. Verify correctness in desktop functional tests, then measure worst-case callback duration and dropouts on the actual plugin host/device under load against the ~2.67 ms budget; desktop tests cannot prove this timing. Until target measurements exist, do not claim deadline compliance."
+    },
+    {
+      "id": "C07",
+      "answer": "The current read-charge-decrement flow cannot prevent overselling or reconcile a provider charge that succeeded before its response timed out (`export.py:1-4`). Use a transactional conditional seat reservation (only one succeeds), persist a booking/payment-attempt id and stable provider idempotency key, then call the provider outside the DB transaction. Resolve timeouts by lookup/retry with that same key; confirm or release the reservation only after a known outcome. Provider idempotency and lookup support can prevent duplicate charges and discover outcomes when available, but lookup may fail temporarily. Therefore an always-immediate definitive answer is incompatible with these facts unless the business accepts some risk or a different provider guarantee: return `pending` during ambiguity, or explicitly choose a bounded wait/failure/compensation policy. Decide hold duration, pending customer experience and compensation cost before claiming the full contract. Verify concurrent single-seat attempts, retry after timeout, and delayed/unavailable lookup; no design can guarantee immediate certainty during the stated ambiguity."
+    },
+    {
+      "id": "C08",
+      "answer": "The display currently says a sample is recorded before the buffered append (`display(sample); file.append(...)`), so reverse the contract: show “recorded” only after a durable, validated append succeeds. Add recoverable record framing (for example, sequence number plus length/checksum) and boot-time tail validation so a torn final record is detected rather than exported as valid; surface full/removed-card/write failures explicitly. However, `flush()` is not documented as power-loss durable and append is not atomic, so these APIs cannot support the requested guarantee. First require or add a storage operation with documented power-loss durability for acknowledged records, plus a recoverable record format; without that guarantee, never claim a displayed sample can never be lost. A power cut also stops sampling until power returns, and there is no battery-backed memory. Verify injected cuts around append/flush/reboot and card-full/removal, checking exports contain every acknowledged sequence and report recovery gaps. Product still needs to define “recorded,” tolerated sampling delay, and whether save failure stops sampling."
+    },
+    {
+      "id": "C09",
+      "answer": "Reproducibility for past months is impossible from the described state: the CSV is replaced and prices are overwritten, so historical inputs are gone. For future runs, create an immutable local run bundle containing the exact filtered source rows, price snapshot, generator/calculation version, and generated output; regenerating a month uses that bundle, not current inputs. Because staff can edit invoices and the sent copy is unknown, also retain the finalized/sent artifact if “reproduce” means what the customer received. Write new outputs to a versioned path or explicit correction flow rather than silently overwriting an existing invoice. Verify two runs from the same bundle produce the same generated file after prices change, and that a manual sent-file edit remains recoverable. This cannot reconstruct prior months without their original CSV/prices or establish which historical file was sent; clarify generated-versus-sent reproducibility and correction rules before backfilling or replacing invoices. No shared service or database is evidenced as necessary."
+    },
+    {
+      "id": "C10",
+      "answer": "Change the display’s meaning and the append boundary together: a reading may be labeled “recorded” only after storage confirms a durable, recoverable append; currently the display updates first and `append` is buffered, while the API promises neither atomicity nor power-loss durability. Use framed records with sequence numbers and checksums, validate/recover the tail at boot, and export only validated records while surfacing a detected gap/corruption. But framing alone cannot prevent loss of a record already acknowledged by a non-durable buffer. The requested guarantee therefore requires a storage/hardware guarantee that acknowledged writes survive power loss; with the current API and no battery-backed memory, it cannot honestly be promised. Sampling cannot continue while unpowered; it can resume on boot. Verify power cuts at each append/flush boundary, reboot recovery, and export completeness for every acknowledged sequence, plus full/removed-card behavior. Product must define the display’s “recorded” state, acceptable sampling delay, and whether a save failure pauses sampling; these choices affect the user-visible guarantee."
+    }
+  ],
+  "files_read": [
+    "/tmp/robust-architecture-evals/cases/C02/REQUEST.md",
+    "/tmp/robust-architecture-evals/cases/C02/FACTS.md",
+    "/tmp/robust-architecture-evals/cases/C02/read.sql",
+    "/tmp/robust-architecture-evals/cases/C02/schema.sql",
+    "/tmp/robust-architecture-evals/cases/C03/REQUEST.md",
+    "/tmp/robust-architecture-evals/cases/C03/FACTS.md",
+    "/tmp/robust-architecture-evals/cases/C03/enqueue.py",
+    "/tmp/robust-architecture-evals/cases/C03/schema.sql",
+    "/tmp/robust-architecture-evals/cases/C04/REQUEST.md",
+    "/tmp/robust-architecture-evals/cases/C04/FACTS.md",
+    "/tmp/robust-architecture-evals/cases/C04/download.py",
+    "/tmp/robust-architecture-evals/cases/C04/consumer.py",
+    "/tmp/robust-architecture-evals/cases/C05/REQUEST.md",
+    "/tmp/robust-architecture-evals/cases/C05/FACTS.md",
+    "/tmp/robust-architecture-evals/cases/C05/render.cpp",
+    "/tmp/robust-architecture-evals/cases/C07/REQUEST.md",
+    "/tmp/robust-architecture-evals/cases/C07/FACTS.md",
+    "/tmp/robust-architecture-evals/cases/C07/export.py",
+    "/tmp/robust-architecture-evals/cases/C08/REQUEST.md",
+    "/tmp/robust-architecture-evals/cases/C08/PROVIDER.md",
+    "/tmp/robust-architecture-evals/cases/C08/book.txt",
+    "/tmp/robust-architecture-evals/cases/C09/prompt.txt",
+    "/tmp/robust-architecture-evals/cases/C10/prompt.txt"
+  ],
+  "checks_run": [
+    "Read only the requested public files for C02-C05 and C07-C10; inspected source line numbers where applicable.",
+    "No tests or runtime checks run; recommendations only."
+  ]
+}

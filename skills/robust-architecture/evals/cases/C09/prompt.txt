@@ -1,0 +1,10 @@
+A laboratory instrument records temperature during transport. Assess the smallest architecture change that satisfies the technician's request; explain the guarantees and any decisions still needed.
+
+User request: “After a power cut, the device should continue recording, and the exported file must never silently omit readings that were shown as recorded on the display.”
+
+Raw artifacts:
+- A microcontroller samples one sensor once per second. A single loop reads the sensor, appends a line to a local removable SD card, and updates the display.
+- Current code: `display(sample); file.append(format(sample));` The append API buffers writes; it exposes `flush()` and an error result, but its documentation does not promise atomic writes or power-loss durability.
+- On boot the device opens the same file for append. Exports copy that file verbatim when the user removes the card.
+- The hardware has no battery-backed memory. A power cut can happen at any instruction. The card may be removed or full. There is no network and no database.
+- Product has not defined the acceptable sampling delay, whether a failed save should stop sampling, or the meaning of “recorded” on the display.

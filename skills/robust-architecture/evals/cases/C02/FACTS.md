@@ -1,0 +1,1 @@
+Team membership can change. There is no trustworthy historical log. New signatures can capture their authorisation context. A past team association does not grant current access to a release. Only this historical question needs solving.

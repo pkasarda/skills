@@ -1,0 +1,79 @@
+[
+  {
+    "id": "C01",
+    "request": "REQUEST.md",
+    "files": [
+      "notes.py",
+      "adapters.py",
+      "FACTS.md"
+    ]
+  },
+  {
+    "id": "C02",
+    "request": "REQUEST.md",
+    "files": [
+      "schema.sql",
+      "read.sql",
+      "FACTS.md"
+    ]
+  },
+  {
+    "id": "C03",
+    "request": "REQUEST.md",
+    "files": [
+      "enqueue.py",
+      "schema.sql",
+      "FACTS.md"
+    ]
+  },
+  {
+    "id": "C04",
+    "request": "REQUEST.md",
+    "files": [
+      "download.py",
+      "consumer.py",
+      "FACTS.md"
+    ]
+  },
+  {
+    "id": "C05",
+    "request": "REQUEST.md",
+    "files": [
+      "render.cpp",
+      "FACTS.md"
+    ]
+  },
+  {
+    "id": "C06",
+    "request": "REQUEST.md",
+    "files": [
+      "cli.py"
+    ]
+  },
+  {
+    "id": "C07",
+    "request": "REQUEST.md",
+    "files": [
+      "export.py",
+      "FACTS.md"
+    ]
+  },
+  {
+    "id": "C08",
+    "request": "REQUEST.md",
+    "files": [
+      "book.txt",
+      "PROVIDER.md"
+    ]
+  },
+  {
+    "id": "C09",
+    "request": "prompt.txt",
+    "files": []
+  },
+  {
+    "id": "C10",
+    "request": "prompt.txt",
+    "files": []
+  }
+]

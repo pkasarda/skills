@@ -1,0 +1,1 @@
+Sources can be20GB; memory budget200MB. Reader has async close(). Consumer can cancel, raise, stop early or be slow. A generator break with the iterator still referenced does not guarantee prompt finalisation.

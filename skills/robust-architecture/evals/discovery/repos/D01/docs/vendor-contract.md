@@ -1,0 +1,1 @@
+Accepted behavior: an import uses the library in config.json, can lend an available copy to a borrower, and must never affect another library or replace an existing loan. Each row receives its own result; valid rows may succeed when another row is refused.

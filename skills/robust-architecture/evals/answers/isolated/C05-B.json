@@ -1,0 +1,14 @@
+{
+  "id": "C05",
+  "case_summary": "Propose boundaries and proof for an audio plugin whose 128-frame render callback drops audio under a 2.67 ms deadline.",
+  "answer": "Keep the render callback a bounded, real-time-only path: process the 128 frames using preallocated scratch space and the last valid configuration; remove its mutex, HTTP fetch, allocation, and synchronous telemetry. A control-side owner validates updates and serializes any UI/network writers, then publishes a fixed-size latest-value snapshot through a bounded, nonblocking handoff. Coalescing is valid because intermediate settings need not be retained. Network failure leaves the current configuration active. Send telemetry through a bounded nonblocking queue to a background consumer; drop telemetry when full. Do not assume an atomic or handoff is real-time safe until its operations are confirmed lock-free on the target. The alternative—moving only HTTP off-thread while retaining the callback lock or synchronous telemetry—still permits deadline misses. First verify the mounted callback has no blocking I/O, locks, allocation, or unbounded work; then run the plugin in its host at 48 kHz with repeated 128-frame blocks while stressing updates, network stalls, and a full telemetry queue. Measure callback worst-case time on target hardware against 2.67 ms and confirm output continues with stale valid settings and telemetry drops under overload. Desktop functional tests cannot establish host timing; no target measurements or implementation evidence were provided, so the real-time claim remains unproven.",
+  "files_read": [
+    "/tmp/robust-architecture-evals/cases/C05/REQUEST.md",
+    "/tmp/robust-architecture-evals/cases/C05/FACTS.md",
+    "/tmp/robust-architecture-evals/cases/C05/render.cpp",
+    "/tmp/architecture-skill-build/robust-architecture/SKILL.md",
+    "/tmp/architecture-skill-build/robust-architecture/references/boundary-checks.md",
+    "/tmp/architecture-skill-build/robust-architecture/references/foundations.md"
+  ],
+  "checks_run": ["Read the public C05 request, facts, and callback source; no tests or timing measurements were run."]
+}

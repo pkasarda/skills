@@ -1,0 +1,13 @@
+{
+  "frozen_utc": "2026-11-06T20:00:05.063251+00:00",
+  "cause": "Discovery v1 D02 critical: UI callback fence occurs after cache publication; same-identity new-lifetime result can mutate cache.",
+  "change": "Require complete publication path and applicability before protected effects; distinguish consumer cancellation from committed business effects.",
+  "core_hashes": {
+    "SKILL.md": "2bb475e37f445a8ea3346610f1db21ed437f8fcdeccc0f4c5ca9042ad76bae35",
+    "references/boundary-checks.md": "acbc9b31a93e756df8a5535b49361e45e34da7c1bb77ef265b0be51e27c22ba7",
+    "references/foundations.md": "040d418b40119c8b28841907487b46f38dc1058af54de1b96fb3bdfd9ac58b9f",
+    "agents/openai.yaml": "523a2657b937f5b0d0f2bbc460755db5792de82a7cedb5619a955fa9d79f4ca5"
+  },
+  "previous_instructional_version_preserved": true,
+  "full_structured_suite_version": "v1; do not relabel as v2"
+}

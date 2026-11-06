@@ -1,0 +1,10 @@
+{
+  "frozen_utc": "2026-11-06T19:52:25.488138+00:00",
+  "prompt": "REQUEST.txt",
+  "candidate_unchanged": true,
+  "files": 20,
+  "model": "gpt-6-luna high",
+  "max_words": 350,
+  "ordinary_tests_allowed": true,
+  "request_does_not_name_defect": true
+}

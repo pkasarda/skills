@@ -1,0 +1,17 @@
+{
+  "totals": {
+    "A": {
+      "total": 8,
+      "passed": 6,
+      "critical_total": 4,
+      "critical_passed": 4
+    },
+    "B": {
+      "total": 8,
+      "passed": 7,
+      "critical_total": 4,
+      "critical_passed": 3
+    }
+  },
+  "scope": "Supplemental2miniature discoveryrepos; D01freshcontexts,D02reusedsame-condition short contexts dueharness cap; not production-general evidence."
+}

@@ -1,0 +1,22 @@
+{
+  "D01/web.py": "6a45040ab47339c5c063cd997c0d7060cf5c33b08811aadbbca208d83d33cd4e",
+  "D01/vendor.py": "93b828c8d3bc5599cacee300b4f1f5a675df20308297880f797fc7db7b21d8e4",
+  "D01/schema.sql": "84f19cf1245f6f10fb7688abc857fecf29f60a9d580bbd96136ea6cdabaa845a",
+  "D01/config.json": "815bede1479fe65f832f70ccc3c44c3552f6e25126885bf8acbf390f7208f725",
+  "D01/README.md": "7a2d39ade11f74da8eccd7ed13e7471e649cbc2cf7b1209ec114950624cbbf84",
+  "D01/main.py": "38921849f6a2e3f9837b949cb9a19c5b8f810edb9680d7f6b317a1aa11b70394",
+  "D02/transport.py": "0739abcc17872eb481045e9c9328d242f7b2589cad19ab3cf2d605da8c4809c0",
+  "D02/cache.py": "e10759ca888c74ea456d431091ac41acf7a98c0b77a1a16beb76cf08d4ba84a1",
+  "D02/README.md": "82e2ae82f038b5350ab2189be00f0fac3fa6ee105d577c863630bde38e3fadf6",
+  "D02/refresh.py": "11495fe754cad466dc2e3ad1b0956d6b77036e64e0c085a7b5f099cadc82fa61",
+  "D02/main.py": "a5c29dc9d77af1f663e6c0beda3bb39a12301b0383440d906a1f47ebeda48908",
+  "D02/panel.py": "abc14bb7dd52e2a1eaaaa189fb2bc17623a21f631cc96a419848f3d76d3dc773",
+  "D02/tests/test_panel.py": "cdcfee36dad758e2c2ec495e034ea8977e4d023ac1343384990f818c6f883789",
+  "D02/docs/old-notes.md": "2a8d05a7d4c8dc9e8f346ae0ee2593c8f4d96340791d2ffb7d89f4801ec229de",
+  "D02/docs/contracts.md": "8eed920a65fe71bc7317b3c3f2890f0e6ffa33fa3ff26804c284e8057a9c3d9d",
+  "D01/tests/test_flow.py": "21375b174611d4c849172c24856d3577caab9675282fb8836cdb21a98f39df33",
+  "D01/library/__init__.py": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+  "D01/library/commands.py": "c2285511bc01cc30688a0efb082c997ba6cff665a3150b32cd484f38ff8719e7",
+  "D01/docs/design-v1.md": "402e4f3a34ba0c3282f11f5e4e3402234fd72c3bd15edd1f3e026961edc504f8",
+  "D01/docs/vendor-contract.md": "38f3ef1871fda6fe4481f538af397d2716d0c82b3a77ba530dd526501820ee92"
+}

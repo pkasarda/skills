@@ -1,0 +1,1 @@
+An art-loan application shows a signed release as approved by the signer's current team. Moving a person changes the team displayed on all old releases. We need the team that authorised each signature at signing time. Old rows have actor_id and signed_at only; no membership history exists. Propose a bounded architecture/data correction without inventing old facts.

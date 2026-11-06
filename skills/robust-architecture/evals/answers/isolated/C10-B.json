@@ -1,0 +1,12 @@
+{
+  "id": "C10",
+  "case_summary": "A local invoice CLI must reproduce past monthly invoices and regenerate any month despite overwritten source data, mutable prices, and editable outputs.",
+  "answer": "The available files cannot establish what any past invoice contained: prior CSVs and prices were discarded, and staff edits/sent copies are unrecorded. No design can recover that history reliably; label those months unreproducible unless independent copies provide evidence. For future months, keep the local-file design: retain each month's source CSV and the exact price snapshot used, then save each generated invoice and small run metadata (month, input references, generator version, rounding rule). Make generated runs immutable; regeneration creates a new run/revision rather than overwriting one. If ‘actually sent’ must be reproducible, staff must also archive the final edited artifact as sent (and identify it in the run record); generated output alone cannot prove delivery or sent contents. Corrections should create a new revision linked to the prior one, leaving prior artifacts intact. First resolve whether the guarantee is generated output or sent invoice and define correction semantics. Verify with a representative month: regenerate after changing current prices and replacing the CSV, compare bytes/totals to the archived run, then edit and record a sent copy and confirm a correction preserves both. This tests local reproducibility only; it does not establish recovery of legacy invoices, that staff captured every sent copy, or durable storage beyond the local machine. Atomic file replacement can prevent partial publication but does not supply backup durability.",
+  "files_read": [
+    "/tmp/robust-architecture-evals/cases/C10/prompt.txt",
+    "/tmp/architecture-skill-build/robust-architecture/SKILL.md",
+    "/tmp/architecture-skill-build/robust-architecture/references/boundary-checks.md",
+    "/tmp/architecture-skill-build/robust-architecture/references/foundations.md"
+  ],
+  "checks_run": ["Read the case prompt and relevant architecture guidance; no implementation or runtime checks performed."]
+}

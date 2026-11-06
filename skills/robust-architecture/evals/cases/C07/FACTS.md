@@ -1,0 +1,1 @@
+Current writes go directly to final paths. Filenames derive from source names. Preferences are local JSON. Process may terminate at any point. Resume semantics and which source/settings identify one export run have not been specified.

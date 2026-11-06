@@ -1,0 +1,14 @@
+{
+  "id": "C04",
+  "case_summary": "The download SDK must bound memory and promptly release its owned reader when a slow or early-stopping consumer exits.",
+  "answer": "Remove the producer task and queue: they prefetch without backpressure and the queue is unbounded. Make `stream(factory)` an async context manager that opens the reader and yields a pull-based async iterator; each `__anext__` performs one bounded read (for example, at most 1 MiB), so a slow consumer causes no read-ahead and memory stays within the chunk plus reader overhead. The context owns the reader and awaits `close()` on normal completion, break, exception, or cancellation; the iterator is invalid after context exit, even if retained. Require callers to use `async with stream(factory) as chunks:` so early exit has a deterministic cleanup point independent of generator finalisation. This small contract fits a single owned file source; a background pump or larger buffering would add coordination without improving this flow. Verify with a reader that records read sizes, in-flight reads, and closure: slow consumption must not increase outstanding reads or buffer beyond the bound; break while retaining the iterator must close promptly; cancellation and read errors must also close, and post-exit iteration must refuse. These are proposed checks, not run results. Confirm the real reader supports bounded reads and cancellation-safe close; source code here does not establish either guarantee or measured peak memory.",
+  "files_read": [
+    "/tmp/robust-architecture-evals/cases/C04/REQUEST.md",
+    "/tmp/robust-architecture-evals/cases/C04/FACTS.md",
+    "/tmp/robust-architecture-evals/cases/C04/consumer.py",
+    "/tmp/robust-architecture-evals/cases/C04/download.py",
+    "/tmp/architecture-skill-build/robust-architecture/SKILL.md",
+    "/tmp/architecture-skill-build/robust-architecture/references/boundary-checks.md"
+  ],
+  "checks_run": []
+}

@@ -1,0 +1,52 @@
+[
+  {
+    "id": "D01",
+    "criteria": [
+      {
+        "id": "D01.1",
+        "critical": true,
+        "description": "Discover CLI/nightly vendor path bypassing an adequate existing lend owner; identify actual cross-library and existing-loan overwrite consequences from source rather than trusting stale design doc."
+      },
+      {
+        "id": "D01.2",
+        "critical": true,
+        "description": "Recommend converging on scoped/state-guarded owner or equivalent shared authority with row outcomes; not merely another pre-read, global lock, or new service."
+      },
+      {
+        "id": "D01.3",
+        "critical": false,
+        "description": "Use project evidence across entrypoint, importer, command and contract; distinguish current green happy tests from wrong-library/loaned regression proof."
+      },
+      {
+        "id": "D01.4",
+        "critical": false,
+        "description": "Preserve valid per-row partial outcomes and proportional local architecture, naming a discriminating first correction instead of inventing whole-import atomicity or broad rewrite."
+      }
+    ]
+  },
+  {
+    "id": "D02",
+    "criteria": [
+      {
+        "id": "D02.1",
+        "critical": true,
+        "description": "Discover account-unscoped cache and stale async result publication after close/account switch; following only initial load is insufficient."
+      },
+      {
+        "id": "D02.2",
+        "critical": true,
+        "description": "Address both identity/scope of cached/published result and ownership/cancellation/late-result fencing; cancellation or a cache-key change alone is insufficient."
+      },
+      {
+        "id": "D02.3",
+        "critical": false,
+        "description": "Trace actual login/panel/refresh/cache path against privacy/lifetime contract and propose a controlled switch/late-completion regression beyond existing happy test."
+      },
+      {
+        "id": "D02.4",
+        "critical": false,
+        "description": "Keep local solution proportional, distinguish source/probe evidence from unrun implementation and explicitly preserve currently valid feed while avoiding cross-account display."
+      }
+    ]
+  }
+]

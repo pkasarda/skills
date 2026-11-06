@@ -1,0 +1,1 @@
+Pozri sa na tento malý projekt a povedz mi, či má rozumnú a robustnú architektúru a čo by si upravil ako prvé. Zdroj nemeň. Závery opri o to, čo nájdeš v kóde a kontrakte; zelené testy samy osebe nestačia.

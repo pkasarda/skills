@@ -1,0 +1,1 @@
+Accepted UX/privacy contract: the displayed feed belongs to the currently signed-in account. Closing a panel ends its refresh lifetime. Login starts with that account's cache or an empty view; data from another login must never be shown. Network completion can arrive after the user closes or reopens the panel.

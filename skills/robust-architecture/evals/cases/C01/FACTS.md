@@ -1,0 +1,1 @@
+SQLite supports transactions and guarded SQL. Another process can revoke a membership. User-supplied org_id is not trusted. Production: one small team; no independent scaling or deployment requirement. The domain rule requires current membership when publication takes effect.

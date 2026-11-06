@@ -1,0 +1,1 @@
+Small class-booking service has one seat. Prevent double booking and double charging despite provider timeouts. Customers should always get an immediate definitive answer. Multiple requests/client retries occur. Business has not decided hold duration, pending outcomes or compensation cost. Propose smallest honest design.

@@ -1,0 +1,1 @@
+The callback must finish within its approximately2.67ms block budget. Parameter updates may be coalesced to the latest valid settings; intermediate values need not be preserved. Network can be unavailable. Functional tests run on a desktop, not the plugin host. No target timing measurements have been taken.

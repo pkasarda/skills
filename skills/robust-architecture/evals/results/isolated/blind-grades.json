@@ -1,0 +1,635 @@
+{
+  "cases": [
+    {
+      "id": "C01",
+      "responses": {
+        "X": {
+          "criteria": [
+            {
+              "id": "C01.1",
+              "pass": true,
+              "evidence_quote": "Replace the check-then-write in notes.py::publish with one guarded UPDATE",
+              "reason": "Existing owner"
+            },
+            {
+              "id": "C01.2",
+              "pass": true,
+              "evidence_quote": "an active member whose user_id is actor_id and whose org_id equals notes.org_id",
+              "reason": "Guard at write"
+            },
+            {
+              "id": "C01.3",
+              "pass": true,
+              "evidence_quote": "Both web_publish and cli_publish already call publish with an actor id",
+              "reason": "Both callers and refusal stated"
+            },
+            {
+              "id": "C01.4",
+              "pass": true,
+              "evidence_quote": "pause before the guarded UPDATE, commit revocation on the second connection, resume and assert no publication; also confirm both adapters retain the shared path and active membership permits publication",
+              "reason": "Controlled race and control"
+            }
+          ],
+          "notes": ""
+        },
+        "Y": {
+          "criteria": [
+            {
+              "id": "C01.1",
+              "pass": true,
+              "evidence_quote": "Keep notes.publish as the authority; do not extract a microservice",
+              "reason": "Existing owner"
+            },
+            {
+              "id": "C01.2",
+              "pass": true,
+              "evidence_quote": "update the note only when its id matches and an EXISTS subquery finds an active membership for the actor and the note's org",
+              "reason": "Guard at write"
+            },
+            {
+              "id": "C01.3",
+              "pass": true,
+              "evidence_quote": "Both web_publish and cli_publish already call publish, so they retain the same rule without adapter changes.",
+              "reason": "Both callers and refusal stated"
+            },
+            {
+              "id": "C01.4",
+              "pass": true,
+              "evidence_quote": "also race revoke and publish and assert the serial outcome is either revoke-first/forbidden or publish-first/committed",
+              "reason": "Controlled race and legitimate serialization control"
+            }
+          ],
+          "notes": ""
+        }
+      }
+    },
+    {
+      "id": "C02",
+      "responses": {
+        "X": {
+          "criteria": [
+            {
+              "id": "C02.1",
+              "pass": true,
+              "evidence_quote": "populate it in the existing signature write from the team context that authorized that signature",
+              "reason": "Historical fact"
+            },
+            {
+              "id": "C02.2",
+              "pass": true,
+              "evidence_quote": "Do not backfill old rows from people.team_id",
+              "reason": "No fabricated history"
+            },
+            {
+              "id": "C02.3",
+              "pass": true,
+              "evidence_quote": "it must not grant current access",
+              "reason": "Separate access"
+            },
+            {
+              "id": "C02.4",
+              "pass": true,
+              "evidence_quote": "changing the signer's team afterward leaves the release's displayed team unchanged",
+              "reason": "Move regression"
+            }
+          ],
+          "notes": ""
+        },
+        "Y": {
+          "criteria": [
+            {
+              "id": "C02.1",
+              "pass": true,
+              "evidence_quote": "populate it from the trusted authorization context in the same write/transaction that records a new signature",
+              "reason": "Historical fact"
+            },
+            {
+              "id": "C02.2",
+              "pass": true,
+              "evidence_quote": "Leave legacy rows unknown rather than inferring from today's membership",
+              "reason": "No fabricated history"
+            },
+            {
+              "id": "C02.3",
+              "pass": true,
+              "evidence_quote": "keeping current access checks separate",
+              "reason": "Separate access"
+            },
+            {
+              "id": "C02.4",
+              "pass": true,
+              "evidence_quote": "sign under team A, move the signer to B, and confirm the old release still attributes A",
+              "reason": "Move regression"
+            }
+          ],
+          "notes": ""
+        }
+      }
+    },
+    {
+      "id": "C03",
+      "responses": {
+        "X": {
+          "criteria": [
+            {
+              "id": "C03.1",
+              "pass": true,
+              "evidence_quote": "reuse the same operation ID for retries of one intention and generate a fresh one for each new order",
+              "reason": "Operation identity"
+            },
+            {
+              "id": "C03.2",
+              "pass": true,
+              "evidence_quote": "make `(account_id, operation_id)` the database uniqueness boundary",
+              "reason": "Unique job identity and mismatch conflict stated"
+            },
+            {
+              "id": "C03.3",
+              "pass": true,
+              "evidence_quote": "Preserve operation IDs for the promised retry horizon",
+              "reason": "Retention and scoped authorization stated"
+            },
+            {
+              "id": "C03.4",
+              "pass": true,
+              "evidence_quote": "concurrent same-ID/same-payload requests yield one ID; a fresh ID with identical payload yields a distinct job; same-ID/different-payload is refused",
+              "reason": "Real database seam"
+            }
+          ],
+          "notes": ""
+        },
+        "Y": {
+          "criteria": [
+            {
+              "id": "C03.1",
+              "pass": true,
+              "evidence_quote": "generate and retain one operation_id across retries and issue a fresh one for each intentional order",
+              "reason": "Operation identity"
+            },
+            {
+              "id": "C03.2",
+              "pass": true,
+              "evidence_quote": "Persist it on jobs and enforce UNIQUE(account_id, operation_id)",
+              "reason": "Unique job identity and mismatch conflict stated"
+            },
+            {
+              "id": "C03.3",
+              "pass": false,
+              "evidence_quote": "",
+              "reason": "No retention horizon or replay lifetime stated"
+            },
+            {
+              "id": "C03.4",
+              "pass": true,
+              "evidence_quote": "Verify sequential retry, distinct same-payload operations, same-key/different-payload conflict, concurrent same-key requests yielding one row/id",
+              "reason": "Acceptance tests"
+            }
+          ],
+          "notes": ""
+        }
+      }
+    },
+    {
+      "id": "C04",
+      "responses": {
+        "X": {
+          "criteria": [
+            {
+              "id": "C04.1",
+              "pass": true,
+              "evidence_quote": "one bounded reader.read(max_bytes) per __anext__, so the consumer's pace applies backpressure",
+              "reason": "Bounded pull"
+            },
+            {
+              "id": "C04.2",
+              "pass": true,
+              "evidence_quote": "Make the download an async context manager",
+              "reason": "Explicit lifetime"
+            },
+            {
+              "id": "C04.3",
+              "pass": false,
+              "evidence_quote": "",
+              "reason": "No error propagation contract or explicit outstanding error-handling decision"
+            },
+            {
+              "id": "C04.4",
+              "pass": true,
+              "evidence_quote": "Verify early break with a retained iterator closes promptly, slow consumption causes no reads ahead",
+              "reason": "Resource verification"
+            }
+          ],
+          "notes": ""
+        },
+        "Y": {
+          "criteria": [
+            {
+              "id": "C04.1",
+              "pass": true,
+              "evidence_quote": "each `__anext__` performs one bounded read",
+              "reason": "Bounded pull"
+            },
+            {
+              "id": "C04.2",
+              "pass": true,
+              "evidence_quote": "Make `stream(factory)` an async context manager",
+              "reason": "Explicit lifetime"
+            },
+            {
+              "id": "C04.3",
+              "pass": true,
+              "evidence_quote": "Confirm the real reader supports bounded reads and cancellation-safe close",
+              "reason": "Reader cleanup decision explicitly unverified; no producer"
+            },
+            {
+              "id": "C04.4",
+              "pass": true,
+              "evidence_quote": "slow consumption must not increase outstanding reads or buffer beyond the bound; break while retaining the iterator must close promptly",
+              "reason": "Resource verification"
+            }
+          ],
+          "notes": ""
+        }
+      }
+    },
+    {
+      "id": "C05",
+      "responses": {
+        "X": {
+          "criteria": [
+            {
+              "id": "C05.1",
+              "pass": true,
+              "evidence_quote": "remove its mutex, HTTP fetch, allocation, and synchronous telemetry",
+              "reason": "Remove callback hazards"
+            },
+            {
+              "id": "C05.2",
+              "pass": true,
+              "evidence_quote": "a fixed-size latest-value snapshot through a bounded, nonblocking handoff",
+              "reason": "Bounded handoff, last-valid and drop policy stated"
+            },
+            {
+              "id": "C05.3",
+              "pass": true,
+              "evidence_quote": "Measure callback worst-case time on target hardware against 2.67 ms",
+              "reason": "Target proof"
+            },
+            {
+              "id": "C05.4",
+              "pass": true,
+              "evidence_quote": "stressing updates, network stalls, and a full telemetry queue",
+              "reason": "Failure and overload proof"
+            }
+          ],
+          "notes": ""
+        },
+        "Y": {
+          "criteria": [
+            {
+              "id": "C05.1",
+              "pass": true,
+              "evidence_quote": "This keeps the callback independent of network availability and avoids waiting, allocation, and synchronous I/O",
+              "reason": "Move hazards off callback; locks also checked"
+            },
+            {
+              "id": "C05.2",
+              "pass": true,
+              "evidence_quote": "a fixed-size immutable snapshot through a bounded, nonblocking latest-value handoff",
+              "reason": "Bounded handoff, previous settings and drop policy"
+            },
+            {
+              "id": "C05.3",
+              "pass": true,
+              "evidence_quote": "measure worst-case callback duration and xruns on the target plugin host at 128 frames/48 kHz",
+              "reason": "Target proof"
+            },
+            {
+              "id": "C05.4",
+              "pass": true,
+              "evidence_quote": "stress parameter changes and offline/network stalls",
+              "reason": "Handoff and failure stress"
+            }
+          ],
+          "notes": ""
+        }
+      }
+    },
+    {
+      "id": "C06",
+      "responses": {
+        "X": {
+          "criteria": [
+            {
+              "id": "C06.1",
+              "pass": true,
+              "evidence_quote": "Replace only the stderr string in finish(); leave the JSON serialization and stdout write untouched.",
+              "reason": "Local copy and stdout"
+            },
+            {
+              "id": "C06.2",
+              "pass": true,
+              "evidence_quote": "No architecture work is needed",
+              "reason": "No ceremony"
+            },
+            {
+              "id": "C06.3",
+              "pass": true,
+              "evidence_quote": "Verify by capturing both streams",
+              "reason": "Focused checks"
+            },
+            {
+              "id": "C06.4",
+              "pass": true,
+              "evidence_quote": "No architecture work is needed: this is a local presentation change.",
+              "reason": "Proposal; no execution claimed"
+            }
+          ],
+          "notes": ""
+        },
+        "Y": {
+          "criteria": [
+            {
+              "id": "C06.1",
+              "pass": true,
+              "evidence_quote": "replace only that stderr literal with Exported",
+              "reason": "Local copy and unchanged stdout stated"
+            },
+            {
+              "id": "C06.2",
+              "pass": true,
+              "evidence_quote": "No architecture work is justified.",
+              "reason": "No ceremony"
+            },
+            {
+              "id": "C06.3",
+              "pass": true,
+              "evidence_quote": "Verify by capturing both streams for a representative path",
+              "reason": "Focused checks"
+            },
+            {
+              "id": "C06.4",
+              "pass": true,
+              "evidence_quote": "The smallest intervention is to replace only that stderr literal with Exported.",
+              "reason": "Proposal; no execution claimed"
+            }
+          ],
+          "notes": ""
+        }
+      }
+    },
+    {
+      "id": "C07",
+      "responses": {
+        "X": {
+          "criteria": [
+            {
+              "id": "C07.1",
+              "pass": true,
+              "evidence_quote": "write to a unique temporary file beside its target, finish and flush it, then persist a prepared record containing its digest before atomically replacing the target",
+              "reason": "Atomic publication"
+            },
+            {
+              "id": "C07.2",
+              "pass": true,
+              "evidence_quote": "otherwise resume from the temp if valid or reprocess",
+              "reason": "Mid-image recovery; between-image pause stated"
+            },
+            {
+              "id": "C07.3",
+              "pass": true,
+              "evidence_quote": "reconcile prepared entries: matching target digest means completed",
+              "reason": "Crash reconciliation"
+            },
+            {
+              "id": "C07.4",
+              "pass": true,
+              "evidence_quote": "Power-loss durability needs platform-specific flush guarantees.",
+              "reason": "Local design and filesystem limit"
+            }
+          ],
+          "notes": ""
+        },
+        "Y": {
+          "criteria": [
+            {
+              "id": "C07.1",
+              "pass": true,
+              "evidence_quote": "Write each image to a unique temporary file beside its destination, close/flush it, then atomically replace the final path only after encoding succeeds",
+              "reason": "Atomic publication"
+            },
+            {
+              "id": "C07.2",
+              "pass": false,
+              "evidence_quote": "",
+              "reason": "No explicit recovery of an incomplete temp image"
+            },
+            {
+              "id": "C07.3",
+              "pass": true,
+              "evidence_quote": "safely redo an item whose output committed just before its completion record",
+              "reason": "Crash reconciliation conditional on deterministic output"
+            },
+            {
+              "id": "C07.4",
+              "pass": true,
+              "evidence_quote": "Exact durability depends on filesystem rename/flush guarantees",
+              "reason": "Local design and filesystem limit"
+            }
+          ],
+          "notes": ""
+        }
+      }
+    },
+    {
+      "id": "C08",
+      "responses": {
+        "X": {
+          "criteria": [
+            {
+              "id": "C08.1",
+              "pass": true,
+              "evidence_quote": "the service cannot truthfully return immediate success or failure",
+              "reason": "Rejects impossible guarantee"
+            },
+            {
+              "id": "C08.2",
+              "pass": true,
+              "evidence_quote": "conditionally claim the sole seat and create an intent keyed by a stable client idempotency key",
+              "reason": "Atomic claim, pending and hold decision stated"
+            },
+            {
+              "id": "C08.3",
+              "pass": true,
+              "evidence_quote": "on timeout or unavailable lookup, retain an explicit pending/unknown state and reconcile by key, retrying the same idempotent operation",
+              "reason": "Stable identity and recovery"
+            },
+            {
+              "id": "C08.4",
+              "pass": true,
+              "evidence_quote": "may hold the seat and cannot promise immediate finality",
+              "reason": "Tradeoff and business decisions"
+            }
+          ],
+          "notes": ""
+        },
+        "Y": {
+          "criteria": [
+            {
+              "id": "C08.1",
+              "pass": true,
+              "evidence_quote": "during provider and lookup outages, the service cannot truthfully return definitive success or failure immediately",
+              "reason": "Rejects impossible guarantee"
+            },
+            {
+              "id": "C08.2",
+              "pass": true,
+              "evidence_quote": "In one SQL transaction, claim the sole seat and create a booking intent",
+              "reason": "Atomic claim, pending and hold decision stated"
+            },
+            {
+              "id": "C08.3",
+              "pass": true,
+              "evidence_quote": "retry lookup (and only permitted same-key charge retries)",
+              "reason": "Stable identity and recovery"
+            },
+            {
+              "id": "C08.4",
+              "pass": true,
+              "evidence_quote": "Do not release or compensate an ambiguous charge without a business rule",
+              "reason": "Tradeoff and business decisions"
+            }
+          ],
+          "notes": ""
+        }
+      }
+    },
+    {
+      "id": "C09",
+      "responses": {
+        "X": {
+          "criteria": [
+            {
+              "id": "C09.1",
+              "pass": true,
+              "evidence_quote": "`flush()` has no documented power-loss durability or atomicity",
+              "reason": "Distinguishes acknowledged and pending"
+            },
+            {
+              "id": "C09.2",
+              "pass": true,
+              "evidence_quote": "show a sample as pending until then, and report save failure distinctly",
+              "reason": "Durable boundary and full/removal tests stated"
+            },
+            {
+              "id": "C09.3",
+              "pass": true,
+              "evidence_quote": "scan and validate records, tolerate or discard only a torn final frame, detect sequence gaps, and refuse or clearly flag incomplete exports",
+              "reason": "Recovery"
+            },
+            {
+              "id": "C09.4",
+              "pass": true,
+              "evidence_quote": "Synchronous durable writes may delay or stop one-second sampling",
+              "reason": "Latency and failure product decision"
+            }
+          ],
+          "notes": ""
+        },
+        "Y": {
+          "criteria": [
+            {
+              "id": "C09.1",
+              "pass": true,
+              "evidence_quote": "flush has no documented power-loss durability",
+              "reason": "Distinguishes acknowledged and pending"
+            },
+            {
+              "id": "C09.2",
+              "pass": true,
+              "evidence_quote": "If no such guarantee is available, the device must not display ‘recorded’ at all",
+              "reason": "Conditional durability, uncertainty and card tests"
+            },
+            {
+              "id": "C09.3",
+              "pass": true,
+              "evidence_quote": "accept only complete valid frames and verify sequence continuity",
+              "reason": "Recovery and visible incomplete-export error"
+            },
+            {
+              "id": "C09.4",
+              "pass": true,
+              "evidence_quote": "whether to stop sampling or mark unsaved samples when storage is full",
+              "reason": "Sampling latency and failure decisions"
+            }
+          ],
+          "notes": ""
+        }
+      }
+    },
+    {
+      "id": "C10",
+      "responses": {
+        "X": {
+          "criteria": [
+            {
+              "id": "C10.1",
+              "pass": true,
+              "evidence_quote": "Existing months cannot be reconstructed from the described files",
+              "reason": "Missing historical evidence"
+            },
+            {
+              "id": "C10.2",
+              "pass": true,
+              "evidence_quote": "To reproduce the invoice actually sent, add an explicit issuance step",
+              "reason": "Generated versus sent and correction decisions"
+            },
+            {
+              "id": "C10.3",
+              "pass": true,
+              "evidence_quote": "retain an immutable per-run bundle containing the exact CSV and price inputs, generated invoice, and generator version",
+              "reason": "Inputs and no overwrite"
+            },
+            {
+              "id": "C10.4",
+              "pass": true,
+              "evidence_quote": "they require recovered source inputs and, for sent-copy reproduction, the actual sent files",
+              "reason": "Historical evidence path"
+            }
+          ],
+          "notes": ""
+        },
+        "Y": {
+          "criteria": [
+            {
+              "id": "C10.1",
+              "pass": true,
+              "evidence_quote": "No design can recover that history reliably; label those months unreproducible unless independent copies provide evidence.",
+              "reason": "Missing historical evidence"
+            },
+            {
+              "id": "C10.2",
+              "pass": true,
+              "evidence_quote": "First resolve whether the guarantee is generated output or sent invoice and define correction semantics.",
+              "reason": "Generated versus sent and corrections"
+            },
+            {
+              "id": "C10.3",
+              "pass": true,
+              "evidence_quote": "Make generated runs immutable; regeneration creates a new run/revision rather than overwriting one.",
+              "reason": "Inputs/version stated and no overwrite"
+            },
+            {
+              "id": "C10.4",
+              "pass": true,
+              "evidence_quote": "label those months unreproducible unless independent copies provide evidence",
+              "reason": "Historical evidence path"
+            }
+          ],
+          "notes": ""
+        }
+      }
+    }
+  ],
+  "rubric_issues": []
+}

@@ -1,0 +1,644 @@
+{
+  "cases": [
+    {
+      "id": "C01",
+      "responses": {
+        "X": {
+          "criteria": [
+            {
+              "id": "C01.1",
+              "pass": true,
+              "evidence_quote": "Keep `publish` as the owner; both `web_publish` and `cli_publish` already delegate to it",
+              "reason": "Shared bounded owner"
+            },
+            {
+              "id": "C01.2",
+              "pass": true,
+              "evidence_quote": "making the publication `UPDATE` conditional on `EXISTS` for an active membership matching the note's `org_id` and `actor_id`, all in the same statement",
+              "reason": "Guarded mutation"
+            },
+            {
+              "id": "C01.3",
+              "pass": true,
+              "evidence_quote": "Treat zero updated rows as a refusal",
+              "reason": "Shared callers and refusal"
+            },
+            {
+              "id": "C01.4",
+              "pass": false,
+              "evidence_quote": "",
+              "reason": "No own/foreign decoy or valid-success control"
+            }
+          ],
+          "notes": ""
+        },
+        "Y": {
+          "criteria": [
+            {
+              "id": "C01.1",
+              "pass": true,
+              "evidence_quote": "Keep `publish` in `notes.py` as the single owner",
+              "reason": "Shared bounded owner"
+            },
+            {
+              "id": "C01.2",
+              "pass": true,
+              "evidence_quote": "make the publication UPDATE conditional on an active membership for `(actor_id, notes.org_id)` at write time",
+              "reason": "Guarded mutation"
+            },
+            {
+              "id": "C01.3",
+              "pass": true,
+              "evidence_quote": "Treat zero affected rows as `forbidden`",
+              "reason": "Shared callers and refusal"
+            },
+            {
+              "id": "C01.4",
+              "pass": false,
+              "evidence_quote": "",
+              "reason": "No own/foreign decoy"
+            }
+          ],
+          "notes": ""
+        }
+      }
+    },
+    {
+      "id": "C02",
+      "responses": {
+        "X": {
+          "criteria": [
+            {
+              "id": "C02.1",
+              "pass": true,
+              "evidence_quote": "Add an approving-team snapshot to each release when the signature is authorized",
+              "reason": "Signing-time fact"
+            },
+            {
+              "id": "C02.2",
+              "pass": true,
+              "evidence_quote": "Leave legacy rows unknown (`NULL`)",
+              "reason": "Unknown history"
+            },
+            {
+              "id": "C02.3",
+              "pass": true,
+              "evidence_quote": "keep current release access governed by current authorization",
+              "reason": "Separate current authority"
+            },
+            {
+              "id": "C02.4",
+              "pass": true,
+              "evidence_quote": "signing under team A, moving the person to team B",
+              "reason": "Narrow tracer and regression"
+            }
+          ],
+          "notes": ""
+        },
+        "Y": {
+          "criteria": [
+            {
+              "id": "C02.1",
+              "pass": true,
+              "evidence_quote": "populate it from the team whose membership authorized the signer when the signature is committed",
+              "reason": "Signing-time fact"
+            },
+            {
+              "id": "C02.2",
+              "pass": true,
+              "evidence_quote": "Keep legacy values unknown/null",
+              "reason": "Unknown history"
+            },
+            {
+              "id": "C02.3",
+              "pass": true,
+              "evidence_quote": "continue evaluating present access separately",
+              "reason": "Separate current authority"
+            },
+            {
+              "id": "C02.4",
+              "pass": true,
+              "evidence_quote": "Check a signature then move the person",
+              "reason": "Narrow tracer and regression"
+            }
+          ],
+          "notes": ""
+        }
+      }
+    },
+    {
+      "id": "C03",
+      "responses": {
+        "X": {
+          "criteria": [
+            {
+              "id": "C03.1",
+              "pass": true,
+              "evidence_quote": "A retry uses the same key; a new intentional order, even with identical payload, uses a new key",
+              "reason": "Operation identity"
+            },
+            {
+              "id": "C03.2",
+              "pass": true,
+              "evidence_quote": "Enforce uniqueness in the database and resolve concurrent inserts by reading the winning record. Store a payload hash too so reuse of one key with different content is refused.",
+              "reason": "Atomic uniqueness and conflict"
+            },
+            {
+              "id": "C03.3",
+              "pass": true,
+              "evidence_quote": "Key retention and client key-generation/retry persistence need an explicit contract",
+              "reason": "Scoped authorization also stated"
+            },
+            {
+              "id": "C03.4",
+              "pass": true,
+              "evidence_quote": "Verify concurrent same-key requests create one job, two keys with identical payload create two, mismatched key reuse is rejected",
+              "reason": "Acceptance tests"
+            }
+          ],
+          "notes": ""
+        },
+        "Y": {
+          "criteria": [
+            {
+              "id": "C03.1",
+              "pass": true,
+              "evidence_quote": "Same key and same payload returns the same logical job; same key with different payload is a conflict; a new intentional order uses a new key even for identical payload.",
+              "reason": "Operation identity"
+            },
+            {
+              "id": "C03.2",
+              "pass": true,
+              "evidence_quote": "Enforce `UNIQUE(account_id, operation_id)` and atomically insert or resolve the winner under concurrent retries.",
+              "reason": "Atomic uniqueness and conflict stated"
+            },
+            {
+              "id": "C03.3",
+              "pass": false,
+              "evidence_quote": "",
+              "reason": "No retention or replay lifetime assumption"
+            },
+            {
+              "id": "C03.4",
+              "pass": true,
+              "evidence_quote": "Verify simultaneous same-key acceptance creates one job, distinct keys create two identical-payload jobs, mismatched reuse conflicts",
+              "reason": "Acceptance tests"
+            }
+          ],
+          "notes": ""
+        }
+      }
+    },
+    {
+      "id": "C04",
+      "responses": {
+        "X": {
+          "criteria": [
+            {
+              "id": "C04.1",
+              "pass": true,
+              "evidence_quote": "Replace the unbounded queue in `download.py` with bounded backpressure and cap each read/chunk size",
+              "reason": "Bounded buffering"
+            },
+            {
+              "id": "C04.2",
+              "pass": true,
+              "evidence_quote": "Require consumers to close even when they retain the iterator",
+              "reason": "Explicit lifetime"
+            },
+            {
+              "id": "C04.3",
+              "pass": false,
+              "evidence_quote": "",
+              "reason": "Close-failure reporting left unspecified; error propagation not defined"
+            },
+            {
+              "id": "C04.4",
+              "pass": true,
+              "evidence_quote": "assert bounded peak buffered bytes and no live pump/reader afterward",
+              "reason": "Slow and abandoned tests"
+            }
+          ],
+          "notes": ""
+        },
+        "Y": {
+          "criteria": [
+            {
+              "id": "C04.1",
+              "pass": true,
+              "evidence_quote": "remove the producer task and read/yield one bounded chunk at a time",
+              "reason": "Backpressure"
+            },
+            {
+              "id": "C04.2",
+              "pass": true,
+              "evidence_quote": "expose it through an async context manager",
+              "reason": "Explicit lifetime"
+            },
+            {
+              "id": "C04.3",
+              "pass": false,
+              "evidence_quote": "",
+              "reason": "No error propagation policy"
+            },
+            {
+              "id": "C04.4",
+              "pass": true,
+              "evidence_quote": "Verify early break while retaining the handle closes the reader promptly",
+              "reason": "Early break and slow consumer tests; no producer in simplest version"
+            }
+          ],
+          "notes": ""
+        }
+      }
+    },
+    {
+      "id": "C05",
+      "responses": {
+        "X": {
+          "criteria": [
+            {
+              "id": "C05.1",
+              "pass": true,
+              "evidence_quote": "remove the mutex, HTTP fetch, vector allocation, and synchronous telemetry write",
+              "reason": "Remove deadline hazards"
+            },
+            {
+              "id": "C05.2",
+              "pass": true,
+              "evidence_quote": "bounded lock-free/latest-value handoff that may coalesce updates, and retain the last valid settings when the network is unavailable",
+              "reason": "Bounded state and overload behavior"
+            },
+            {
+              "id": "C05.3",
+              "pass": true,
+              "evidence_quote": "Verify worst-case callback time on the actual plugin host under parameter churn and telemetry load",
+              "reason": "Host evidence"
+            },
+            {
+              "id": "C05.4",
+              "pass": true,
+              "evidence_quote": "including network loss, against the 2.67 ms block budget",
+              "reason": "Failure and load verification"
+            }
+          ],
+          "notes": ""
+        },
+        "Y": {
+          "criteria": [
+            {
+              "id": "C05.1",
+              "pass": true,
+              "evidence_quote": "remove the mutex, HTTP fetch, vector allocation, and synchronous telemetry write",
+              "reason": "Remove deadline hazards"
+            },
+            {
+              "id": "C05.2",
+              "pass": true,
+              "evidence_quote": "publish a prebuilt, bounded snapshot for the callback to consume without blocking, allowing intermediate settings to coalesce",
+              "reason": "Bounded state and last-valid behavior stated"
+            },
+            {
+              "id": "C05.3",
+              "pass": true,
+              "evidence_quote": "measure worst-case callback duration and dropouts on the actual plugin host/device under load",
+              "reason": "Host evidence"
+            },
+            {
+              "id": "C05.4",
+              "pass": false,
+              "evidence_quote": "",
+              "reason": "No explicit failure/overload verification of handoff or network loss"
+            }
+          ],
+          "notes": ""
+        }
+      }
+    },
+    {
+      "id": "C06",
+      "responses": {
+        "X": {
+          "criteria": [
+            {
+              "id": "C06.1",
+              "pass": true,
+              "evidence_quote": "Change only the stderr literal at `cli.py:5` from `Saved` to `Exported`; leave the compact JSON print at line 4 untouched.",
+              "reason": "Exact change"
+            },
+            {
+              "id": "C06.2",
+              "pass": true,
+              "evidence_quote": "No architecture work is needed.",
+              "reason": "No ceremony"
+            },
+            {
+              "id": "C06.3",
+              "pass": true,
+              "evidence_quote": "Verify captured stdout remains byte-for-byte `finish`'s existing JSON output",
+              "reason": "Focused assertion"
+            },
+            {
+              "id": "C06.4",
+              "pass": true,
+              "evidence_quote": "no execution was performed",
+              "reason": "Truthful status"
+            }
+          ],
+          "notes": ""
+        },
+        "Y": {
+          "criteria": [
+            {
+              "id": "C06.1",
+              "pass": true,
+              "evidence_quote": "Change only stderr's `Saved` text to `Exported`; preserve the `json.dumps` call and stdout bytes.",
+              "reason": "Exact change"
+            },
+            {
+              "id": "C06.2",
+              "pass": true,
+              "evidence_quote": "No architecture work is needed",
+              "reason": "No ceremony"
+            },
+            {
+              "id": "C06.3",
+              "pass": true,
+              "evidence_quote": "Verify captured stdout is byte-for-byte identical for a representative path",
+              "reason": "Focused assertion"
+            },
+            {
+              "id": "C06.4",
+              "pass": true,
+              "evidence_quote": "no implementation was tested",
+              "reason": "Truthful status"
+            }
+          ],
+          "notes": ""
+        }
+      }
+    },
+    {
+      "id": "C07",
+      "responses": {
+        "X": {
+          "criteria": [
+            {
+              "id": "C07.1",
+              "pass": false,
+              "evidence_quote": "",
+              "reason": "Wrong domain: payment booking"
+            },
+            {
+              "id": "C07.2",
+              "pass": false,
+              "evidence_quote": "",
+              "reason": "Wrong domain"
+            },
+            {
+              "id": "C07.3",
+              "pass": false,
+              "evidence_quote": "",
+              "reason": "Wrong domain"
+            },
+            {
+              "id": "C07.4",
+              "pass": false,
+              "evidence_quote": "",
+              "reason": "Wrong domain"
+            }
+          ],
+          "notes": ""
+        },
+        "Y": {
+          "criteria": [
+            {
+              "id": "C07.1",
+              "pass": true,
+              "evidence_quote": "Write each image to a temporary file beside its destination, flush it, then atomically replace the final path",
+              "reason": "Local completion boundary"
+            },
+            {
+              "id": "C07.2",
+              "pass": false,
+              "evidence_quote": "",
+              "reason": "Does not state resume action for incomplete image"
+            },
+            {
+              "id": "C07.3",
+              "pass": true,
+              "evidence_quote": "reconcile a final file committed just before a crash but not yet recorded in the manifest",
+              "reason": "Progress reconciliation"
+            },
+            {
+              "id": "C07.4",
+              "pass": true,
+              "evidence_quote": "whether filesystem flush must survive power loss are unspecified",
+              "reason": "Local design and durability limit"
+            }
+          ],
+          "notes": ""
+        }
+      }
+    },
+    {
+      "id": "C08",
+      "responses": {
+        "X": {
+          "criteria": [
+            {
+              "id": "C08.1",
+              "pass": false,
+              "evidence_quote": "",
+              "reason": "Wrong domain: recording device"
+            },
+            {
+              "id": "C08.2",
+              "pass": false,
+              "evidence_quote": "",
+              "reason": "Wrong domain"
+            },
+            {
+              "id": "C08.3",
+              "pass": false,
+              "evidence_quote": "",
+              "reason": "Wrong domain"
+            },
+            {
+              "id": "C08.4",
+              "pass": false,
+              "evidence_quote": "",
+              "reason": "Wrong domain"
+            }
+          ],
+          "notes": ""
+        },
+        "Y": {
+          "criteria": [
+            {
+              "id": "C08.1",
+              "pass": true,
+              "evidence_quote": "The requested immediate definitive answer cannot be guaranteed when a charge may have succeeded but both its response and temporary lookup are unavailable.",
+              "reason": "Rejects certainty"
+            },
+            {
+              "id": "C08.2",
+              "pass": true,
+              "evidence_quote": "reserves the sole seat and records a pending booking with a stable provider idempotency key",
+              "reason": "Concurrency and hold duration stated"
+            },
+            {
+              "id": "C08.3",
+              "pass": true,
+              "evidence_quote": "Reconcile timeouts by lookup/retry with that same key",
+              "reason": "Stable identity; provider call follows local transaction"
+            },
+            {
+              "id": "C08.4",
+              "pass": true,
+              "evidence_quote": "expose a pending result, or choose a bounded hold/failure policy with explicit compensation risk",
+              "reason": "Tradeoff and decision"
+            }
+          ],
+          "notes": ""
+        }
+      }
+    },
+    {
+      "id": "C09",
+      "responses": {
+        "X": {
+          "criteria": [
+            {
+              "id": "C09.1",
+              "pass": true,
+              "evidence_quote": "the current buffered `append()`/`flush()` contract explicitly does not promise power-loss durability or atomic writes",
+              "reason": "Durability and acknowledgement distinguished"
+            },
+            {
+              "id": "C09.2",
+              "pass": false,
+              "evidence_quote": "",
+              "reason": "Full/removal errors need defining, but no clear failure reporting to user"
+            },
+            {
+              "id": "C09.3",
+              "pass": true,
+              "evidence_quote": "Add framed records with sequence and checksum so boot/export can detect and exclude a torn tail",
+              "reason": "Recovery"
+            },
+            {
+              "id": "C09.4",
+              "pass": true,
+              "evidence_quote": "Acceptable sampling delay and whether to stop or continue visibly unsaved on write failure remain product decisions.",
+              "reason": "Latency and failure tradeoff"
+            }
+          ],
+          "notes": ""
+        },
+        "Y": {
+          "criteria": [
+            {
+              "id": "C09.1",
+              "pass": false,
+              "evidence_quote": "",
+              "reason": "Wrong domain: invoices"
+            },
+            {
+              "id": "C09.2",
+              "pass": false,
+              "evidence_quote": "",
+              "reason": "Wrong domain"
+            },
+            {
+              "id": "C09.3",
+              "pass": false,
+              "evidence_quote": "",
+              "reason": "Wrong domain"
+            },
+            {
+              "id": "C09.4",
+              "pass": false,
+              "evidence_quote": "",
+              "reason": "Wrong domain"
+            }
+          ],
+          "notes": ""
+        }
+      }
+    },
+    {
+      "id": "C10",
+      "responses": {
+        "X": {
+          "criteria": [
+            {
+              "id": "C10.1",
+              "pass": true,
+              "evidence_quote": "old months cannot be reconstructed from these artifacts",
+              "reason": "Missing history explicitly unknown"
+            },
+            {
+              "id": "C10.2",
+              "pass": true,
+              "evidence_quote": "Product must choose generated-versus-sent reproducibility and a correction/versioning policy.",
+              "reason": "Authority and corrections"
+            },
+            {
+              "id": "C10.3",
+              "pass": true,
+              "evidence_quote": "Archive a versioned run bundle (month's source rows, price snapshot, rounding/tool version) and write a new output/manifest atomically instead of overwriting the only copy",
+              "reason": "Inputs and overwrite"
+            },
+            {
+              "id": "C10.4",
+              "pass": true,
+              "evidence_quote": "mark them unavailable unless reliable originals can be recovered",
+              "reason": "Practical historical path"
+            }
+          ],
+          "notes": ""
+        },
+        "Y": {
+          "criteria": [
+            {
+              "id": "C10.1",
+              "pass": false,
+              "evidence_quote": "",
+              "reason": "Wrong domain: recording device"
+            },
+            {
+              "id": "C10.2",
+              "pass": false,
+              "evidence_quote": "",
+              "reason": "Wrong domain"
+            },
+            {
+              "id": "C10.3",
+              "pass": false,
+              "evidence_quote": "",
+              "reason": "Wrong domain"
+            },
+            {
+              "id": "C10.4",
+              "pass": false,
+              "evidence_quote": "",
+              "reason": "Wrong domain"
+            }
+          ],
+          "notes": ""
+        }
+      }
+    }
+  ],
+  "rubric_issues": [
+    {
+      "criterion": "C01.4",
+      "issue": "The requested own/foreign decoy is not defined in the public case; nevertheless graded as written."
+    },
+    {
+      "criterion": "C04.3",
+      "issue": "Requires defined error propagation although public request does not specify an error policy; graded as written."
+    }
+  ]
+}

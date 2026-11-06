@@ -1,0 +1,165 @@
+{
+  "cases": [
+    {
+      "id": "D02",
+      "responses": {
+        "X": {
+          "criteria": [
+            {
+              "id": "D02.1",
+              "pass": true,
+              "evidence_quote": "`open(account)` načíta globálne `cache.latest`; v `refresh.py` každé dokončenie prepíše tú istú cache a bez kontroly zavolá callback.",
+              "reason": "Unscoped cache and stale callback"
+            },
+            {
+              "id": "D02.2",
+              "pass": false,
+              "evidence_quote": "generation token v `Panel`, overený callbackom",
+              "reason": "Callback-only fence follows refresh cache write; same-account reopened cache can receive stale result"
+            },
+            {
+              "id": "D02.3",
+              "pass": true,
+              "evidence_quote": "zopakovať probe s A/B a po close/reopen A",
+              "reason": "Traces flow and controlled regression"
+            },
+            {
+              "id": "D02.4",
+              "pass": true,
+              "evidence_quote": "aktuálny výsledok sa musí zobraziť",
+              "reason": "Valid feed, proportional scope and evidence limits"
+            }
+          ],
+          "notes": ""
+        },
+        "Y": {
+          "criteria": [
+            {
+              "id": "D02.1",
+              "pass": true,
+              "evidence_quote": "`Panel.open` reads one global `cache.latest`",
+              "reason": "Unscoped cache and stale completion described"
+            },
+            {
+              "id": "D02.2",
+              "pass": true,
+              "evidence_quote": "a request may update cache or invoke the callback only while its captured generation is current",
+              "reason": "Scopes cache and fences both effects"
+            },
+            {
+              "id": "D02.3",
+              "pass": true,
+              "evidence_quote": "Verify A/B completion in both orders, close before completion, and close/reopen same account",
+              "reason": "Traces flow and controlled regression"
+            },
+            {
+              "id": "D02.4",
+              "pass": false,
+              "evidence_quote": "",
+              "reason": "No explicit current valid feed preservation check or guarantee"
+            }
+          ],
+          "notes": ""
+        }
+      }
+    },
+    {
+      "id": "C08",
+      "responses": {
+        "X": {
+          "criteria": [
+            {
+              "id": "C08.1",
+              "pass": true,
+              "evidence_quote": "Immediate definitive booking success or failure is impossible during a provider/lookup outage.",
+              "reason": "Unknowable outcome"
+            },
+            {
+              "id": "C08.2",
+              "pass": true,
+              "evidence_quote": "atomically claim the seat and persist a pending booking intent",
+              "reason": "Atomic seat claim, pending and hold choice stated"
+            },
+            {
+              "id": "C08.3",
+              "pass": true,
+              "evidence_quote": "Charge with a stable provider key tied to the intent.",
+              "reason": "Persisted identity and same-key lookup stated"
+            },
+            {
+              "id": "C08.4",
+              "pass": true,
+              "evidence_quote": "Holding the seat preserves no-double-booking safety but can block the sole seat indefinitely",
+              "reason": "Availability and product tradeoff"
+            }
+          ],
+          "notes": ""
+        },
+        "Y": {
+          "criteria": [
+            {
+              "id": "C08.1",
+              "pass": true,
+              "evidence_quote": "during provider and lookup outages, the service cannot truthfully return definitive success or failure immediately",
+              "reason": "Unknowable outcome"
+            },
+            {
+              "id": "C08.2",
+              "pass": true,
+              "evidence_quote": "In one SQL transaction, claim the sole seat and create a booking intent",
+              "reason": "Atomic claim, pending and hold choice stated"
+            },
+            {
+              "id": "C08.3",
+              "pass": true,
+              "evidence_quote": "retry lookup (and only permitted same-key charge retries)",
+              "reason": "Stable key and recovery"
+            },
+            {
+              "id": "C08.4",
+              "pass": true,
+              "evidence_quote": "Do not release or compensate an ambiguous charge without a business rule",
+              "reason": "Pending and compensation decisions"
+            }
+          ],
+          "notes": ""
+        }
+      }
+    },
+    {
+      "id": "D03",
+      "responses": {
+        "X": {
+          "criteria": [
+            {
+              "id": "D03.1",
+              "pass": true,
+              "evidence_quote": "updates clearance without checking `revision`, and inserts a release notice for every clear result",
+              "reason": "Both stale effects and contract identified"
+            },
+            {
+              "id": "D03.2",
+              "pass": true,
+              "evidence_quote": "updates clearance with `WHERE id=? AND revision=?`; insert a clear release notice only if that guarded update affected one row",
+              "reason": "Atomic transaction guards both effects"
+            },
+            {
+              "id": "D03.3",
+              "pass": true,
+              "evidence_quote": "always records the valid result in history",
+              "reason": "Preserves historical submitted revision"
+            },
+            {
+              "id": "D03.4",
+              "pass": false,
+              "evidence_quote": "",
+              "reason": "No concurrent-order verification or explicit scanner cancellation limit"
+            }
+          ],
+          "notes": ""
+        }
+      }
+    }
+  ],
+  "rubric_issues": []
+}

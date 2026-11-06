@@ -1,0 +1,1 @@
+An audio plugin must render128 frames at48kHz. Current render callback occasionally drops audio. Propose architecture boundaries and the proof needed. Someone suggested Kafka for parameter events; no requirement exists for independent services.

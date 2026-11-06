@@ -1,0 +1,13 @@
+{
+  "id": "C08",
+  "case_summary": "Design a safe one-seat booking and charge flow despite concurrent requests, retries, and ambiguous provider timeouts, under a demand for immediate definitive answers.",
+  "answer": "The shown flow reads availability before the charge, so concurrent requests can both charge; a timeout also cannot reveal whether the provider charged. Immediate definitive booking success or failure is impossible during a provider/lookup outage. The product must accept an immediate `pending` result, allow waiting without a bounded answer, or define a compensation/refusal policy; do not label uncertainty success or failure.\n\nSmallest safe flow: in one SQL transaction, atomically claim the seat and persist a pending booking intent keyed by a client-supplied idempotency key scoped to the customer. Same key and same request returns that booking; mismatched reuse is refused. One booking owner controls state and seat release. Charge with a stable provider key tied to the intent. On definite success confirm; on definite decline release. On timeout keep the seat claimed and result pending while a periodic worker looks up the same provider key and reconciles. Never compensate an ambiguous charge without an agreed policy.\n\nThis adds durable intent and one recovery worker, not a separate service. Holding the seat preserves no-double-booking safety but can block the sole seat indefinitely; expiry improves availability only with a defined policy.\n\nDiscriminating check: concurrent distinct keys must create one claim/charge; same-key retries must create one intent/charge; test provider charge then timeout, lookup outage, and crash before local confirmation, then verify reconciliation. Key retention must cover retry/recovery; its duration and eventual lookup recovery are unverified. Hold duration, pending UX, recovery/manual ownership, and compensation cost remain product decisions.",
+  "files_read": [
+    "/tmp/architecture-skill-build/robust-architecture/SKILL.md",
+    "/tmp/architecture-skill-build/robust-architecture/references/boundary-checks.md",
+    "/tmp/robust-architecture-evals/cases/C08/REQUEST.md",
+    "/tmp/robust-architecture-evals/cases/C08/PROVIDER.md",
+    "/tmp/robust-architecture-evals/cases/C08/book.txt"
+  ],
+  "checks_run": ["Validated JSON syntax and confirmed the proposal is under 250 words."]
+}

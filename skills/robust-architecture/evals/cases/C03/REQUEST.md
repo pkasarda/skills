@@ -1,0 +1,1 @@
+Our label-job API prevents duplicate requests with payload_hash, but two intentional orders for identical labels now collapse to one job. Retrying a timed-out enqueue must produce one logical job; a new identical order must produce another. Fix the contract, not just the hash. Scope is acceptance/enqueue in the database, not exactly-once physical printing.

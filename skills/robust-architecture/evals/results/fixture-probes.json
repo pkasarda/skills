@@ -1,0 +1,21 @@
+{
+  "C01": {
+    "revoked_actor_still_publishes": true,
+    "probe": "controlled sequential interleaving, not concurrent load"
+  },
+  "C02": {
+    "historic_display_changes_with_current_membership": true
+  },
+  "C03": {
+    "two_identical_intentions_collapse": true
+  },
+  "C04": {
+    "retained_abandoned_iterator_keeps_reading": true,
+    "probe_cleanup_completed": true,
+    "memory_benchmark": false
+  },
+  "C07": {
+    "failed_write_destroys_previous_completed_file": true,
+    "probe": "injected encoder failure; not power-loss proof"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "id": "D02",
+  "answer": "Projekt má jednoduché, čitateľné vrstvy, ale jeho stav a asynchrónny životný cyklus nespĺňajú deklarovaný kontrakt pri prepnutí účtu. `cache.py` drží jedinú globálnu hodnotu; `Panel.open` ju zobrazí bez kontroly účtu a `Refresh.once` ju prepíše po každom dokončení. `Panel.on_result` tiež bez kontroly nastaví feed. `stop()` iba zmení `timer_running`, ktorý úloha ani callback nekontrolujú. Preto odpoveď po zatvorení alebo prepnutí môže prepísať aktívny panel aj cache dátami predošlého účtu. Prvý krok: zaveďte najmenšie account-scoped uloženie a odmietnite výsledky pre neaktuálny účet/obdobie otvorenia panelu; pridajte odložené dokončenia pokrývajúce A→B, logout a reopen. Nie je dôvod na širší prepis: README uvádza jediné okno, fake transport a žiadnu perzistenciu. Existujúci test overuje iba úspešné prvé načítanie. Testovací úspech preto robustnosť prepnutia nedokazuje. Neoverené zostáva správanie skutočného transportu a UI; tento projekt ich neobsahuje.",
+  "files_read": [
+    "/tmp/robust-architecture-evals/discovery/REQUEST.txt",
+    "/tmp/robust-architecture-evals/discovery/repos/D02/README.md",
+    "/tmp/robust-architecture-evals/discovery/repos/D02/docs/contracts.md",
+    "/tmp/robust-architecture-evals/discovery/repos/D02/docs/old-notes.md",
+    "/tmp/robust-architecture-evals/discovery/repos/D02/main.py",
+    "/tmp/robust-architecture-evals/discovery/repos/D02/panel.py",
+    "/tmp/robust-architecture-evals/discovery/repos/D02/cache.py",
+    "/tmp/robust-architecture-evals/discovery/repos/D02/transport.py",
+    "/tmp/robust-architecture-evals/discovery/repos/D02/refresh.py",
+    "/tmp/robust-architecture-evals/discovery/repos/D02/tests/test_panel.py"
+  ],
+  "checks_run": [
+    {
+      "command": "python3 -m unittest discover -s tests -v",
+      "outcome": "Passed: 1 test (test_first_load); it covers only first-load success."
+    },
+    {
+      "command": "In-memory asyncio probe: delay fetch for account a, close panel, open account b, then complete a's fetch.",
+      "outcome": "Observed active_account='b' with visible_feed=['feed:a'] and global_cache=['feed:a']; confirms stale cross-account result leak."
+    },
+    {
+      "command": "python3 -m json.tool /tmp/robust-architecture-evals/discovery/answers/D02-A.json",
+      "outcome": "Passed JSON syntax validation."
+    }
+  ]
+}

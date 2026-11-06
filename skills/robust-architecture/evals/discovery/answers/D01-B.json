@@ -1,0 +1,31 @@
+{
+  "id": "D01",
+  "answer": "Architektúra má dobrý základ pre malú aplikáciu: `library.commands.lend` je jedno miesto, ktoré podmienene overí knižnicu a stav výtlačku a zapíše aktivitu. V skutočnom importe sa však táto hranica obchádza. `main.run` volá `vendor.apply_manifest`, ktorá aktualizuje podľa samotného `id`, bez `library_id` a kontroly `available`; tým zmenila výtlačok knižnice 2 pri importe knižnice 1 aj prepísala existujúcu výpožičku. Import navyše nezapísal aktivitu. Kontrakt v `docs/vendor-contract.md` obe zmeny zakazuje. `docs/design-v1.md` tvrdí, že všetky zmeny idú cez `lend`, no aktuálny kód to vyvracia. README upozorňuje, že starý návrh môže zaostávať.\n\nPrvý krok: upraviť `vendor.apply_manifest`, aby každý riadok delegoval na `lend(db, library_id, ...)` a vrátil výsledok pre každý riadok. Tým sa znovu použije existujúci vlastník pravidiel, scope aj zápisu aktivity; samostatný servis ani nová vrstva nie sú doložené potrebami projektu. Potom pridať regresné kontroly pre import cudzieho výtlačku, už požičaného výtlačku a zmes úspešného/refused riadku; zachovať samostatný výsledok pre každý riadok.\n\nSpustil som dodané testy: 2 prešli, ale pokrývajú iba úspešné výpožičky. In-memory SQLite probe potvrdil rozdiel: `lend` oba zakázané prípady odmietol, import ich oba označil ako `lent`; stav prepísal a aktivitu nezapísal. Neoveroval som živý vendor protokol, autentizáciu ani prevádzkové správanie. Záver preto platí pre nájdený lokálny kód a deklarovaný kontrakt.",
+  "files_read": [
+    "/tmp/robust-architecture-evals/discovery/repos/D01/README.md",
+    "/tmp/robust-architecture-evals/discovery/repos/D01/main.py",
+    "/tmp/robust-architecture-evals/discovery/repos/D01/web.py",
+    "/tmp/robust-architecture-evals/discovery/repos/D01/vendor.py",
+    "/tmp/robust-architecture-evals/discovery/repos/D01/library/commands.py",
+    "/tmp/robust-architecture-evals/discovery/repos/D01/library/__init__.py",
+    "/tmp/robust-architecture-evals/discovery/repos/D01/tests/test_flow.py",
+    "/tmp/robust-architecture-evals/discovery/repos/D01/schema.sql",
+    "/tmp/robust-architecture-evals/discovery/repos/D01/config.json",
+    "/tmp/robust-architecture-evals/discovery/repos/D01/docs/design-v1.md",
+    "/tmp/robust-architecture-evals/discovery/repos/D01/docs/vendor-contract.md"
+  ],
+  "checks_run": [
+    {
+      "command": "python -m unittest discover -s tests",
+      "outcome": "Could not run: python command not found."
+    },
+    {
+      "command": "python3 -m unittest discover -s tests",
+      "outcome": "Passed: 2 tests."
+    },
+    {
+      "command": "In-memory SQLite probe: call lend for foreign/already-loaned copies, then apply_manifest for the same cases; inspect rows and activity.",
+      "outcome": "lend refused both; vendor returned lent for both, changed the foreign copy and existing loan, and wrote no activity rows."
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+A command-line tool generates monthly customer invoices from a local CSV and a JSON pricing file. Assess the smallest safe design for a requested change; state what can be guaranteed from the available evidence.
+
+User request: “Make past invoices reproducible after prices change, and let staff regenerate any month.”
+
+Raw artifacts:
+- `invoice.csv` contains customer ID, usage quantity and service date. Staff replace this file each month; older source files are not kept.
+- `prices.json` contains only current per-unit prices. It is edited in place; no historical price list is retained.
+- `generate(month)` filters the CSV by service date, multiplies usage by current prices, rounds the total to cents, and writes `invoices/<month>.csv`, overwriting an existing file.
+- A staff member may manually edit a generated invoice before sending it. The tool has no record of which copy was sent.
+- There is no shared service, database, or audit trail. The request does not define whether “reproduce” means the originally generated file or the invoice actually sent, nor how corrections should work.

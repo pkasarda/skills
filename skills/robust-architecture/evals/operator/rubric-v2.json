@@ -1,0 +1,210 @@
+[
+  {
+    "id": "C01",
+    "criteria": [
+      {
+        "id": "C01.1",
+        "description": "Treat as enforcement gap in existing publish owner; choose a bounded correction instead of requiring a new service/model.",
+        "critical": true
+      },
+      {
+        "id": "C01.2",
+        "description": "Enforce applicable current membership and target org at mutation/serialization boundary, not another pre-read or client-provided scope.",
+        "critical": true
+      },
+      {
+        "id": "C01.3",
+        "description": "Keep both mounted callers on one authoritative contract and truthful zero-write refusal.",
+        "critical": false
+      },
+      {
+        "id": "C01.4",
+        "description": "Propose a deterministic revoke-between-check-and-write verification and a legitimate-behavior control or equivalent preservation check; exact fixture/decoy vocabulary is not required.",
+        "critical": false
+      }
+    ],
+    "acceptable_alternatives": "Guarded update/transactional serialization are both valid when their concurrency behavior is explained."
+  },
+  {
+    "id": "C02",
+    "criteria": [
+      {
+        "id": "C02.1",
+        "description": "Represent the actual signing-time fact or reliable versioned relationship; current-person join cannot answer it.",
+        "critical": true
+      },
+      {
+        "id": "C02.2",
+        "description": "Leave unrecoverable legacy team attribution explicitly unknown; do not backfill from current membership or fabricate history.",
+        "critical": true
+      },
+      {
+        "id": "C02.3",
+        "description": "Separate historic attribution/read policy from authority to sign now.",
+        "critical": false
+      },
+      {
+        "id": "C02.4",
+        "description": "Offer a minimal migration/tracer and person-moves-team regression; avoid mandatory system-wide event sourcing or interval tables for every entity.",
+        "critical": false
+      }
+    ],
+    "acceptable_alternatives": "Immutable per-signature context or maintained valid-time membership can be valid; old missing facts stay unknown."
+  },
+  {
+    "id": "C03",
+    "criteria": [
+      {
+        "id": "C03.1",
+        "description": "Use stable caller operation identity across retries and a distinct identity for a new identical intention; adding current timestamp/content hashing alone is insufficient.",
+        "critical": true
+      },
+      {
+        "id": "C03.2",
+        "description": "Atomically bind request claim and accepted job, with uniqueness/concurrency behavior; mismatched key/body reuse refuses.",
+        "critical": true
+      },
+      {
+        "id": "C03.3",
+        "description": "Scope identity and replay authorization appropriately; state bounded retention/replay assumptions instead of universal exactly-once claims.",
+        "critical": false
+      },
+      {
+        "id": "C03.4",
+        "description": "Verify retry, concurrent same identity, distinct identical payloads and mismatched reuse through real acceptance seam.",
+        "critical": false
+      }
+    ],
+    "acceptable_alternatives": "One jobs table with operation identity or composed request record both valid; no separate idempotency service is required."
+  },
+  {
+    "id": "C04",
+    "criteria": [
+      {
+        "id": "C04.1",
+        "description": "Use bounded buffering/backpressure rather than letting the producer outrun the consumer.",
+        "critical": true
+      },
+      {
+        "id": "C04.2",
+        "description": "Provide explicit lifetime/close or async-context contract for early break while iterator remains referenced; bare generator finally/GC alone is not enough.",
+        "critical": true
+      },
+      {
+        "id": "C04.3",
+        "description": "Cancel or await owned producer termination and close the owned reader on cancellation/exception; give a truthful error contract or explicitly identify the remaining error-handling decision without claiming cleanup proved.",
+        "critical": false
+      },
+      {
+        "id": "C04.4",
+        "description": "Propose public-seam slow/abandoned consumer tests proving bounded reads/memory and no owned background task; avoid irrelevant persistence/services.",
+        "critical": false
+      }
+    ],
+    "acceptable_alternatives": "Async-context download handle or explicit aclose lifecycle are valid; exact queue implementation is not prescribed."
+  },
+  {
+    "id": "C05",
+    "criteria": [
+      {
+        "id": "C05.1",
+        "description": "Separate blocking network/telemetry and unbounded locks/allocation from the audio deadline path.",
+        "critical": true
+      },
+      {
+        "id": "C05.2",
+        "description": "Use bounded/prepared state handoff and explicit overload/last-valid behavior; no required database/outbox/Kafka on the callback path.",
+        "critical": true
+      },
+      {
+        "id": "C05.3",
+        "description": "Demand representative worst-case host timing/resource evidence; do not claim the budget is met from static inspection or averages.",
+        "critical": false
+      },
+      {
+        "id": "C05.4",
+        "description": "Give a thin callback/control handoff slice and failure/overload verification while preserving processing semantics.",
+        "critical": false
+      }
+    ],
+    "acceptable_alternatives": "Preallocated bounded channels or safe immutable/prepared snapshots are valid; no particular concurrency primitive is required."
+  },
+  {
+    "id": "C06",
+    "criteria": [
+      {
+        "id": "C06.1",
+        "description": "Keep intervention to the human message; preserve stdout JSON contract.",
+        "critical": true
+      },
+      {
+        "id": "C06.2",
+        "description": "Do not require new layers, services, domain models, ADRs or architecture artifact ceremony for this local copy change.",
+        "critical": true
+      },
+      {
+        "id": "C06.3",
+        "description": "Identify the actual line/surface and suggest a focused stdout/stderr assertion if useful.",
+        "critical": false
+      },
+      {
+        "id": "C06.4",
+        "description": "Do not claim implementation or test execution that did not occur.",
+        "critical": false
+      }
+    ],
+    "acceptable_alternatives": "A concise local edit recommendation is sufficient; no diagram or broad investigation needed."
+  },
+  {
+    "id": "C07",
+    "criteria": [
+      {
+        "id": "C07.1",
+        "description": "Do not promise crash-safe completion while directly overwriting destination; give a local-file completion boundary and interrupted replacement semantics.",
+        "critical": true
+      },
+      {
+        "id": "C07.2",
+        "description": "Distinguish between-image pause from mid-image interruption and state what resume does with an incomplete image.",
+        "critical": false
+      },
+      {
+        "id": "C07.3",
+        "description": "Persist/reconcile necessary progress and files when crash occurs after output completion but before checkpoint; a progress counter is not exactly-once processing.",
+        "critical": false
+      },
+      {
+        "id": "C07.4",
+        "description": "Keep proportional local single-worker design and state filesystem/durability assumptions relevant to guarantee.",
+        "critical": false
+      }
+    ],
+    "acceptable_alternatives": "Atomic temp/replace where supported, or versioned output with completion record. Restart interrupted image acceptable; database/services not mandatory."
+  },
+  {
+    "id": "C08",
+    "criteria": [
+      {
+        "id": "C08.1",
+        "description": "Explicitly reject guaranteed immediate definitive result in every timeout; payment outcome can remain temporarily unknowable.",
+        "critical": true
+      },
+      {
+        "id": "C08.2",
+        "description": "Protect last seat at database concurrency boundary and explain unresolved-payment seat state; surface hold-duration decision.",
+        "critical": true
+      },
+      {
+        "id": "C08.3",
+        "description": "Persist stable operation/provider identity across retries and recover by lookup without another charge; local transaction is not cross-provider atomic.",
+        "critical": true
+      },
+      {
+        "id": "C08.4",
+        "description": "Expose concrete availability/compensation/pending tradeoff and product decision rather than silently picking impossible guarantees.",
+        "critical": false
+      }
+    ],
+    "acceptable_alternatives": "Reserve seat thenpending, or explicitly accepted refund/compensation policy; no universal distributed transaction/event bus requirement."
+  }
+]

@@ -1,0 +1,14 @@
+{
+  "id": "C03",
+  "case_summary": "Change label-job enqueue identity so retries reuse one logical job while separate identical orders create separate jobs.",
+  "answer": "Replace payload-derived uniqueness with a client-supplied operation identity scoped to authenticated account_id. Persist it on jobs and enforce UNIQUE(account_id, operation_id), so concurrent enqueue attempts and retries converge through the database constraint. On collision, load the existing row only after applying the ordinary current read/refusal authorization policy; return it only when its stored payload hash matches the request. Reuse of an operation_id with a different payload should return a conflict, never silently return or mutate the old job. Keep payload_hash for comparison/integrity if useful, but remove it as the order identity. Update both owned web and CLI clients to generate and retain one operation_id across retries and issue a fresh one for each intentional order. This defines acceptance idempotency only; physical printing remains outside the guarantee. Tradeoff: clients must durably retain the operation identity across a timeout; server-generated identities cannot reliably distinguish a retry from a new identical order. Verify sequential retry, distinct same-payload operations, same-key/different-payload conflict, concurrent same-key requests yielding one row/id, and replay after access revocation being refused by normal policy. These fixtures expose only enqueue and schema; client persistence and authorization integration are not present here, so their exact mechanism is unverified.",
+  "files_read": [
+    "/tmp/robust-architecture-evals/cases/C03/REQUEST.md",
+    "/tmp/robust-architecture-evals/cases/C03/FACTS.md",
+    "/tmp/robust-architecture-evals/cases/C03/enqueue.py",
+    "/tmp/robust-architecture-evals/cases/C03/schema.sql"
+  ],
+  "checks_run": [
+    "Read the four supplied case files; no tests or external checks run."
+  ]
+}

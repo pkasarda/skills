@@ -1,0 +1,107 @@
+{
+  "dataset": "structured-paired-v1",
+  "candidate_instruction_hash": "d2b75f6e2495a7310c2b4e430e01572c14df3d19156cc03550ec9fa9305327f8",
+  "current_version_results": "revision2/results/aggregate.json",
+  "cases": [
+    {
+      "id": "C01",
+      "baseline": 4,
+      "with_skill": 4,
+      "maximum": 4
+    },
+    {
+      "id": "C02",
+      "baseline": 4,
+      "with_skill": 4,
+      "maximum": 4
+    },
+    {
+      "id": "C03",
+      "baseline": 3,
+      "with_skill": 4,
+      "maximum": 4
+    },
+    {
+      "id": "C04",
+      "baseline": 3,
+      "with_skill": 4,
+      "maximum": 4
+    },
+    {
+      "id": "C05",
+      "baseline": 4,
+      "with_skill": 4,
+      "maximum": 4
+    },
+    {
+      "id": "C06",
+      "baseline": 4,
+      "with_skill": 4,
+      "maximum": 4
+    },
+    {
+      "id": "C07",
+      "baseline": 3,
+      "with_skill": 4,
+      "maximum": 4
+    },
+    {
+      "id": "C08",
+      "baseline": 4,
+      "with_skill": 4,
+      "maximum": 4
+    },
+    {
+      "id": "C09",
+      "baseline": 4,
+      "with_skill": 4,
+      "maximum": 4
+    },
+    {
+      "id": "C10",
+      "baseline": 4,
+      "with_skill": 4,
+      "maximum": 4
+    }
+  ],
+  "totals": {
+    "baseline": {
+      "total": 40,
+      "passed": 37,
+      "critical_total": 18,
+      "critical_passed": 18
+    },
+    "with_skill": {
+      "total": 40,
+      "passed": 40,
+      "critical_total": 18,
+      "critical_passed": 18
+    }
+  },
+  "failures": [
+    {
+      "case": "C03",
+      "condition": "A",
+      "criterion": "C03.3",
+      "critical": false,
+      "reason": "No retention horizon or replay lifetime stated"
+    },
+    {
+      "case": "C04",
+      "condition": "A",
+      "criterion": "C04.3",
+      "critical": false,
+      "reason": "No error propagation contract or explicit outstanding error-handling decision"
+    },
+    {
+      "case": "C07",
+      "condition": "A",
+      "criterion": "C07.2",
+      "critical": false,
+      "reason": "No explicit recovery of an incomplete temp image"
+    }
+  ],
+  "rubric_issues": [],
+  "candidate_critical_gate": true,
+  "scope": "Synthetic design proposals, one fresh model context per case/condition; not implementation/runtime proof or a universal guarantee."
+}

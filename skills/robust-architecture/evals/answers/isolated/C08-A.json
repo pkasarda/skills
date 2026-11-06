@@ -1,0 +1,11 @@
+{
+  "id": "C08",
+  "case_summary": "Design one-seat booking that avoids double booking and double charging despite concurrent retries and ambiguous provider timeouts, while confronting the demand for an immediate definitive answer.",
+  "answer": "The stated guarantees are incompatible: after a provider timeout, it may have charged, while key lookup may also be unavailable, so the service cannot truthfully return immediate success or failure. Make the booking/payment intent durable before calling the provider. In one SQL transaction, conditionally claim the sole seat and create an intent keyed by a stable client idempotency key; uniqueness makes retries return the same booking. Call charge with that key. Confirm the booking only on a definitive success; on timeout or unavailable lookup, retain an explicit pending/unknown state and reconcile by key, retrying the same idempotent operation. Do not release the seat or report failure while a charge may exist. This is the smallest design that prevents overselling and duplicate charges, but may hold the seat and cannot promise immediate finality. The business must choose pending UX, reservation expiry/release behavior, and who bears refund/compensation cost; if immediate definitive answers are absolute, the provider contract or business requirement must change. Verify concurrent requests and repeated client keys leave at most one seat claim and one provider charge; simulate charge-then-timeout plus failed lookup, then successful reconciliation. This is a design proposal only; no runtime or provider behavior was tested.",
+  "files_read": [
+    "/tmp/robust-architecture-evals/cases/C08/REQUEST.md",
+    "/tmp/robust-architecture-evals/cases/C08/PROVIDER.md",
+    "/tmp/robust-architecture-evals/cases/C08/book.txt"
+  ],
+  "checks_run": ["Validated output as JSON"]
+}

@@ -1,0 +1,12 @@
+{
+  "started_utc": "2026-11-06T19:21:45Z",
+  "estimated_finish_local": "2026-11-06T20:45:00+01:00 to2026-11-06T21:00:00+01:00",
+  "pilot_dispatched_utc": "2026-11-06T19:29:52.029367+00:00",
+  "models": {
+    "responders": "gpt-6-luna high",
+    "judge": "gpt-6.1-terra high"
+  },
+  "responses_complete_utc": "2026-11-06T19:33:35.195709+00:00",
+  "isolated_responses_completed_utc": "2026-11-06T19:44:14.220458+00:00",
+  "blind_grading_completed_utc": "2026-11-06T19:45:48.768125+00:00"
+}

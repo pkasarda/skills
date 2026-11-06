@@ -1,0 +1,13 @@
+{
+  "id": "C07",
+  "case_summary": "A desktop exporter needs pause/resume during long image processing and crash-safe completion for up to 500 locally selected images.",
+  "answer": "Keep the worker and local filesystem as the sole owner; add a small per-run manifest rather than a database or service. Before starting, define run identity from the ordered source paths plus source content fingerprints, settings, and destination mapping; resume only on an exact match. Persist the user's replace decision and reject filename collisions within the run. For each image, write to a unique temporary file beside its target, finish and flush it, then persist a prepared record containing its digest before atomically replacing the target. Persist completed after publication. On restart, reconcile prepared entries: matching target digest means completed; otherwise resume from the temp if valid or reprocess. This closes the publish/checkpoint crash window; atomic rename protects a previous target from partial output. Pause/cancel checks remain between images, so a current minutes-long image is not interruptible; promise pause after the current image, or separately add cooperative cancellation only if required. Compared with direct final writes, the manifest and temp files add cleanup and disk use but provide recoverable progress without a service. First verify with process termination at each write/rename/checkpoint boundary, replacement targets, changed inputs/settings, and resume through the UI. Source confirms direct final writes and no run-identity semantics; crash behavior, filesystem durability/rename guarantees, and UI flows remain unverified. Power-loss durability needs platform-specific flush guarantees.",
+  "files_read": [
+    "/tmp/robust-architecture-evals/cases/C07/REQUEST.md",
+    "/tmp/robust-architecture-evals/cases/C07/FACTS.md",
+    "/tmp/robust-architecture-evals/cases/C07/export.py",
+    "/tmp/architecture-skill-build/robust-architecture/SKILL.md",
+    "/tmp/architecture-skill-build/robust-architecture/references/boundary-checks.md"
+  ],
+  "checks_run": []
+}

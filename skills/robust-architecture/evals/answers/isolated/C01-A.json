@@ -1,0 +1,14 @@
+{
+  "id": "C01",
+  "case_summary": "Fix a publication authorization race in the shared notes owner used by web and scheduled CLI adapters.",
+  "answer": "Replace the check-then-write in notes.py::publish with one guarded UPDATE: set published only where the note id matches and an EXISTS subquery finds an active member whose user_id is actor_id and whose org_id equals notes.org_id. Treat one affected row as published and zero as forbidden (or preserve a distinct missing-note result if that is an intentional API contract). Commit as today. The UPDATE is the authorization and mutation boundary: SQLite serializes the write, so a revocation committed first prevents publication, while a publication write that wins is ordered before the revocation. Do not accept org_id from either adapter. Both web_publish and cli_publish already call publish with an actor id, so the shared owner is notes.py::publish and neither caller needs a separate check. A Publication microservice adds deployment/coordination complexity with no independent scaling need and does not itself close this race. Tradeoff: membership is re-evaluated at the guarded write; callers cannot distinguish forbidden from missing unless the owner deliberately adds that contract. Verify with a two-connection test: pause before the guarded UPDATE, commit revocation on the second connection, resume and assert no publication; also confirm both adapters retain the shared path and active membership permits publication.",
+  "files_read": [
+    "/tmp/robust-architecture-evals/cases/C01/REQUEST.md",
+    "/tmp/robust-architecture-evals/cases/C01/FACTS.md",
+    "/tmp/robust-architecture-evals/cases/C01/notes.py",
+    "/tmp/robust-architecture-evals/cases/C01/adapters.py"
+  ],
+  "checks_run": [
+    "Read the four public case files; no execution or repository checks run."
+  ]
+}

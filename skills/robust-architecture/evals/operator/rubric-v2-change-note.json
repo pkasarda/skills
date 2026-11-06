@@ -1,0 +1,9 @@
+{
+  "reason": "Blind judge flagged over-specific unspecified controls/error policy; revise before fresh isolated predictions. Critical criteria unchanged.",
+  "changed": [
+    "C01.4",
+    "C04.3"
+  ],
+  "frozen_at_utc": "2026-11-06T19:37:04.552048+00:00",
+  "candidate_changed": false
+}

@@ -1,0 +1,14 @@
+{
+  "id": "C02",
+  "case_summary": "The release list misattributes past approvals by joining each signature to the signer's mutable current team.",
+  "answer": "Add nullable `approving_team_id` to releases and populate it from the trusted authorization context in the same write/transaction that records a new signature; do not accept it from the caller. Read historical attribution from this snapshot, while keeping current access checks separate. Leave legacy rows unknown rather than inferring from today's membership. A stable team ID is the smallest representation; copying a display label adds duplication unless the product needs the exact historical wording. Verify with a vertical slice: sign under team A, move the signer to B, and confirm the old release still attributes A; try a caller-supplied mismatching team and confirm it cannot set attribution; confirm a legacy row remains unknown. Check that the schema retains stable, non-reused team identity. The supplied schema has no team table or signing write path, so transaction placement and identifier lifecycle remain unverified; if IDs can be reused or historical labels must remain exact, capture an immutable team identity/version or the label too.",
+  "files_read": [
+    "/tmp/robust-architecture-evals/cases/C02/REQUEST.md",
+    "/tmp/robust-architecture-evals/cases/C02/FACTS.md",
+    "/tmp/robust-architecture-evals/cases/C02/schema.sql",
+    "/tmp/robust-architecture-evals/cases/C02/read.sql",
+    "/tmp/architecture-skill-build/robust-architecture/SKILL.md",
+    "/tmp/architecture-skill-build/robust-architecture/references/boundary-checks.md"
+  ],
+  "checks_run": []
+}

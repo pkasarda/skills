@@ -1,0 +1,79 @@
+---
+name: robust-architecture
+description: Design or challenge software architecture from concrete flows, invariants, ownership and failure evidence. Use for new system design, unclear module boundaries, cross-cutting bug clusters, or changes to state, authority, history or external-effect contracts. Keep ordinary local fixes local; this is not a mandatory architecture ceremony for every edit.
+---
+
+# Robust Architecture
+
+Produce the smallest design whose guarantees can be explained and challenged. Rules guide decisions; they do not certify correctness. A useful architecture makes important facts explicit, gives rules an authoritative home, and remains understandable when something fails or changes.
+
+## Start from a consequence
+
+For an existing system, inspect the actual entrypoints, callers, state stores and checks before trusting diagrams or earlier proposals. For a new system, distinguish requirements from assumptions; describe the first real flow before choosing components.
+
+Record only constraints that change a decision: users and authority, operating volume, latency or resource budgets, availability, failure conditions, recovery and durability needs, deployment constraints, and what the team can operate. Ask for the missing product choice when it changes correctness. Continue independent, reversible work while that choice is unresolved.
+
+Calibrate the intervention:
+
+- **Model/ownership gap:** the necessary fact, complete operation or consistent authority is absent or split. Resolve that contract before patching its readers.
+- **Boundary defect:** an adequate owner exists but a caller bypasses it or its enforcement is incomplete. Deepen or use that owner; a defect across layers does not itself require a new architecture.
+- **Product gap:** required behavior is undecided. Present the concrete consequence and the smallest choices, rather than choosing silently.
+- **Presentation/local defect:** correct underlying facts need a local rendering, parsing or copy correction. Apply the normal local fix; stop the architecture workflow here.
+
+A large file, duplicate syntax, a missing pattern name, or a proposed package is not by itself evidence of a model gap.
+
+## Give facts and rules a home
+
+Name the fact or invariant, its logical authority, and the operations allowed to change it. Authority can be a local function, file publisher, library handle, process or service; it need not be a server or a new module.
+
+- Put the rule at the point that can enforce it for every relevant producer. Entry adapters establish caller trust, parse inputs, invoke that owner and translate the result. Useful early checks improve feedback; authoritative checks protect the actual effect.
+- Model who owns shared data explicitly. A missing parent or scope value is not automatically global authority. Apply the actor's actual policy to reads, serialization and effects, not merely visible controls.
+- Separate current relationships, immutable occurrence facts and projections. Store the history or snapshot the feature genuinely needs. Present relationships cannot reconstruct missing past facts; mark unknowable legacy history honestly.
+- Give a retry its operation identity. Two identical payloads may be separate intentions. Define key scope, mismatched reuse, retention and replay under current authority when retry correctness matters.
+- Give derived rules and representations one maintained definition where consumers must agree. Preserve intentional differences between audiences, cohorts, units and time meanings. Keep cheap local presentation duplication when sharing would create an artificial dependency.
+- Explicitly specified multiwriter or offline designs are valid. Name conflict semantics, coordination and partition behavior instead of assuming a single physical writer can always be imposed.
+
+A boundary earns its existence by hiding a decision and removing knowledge from callers. Check this directly: after the change, which caller no longer knows the rule, storage layout or sequencing? A wrapper that leaves every caller coordinating the same business steps has not moved ownership.
+
+## Own the complete outcome
+
+Trace one intention through its important effects. State what must hold together, the authoritative completion point, and what the user receives if execution stops before or after that point.
+
+Use an actual atomic primitive for invariants that require indivisibility within one authority. Where concurrent writers can invalidate a prior read, enforce applicable scope, state and version in the effect or equivalent serialization. Match the mechanism to a reachable interleaving; a single-threaded pure transformation does not need database-style concurrency machinery.
+
+At network, process, file or asynchronous boundaries, read [Boundary checks](references/boundary-checks.md). Select the relevant branch: durable effects, resource lifetime, real-time work, or state/history. A local transaction does not make an external effect atomic; an unknown result is not necessarily failure. Define recovery and truthful pending/partial outcomes before adding retries.
+
+For reusable APIs, make inputs, outputs, refusals, ownership and cleanup responsibilities explicit. Preserve meaningful error/control-flow distinctions. Place diagnostics where a failure can be explained without exposing protected data; a log is not a recovery mechanism or an authorization/history database.
+
+## Choose a proportional structure
+
+Prefer the existing coherent module and supported platform mechanisms. In a new small application, a few well-bounded functions or modules may be sufficient. Separate deployment or introduce infrastructure when a concrete requirement needs independent scaling, failure isolation, runtime constraints or organisational ownership. Respect an explicitly chosen platform while explaining a consequential tradeoff.
+
+Evaluate the smallest change beside a plausible alternative. Explain the important difference in correctness, resource/operational cost and reversibility. Keep each design decision in one home; independently extract only stable, useful seams. Physical folders, packages and services follow proven boundaries rather than supplying the proof.
+
+Preserve the whole invariant across a change in placement. Migration and rollout must account for existing data, old/new writers, public consumers and rollback compatibility. Removal of a column, API or resource requires evidence that its obligations and consumers have ended.
+
+## Try to disprove it
+
+Choose a thin vertical slice that exercises the disputed boundary. Use the real storage, file, protocol or resource seam relevant to the claim; isolate only genuine external dependencies. For an early design with no implementation, specify the discriminating experiment and leave its result unknown.
+
+Challenge the invariant with the relevant failures: wrong authority, stale state, repeated or reordered work, a crash at the completion boundary, cancellation, missing/ambiguous history, and the actual load or timing limit. Use explicit decoys and controlled interleavings or clocks when they distinguish the rule. A test should fail when that rule is removed, not merely count mocked calls or recognise chosen names.
+
+Check safety **and** progress: how a valid operation eventually completes or gives an honest refusal; how pending work is recovered; how memory, queues, connections and latency remain bounded. Select these checks from the operating envelope rather than rehearsing every theoretical failure.
+
+Observe the mounted/user or public-library flow when claiming it works. Unit assertions, diagrams, green retries, benchmark guesses and synthetic fixtures establish only their own tested boundary. Separate measured results, source findings, assumptions, missing decisions and unexecuted proof.
+
+## Deliver a reviewable decision
+
+Scale the output to the decision. For a substantive design, provide:
+
+1. The concrete flow, constraints and important unknowns.
+2. The invariants, named authorities and affected producers/consumers.
+3. State/history, trust, completion and failure boundaries, with contracts sufficient to trace a success and a failure.
+4. The chosen small structure, a relevant alternative, and why the tradeoff fits.
+5. One first slice with observable acceptance, recovery and evolution/rollout checks.
+6. What is ready, what needs a product decision or proof, and what was actually verified.
+
+Use a small diagram only when it makes a boundary clearer. Skip empty template sections for a local fix. Preserve the user's scope: a design/review request produces a decision, not permission to implement, migrate, deploy, publish or alter live data.
+
+When adopting or evaluating this skill, see [Evaluation protocol](evals/PROTOCOL.md). Primary background is listed in [Foundations](references/foundations.md); it informs reasoning rather than validating an individual design.

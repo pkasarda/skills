@@ -1,0 +1,67 @@
+{
+  "condition": "B",
+  "cases": [
+    {
+      "id": "C02",
+      "answer": "Add an approving-team snapshot to each release when the signature is authorized, deriving it from the membership checked for that signing operation. Display that snapshot for historical attribution; keep current release access governed by current authorization. The existing join in `read.sql` reads `people.team_id`, so a later move rewrites the apparent past. Leave legacy rows unknown (`NULL`); `FACTS.md` says no trustworthy membership history exists, so today's team cannot repair them. Verify by signing under team A, moving the person to team B, and confirming the old release still attributes A while current access follows the separate access rule; also confirm a new signature captures B. This adds one occurrence fact and does not invent relationship history. The supplied files do not show the signing write path, so atomicity with the membership authorization check remains to be verified there."
+    },
+    {
+      "id": "C03",
+      "answer": "Replace payload-based uniqueness with a client-generated operation identity scoped to the authenticated `account_id`, persisted with the accepted job. A retry uses the same key; a new intentional order, even with identical payload, uses a new key. Enforce uniqueness in the database and resolve concurrent inserts by reading the winning record. Store a payload hash too so reuse of one key with different content is refused. Check current account authorization before returning a replay, as required by the request; the key is not an access token. Verify concurrent same-key requests create one job, two keys with identical payload create two, mismatched key reuse is rejected, and a replay after access revocation follows the normal refusal policy. This guarantees one logical database acceptance per key, not exactly-once physical printing. Key retention and client key-generation/retry persistence need an explicit contract; the files do not define those lifetimes."
+    },
+    {
+      "id": "C04",
+      "answer": "Change the SDK contract to an explicitly closable async context/stream: entering opens the reader; normal exhaustion or context exit on break, cancellation, or exception cancels the pump, awaits its termination, then awaits `reader.close()`. Require consumers to close even when they retain the iterator; a generator `finally` alone cannot promptly detect `break` while the iterator remains referenced. Replace the unbounded queue in `download.py` with bounded backpressure and cap each read/chunk size so queued plus in-flight data stays below the 200 MB budget. Verify with a slow consumer, an early break while retaining the handle, cancellation, and a reader that detects close; assert bounded peak buffered bytes and no live pump/reader afterward. The existing `read()` size and close behavior are unspecified, so numeric limits and close-failure reporting must be fixed in the public contract; no runtime proof is available here."
+    },
+    {
+      "id": "C05",
+      "answer": "Keep DSP processing inside the render callback, but remove the mutex, HTTP fetch, vector allocation, and synchronous telemetry write shown in `render.cpp`. Preallocate scratch at setup; publish validated settings through a bounded lock-free/latest-value handoff that may coalesce updates, and retain the last valid settings when the network is unavailable. Send telemetry through a bounded non-audio-thread path with an explicit drop/coalesce policy. Kafka adds no needed guarantee. Verify worst-case callback time on the actual plugin host under parameter churn and telemetry load, including network loss, against the 2.67 ms block budget; desktop functional tests cannot establish this. No target measurements or overload policy for telemetry are supplied, so the timing guarantee is unproven until measured and the telemetry loss policy is selected."
+    },
+    {
+      "id": "C07",
+      "answer": "Keep this local and single-worker. Write each image to a temporary file beside its destination, flush it, then atomically replace the final path; record per-image completion in a small run manifest only after replacement. On restart, bind resume to the selected source identities, settings, and destination, and reconcile a final file committed just before a crash but not yet recorded in the manifest (for example, by verifying its expected content hash). This preserves completed outputs from partial writes without a database. Pause can take effect between images with existing checks; if it must respond during a minutes-long image, decode/resize need cooperative checkpoints, otherwise state the maximum pause latency. Verify crash points before/after replace and manifest update, stale input/settings mismatch, and destination replacement behavior on supported filesystems. Run identity, overwrite policy, and whether filesystem flush must survive power loss are unspecified, so those guarantees need decisions."
+    },
+    {
+      "id": "C08",
+      "answer": "The requested immediate definitive answer cannot be guaranteed when a charge may have succeeded but both its response and temporary lookup are unavailable. The smallest honest flow is one transactional SQL owner that reserves the sole seat and records a pending booking with a stable provider idempotency key; only then call the provider. Reconcile timeouts by lookup/retry with that same key, then atomically confirm the booking or release the reservation after a known non-charge. Do not tell the customer success/failure while the provider outcome is unknown: expose a pending result, or choose a bounded hold/failure policy with explicit compensation risk. Verify concurrent attempts yield one reservation, provider success plus lost response is reconciled once, and temporary lookup failure preserves pending state without a second charge. The provider key protects payment retries, not seat state. Hold duration, pending UX, retry/reconciliation bounds, and compensation cost are unresolved product decisions; a definitive synchronous answer during ambiguity is impossible with the stated provider behavior."
+    },
+    {
+      "id": "C09",
+      "answer": "Keep one local recorder; make the append the authoritative step and update the display to say a sample is recorded only after a successful durability acknowledgement. Add framed records with sequence and checksum so boot/export can detect and exclude a torn tail rather than silently parsing it as complete. But the current buffered `append()`/`flush()` contract explicitly does not promise power-loss durability or atomic writes, so the requested guarantee cannot be claimed from the available API. First require a storage operation that confirms durable commit (and define removal/full-card errors); otherwise the display must distinguish sampled from saved, and a power cut can still lose an acknowledged reading. Verify cuts around write, flush, and display with the actual card/filesystem, then validate recovery/export against torn records. The hardware cannot sample during loss of power; “continue recording” can only mean resume after reboot. Acceptable sampling delay and whether to stop or continue visibly unsaved on write failure remain product decisions."
+    },
+    {
+      "id": "C10",
+      "answer": "Reproducibility requires retaining the exact inputs and pricing/rules used for each generation. Archive a versioned run bundle (month's source rows, price snapshot, rounding/tool version) and write a new output/manifest atomically instead of overwriting the only copy; regeneration uses that bundle. The current CSV is replaced and prices edited in place, so old months cannot be reconstructed from these artifacts—mark them unavailable unless reliable originals can be recovered, never infer old prices. If “invoice” means the copy actually sent, preserve and identify that sent artifact separately; manual edits and no sent-copy record make it unknowable today. Verify rerunning a stored bundle yields identical bytes and that edits/sent versions remain distinct. Product must choose generated-versus-sent reproducibility and a correction/versioning policy. A local archive is sufficient; no service or database is evidenced as necessary."
+    }
+  ],
+  "files_read": [
+    "/tmp/architecture-skill-build/robust-architecture/SKILL.md",
+    "/tmp/architecture-skill-build/robust-architecture/references/boundary-checks.md",
+    "/tmp/robust-architecture-evals/cases/C02/REQUEST.md",
+    "/tmp/robust-architecture-evals/cases/C02/FACTS.md",
+    "/tmp/robust-architecture-evals/cases/C02/schema.sql",
+    "/tmp/robust-architecture-evals/cases/C02/read.sql",
+    "/tmp/robust-architecture-evals/cases/C03/REQUEST.md",
+    "/tmp/robust-architecture-evals/cases/C03/FACTS.md",
+    "/tmp/robust-architecture-evals/cases/C03/schema.sql",
+    "/tmp/robust-architecture-evals/cases/C03/enqueue.py",
+    "/tmp/robust-architecture-evals/cases/C04/REQUEST.md",
+    "/tmp/robust-architecture-evals/cases/C04/FACTS.md",
+    "/tmp/robust-architecture-evals/cases/C04/download.py",
+    "/tmp/robust-architecture-evals/cases/C04/consumer.py",
+    "/tmp/robust-architecture-evals/cases/C05/REQUEST.md",
+    "/tmp/robust-architecture-evals/cases/C05/FACTS.md",
+    "/tmp/robust-architecture-evals/cases/C05/render.cpp",
+    "/tmp/robust-architecture-evals/cases/C07/REQUEST.md",
+    "/tmp/robust-architecture-evals/cases/C07/FACTS.md",
+    "/tmp/robust-architecture-evals/cases/C07/export.py",
+    "/tmp/robust-architecture-evals/cases/C08/REQUEST.md",
+    "/tmp/robust-architecture-evals/cases/C08/PROVIDER.md",
+    "/tmp/robust-architecture-evals/cases/C08/book.txt",
+    "/tmp/robust-architecture-evals/cases/C09/prompt.txt",
+    "/tmp/robust-architecture-evals/cases/C10/prompt.txt"
+  ],
+  "checks_run": [
+    "Read-only inspection of the eight assigned public cases and the relevant durable-effects, resource-lifetime, real-time, and state/history boundary guidance; no tests run because these are proposals only."
+  ]
+}
