@@ -1,0 +1,3 @@
+# Frozen evaluation inputs retain the bytes used by their recorded hashes.
+skills/robust-architecture/evals/cases/** whitespace=-blank-at-eof
+skills/robust-architecture/evals/discovery/repos/** whitespace=-blank-at-eof
