@@ -101,3 +101,7 @@ See [validation scope and limits](VALIDATION.md) for the five additional skills.
 `robust-architecture` is v2. Its [evaluation record](skills/robust-architecture/evals/RESULTS.md) distinguishes the historical precise-task comparison, miniature repository discovery tests, the critical issue discovered there, and the targeted v2 regression/transfer checks. The v2 targeted set passed 10/12 criteria, including all 8 critical criteria; a complete paired v2 benchmark and production validation were not performed.
 
 Evaluation fixture code intentionally contains defects. It is test input, not an implementation to copy or silently repair. Raw proposals, rubrics and failed runs are retained for inspection. Additional private-project checks are not included in this shared library.
+
+## License
+
+[MIT](LICENSE) © 2026 Peter Kasarda.

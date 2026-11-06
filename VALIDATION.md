@@ -27,4 +27,4 @@ The 1.0.0 package uses one shared `skills/` tree, a portable root manifest for C
 - Shared manifest identity/version, local marketplace paths and unchanged skill-file hashes were checked.
 - A pattern scan of all 149 historical Git blobs found no credential-pattern, personal-home-path or private-project-reference matches before the public visibility change. This is a bounded check, not a complete security audit.
 
-Public-directory submission was not performed. Claude's optional directory-submission checks flag the missing license and icon; those are separate from the successful installable-plugin validation. No license was selected on the author's behalf.
+Public-directory submission was not performed. The initial 1.0.0 directory-submission checks flagged a missing license and icon, separately from successful plugin validation. At the author's request, 1.0.1 adds the MIT license and declares it in both manifests; no icon or directory submission was added.

@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "pkasarda-skills",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Source-grounded engineering workflows for architecture, production UI, safe state changes, reliable effects, verification and issue readiness.",
   "author": {
     "name": "pkasarda",
@@ -22,5 +22,6 @@
         "websiteURL": "https://github.com/pkasarda/skills"
       }
     }
-  }
+  },
+  "license": "MIT"
 }
