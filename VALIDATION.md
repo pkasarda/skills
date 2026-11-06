@@ -28,3 +28,10 @@ The 1.0.0 package uses one shared `skills/` tree, a portable root manifest for C
 - A pattern scan of all 149 historical Git blobs found no credential-pattern, personal-home-path or private-project-reference matches before the public visibility change. This is a bounded check, not a complete security audit.
 
 Public-directory submission was not performed. The initial 1.0.0 directory-submission checks flagged a missing license and icon, separately from successful plugin validation. At the author's request, 1.0.1 adds the MIT license and declares it in both manifests; no icon or directory submission was added.
+
+## Product discovery: 1.1.0
+
+- The new skill passed `quick_validate.py`. Both native plugin loaders discovered all seven skills at package version 1.1.0; Claude's strict manifest and marketplace validation also passed.
+- One fresh reviewer requested `gpt-6-luna` with max reasoning applied the skill to three independent scenario descriptions: an unspecified reservation-system idea; a sufficiently specified local prototype with an explicit build request; and a proposed portal in a synthetic CRM that already had order tracking.
+- Its simulated next responses asked consequential questions for the unclear idea, proceeded toward the specified prototype with explicit working assumptions, and inspected existing capabilities before suggesting further portal work. The reviewer reported no material skill defect. These were response simulations, not implemented applications, user interviews or live product experiments; there was no A/B benchmark.
+- Existing six-skill content was preserved byte for byte. The new skill is self-contained and does not require the other skills to be installed.

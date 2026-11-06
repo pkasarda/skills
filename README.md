@@ -4,6 +4,7 @@ Reusable agent skills for source-grounded decisions, complete user flows and hon
 
 | Skill | Use it for |
 | --- | --- |
+| [product-discovery](skills/product-discovery/SKILL.md) | Shaping an unclear idea into a testable first user flow, scope and next decision. |
 | [robust-architecture](skills/robust-architecture/SKILL.md) | Designing or challenging ownership, boundaries, invariants and failure contracts. |
 | [production-ui](skills/production-ui/SKILL.md) | Complete lists and pickers, coherent filters, realistic content and truthful asynchronous UI. |
 | [safe-state-changes](skills/safe-state-changes/SKILL.md) | Implementing bounded mutations through the existing owner with scope, state and coupled-effect guards. |
@@ -11,9 +12,15 @@ Reusable agent skills for source-grounded decisions, complete user flows and hon
 | [evidence-based-verification](skills/evidence-based-verification/SKILL.md) | Choosing discriminating checks and reporting what the evidence actually proves. |
 | [issue-readiness](skills/issue-readiness/SKILL.md) | Reconciling issue decisions, current source, ownership, prerequisites and effective readiness. |
 
-Each skill lives under `skills/<name>/`. Start with its `SKILL.md`; supporting references are loaded when relevant. Each can be used independently. Combine only those needed by the affected contract: a scoped picker can need `production-ui`, a changed save operation can also need `safe-state-changes`, and a claim about the result needs appropriate verification. An ordinary local edit does not need all six.
+Each skill lives under `skills/<name>/`. Start with its `SKILL.md`; supporting references are loaded when relevant. Each can be used independently. Combine only those needed by the affected contract: a scoped picker can need `production-ui`, a changed save operation can also need `safe-state-changes`, and a claim about the result needs appropriate verification. An ordinary local edit does not need the whole library.
 
 These are technology-neutral workflows. They use the project's actual framework, store, design system and authority rules; they do not replace platform documentation or grant permission to publish, merge, migrate or deploy. They guide decisions and checks, without guaranteeing correct architecture or production readiness on every project. Visual design remains a separate concern from data completeness and successful persistence.
+
+## From idea to delivery
+
+For an unclear idea, start with `product-discovery`: it identifies consequential questions, preserves accepted decisions, proposes a small complete flow and names the evidence needed for the next step. For example: “I want to build a reservation system. Help me shape the first useful version.”
+
+Once the product behavior is clear, use the architecture, UI or delivery procedure relevant to that flow. A sufficiently specified build request can proceed directly to implementation; discovery is not a mandatory approval gate. In an existing product, check the current workflow before proposing a new one.
 
 ## Install with `npx skills`
 
@@ -23,7 +30,7 @@ Requires Node.js 22.20 or later. Run from the project where you want the skills:
 npx skills add pkasarda/skills
 ```
 
-The interactive installer lets you choose skills and agents. To install all six for both Claude Code and Codex in the current project:
+The interactive installer lets you choose skills and agents. To install all available skills for both Claude Code and Codex in the current project:
 
 ```sh
 npx skills add pkasarda/skills --skill '*' --agent claude-code codex
@@ -45,7 +52,7 @@ This installs standalone skills rather than the plugin package. Start a new agen
 
 ## Install as a plugin
 
-The repository is one skills-only plugin, `pkasarda-skills`, in the `pkasarda` marketplace. Both hosts use the same six folders under `skills/`. It has no hooks, MCP servers or runtime dependencies. The public repository can be fetched without GitHub authentication.
+The repository is one skills-only plugin, `pkasarda-skills`, in the `pkasarda` marketplace. Both hosts use the same skill folders under `skills/`. It has no hooks, MCP servers or runtime dependencies. The public repository can be fetched without GitHub authentication.
 
 ### Codex
 
@@ -96,7 +103,7 @@ Use one installation method per host. Standalone copies already present in a use
 
 ## Validation
 
-See [validation scope and limits](VALIDATION.md) for the five additional skills. They received structural checks and one bounded independent review, not separate efficacy benchmarks.
+See [validation scope and limits](VALIDATION.md) for the recorded structural checks and bounded reviews of additions to the library. These are not separate efficacy benchmarks.
 
 `robust-architecture` is v2. Its [evaluation record](skills/robust-architecture/evals/RESULTS.md) distinguishes the historical precise-task comparison, miniature repository discovery tests, the critical issue discovered there, and the targeted v2 regression/transfer checks. The v2 targeted set passed 10/12 criteria, including all 8 critical criteria; a complete paired v2 benchmark and production validation were not performed.
 
