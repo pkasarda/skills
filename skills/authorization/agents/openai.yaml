@@ -1,0 +1,3 @@
+interface:
+  display_name: "Authorization"
+  short_description: "Define and enforce who may access each resource"

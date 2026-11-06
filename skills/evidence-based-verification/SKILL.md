@@ -13,6 +13,8 @@ Map the changed contract and its real consumers. Pure logic can use a focused un
 
 Use realistic accepted data and explicit controls. Seed success deliberately and assert setup. Foreign scope, different IDs, null versus zero, stale state and valid unchanged rows should differ where the rule says they differ. A negative assertion about an unrelated decoy does not prove the intended target was protected. A useful test fails when the actual guard, join, ordering or owning operation is removed.
 
+When the claim concerns protected reads/writes or permission changes, derive allow/refusal cases using [authorization](../authorization/SKILL.md) if installed. Its policy matrix selects the cases; this skill determines the evidence needed to prove them.
+
 ## Make failures discriminating
 
 Select relevant failure points and controlled interleavings rather than sleeps or repetition as the diagnosis. Control the clock at the authority that uses it before deriving dependent fixtures; browser timezone does not determine a Node or server expectation. Keep wall/calendar time and elapsed deadlines distinct, and restore local controls afterward.

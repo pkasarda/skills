@@ -13,6 +13,8 @@ Inventory mounted producers of this same operation, including API/UI adapters, i
 
 Separate entry trust and parsing from domain admission. Anonymous/token workflows establish their explicit purpose and scope; authenticated workflows resolve the actual actor. Caller-provided IDs, hidden controls and an earlier authorized read are not proof at a later effect.
 
+When designing, implementing or reviewing a protected mutation or its producers, apply [authorization](../authorization/SKILL.md) if installed to cover the access policy and meaningful actor/resource combinations. Keep the existing owner and the write guards below.
+
 ## Guard the real effect
 
 Use the store's appropriate atomicity or serialization mechanism when a reachable interleaving can invalidate scope, state, availability, revision or locks. Guard all coupled effects under the same winning operation, not merely the final parent row. Expected-state failure must not leave unrelated child, audit, quantity or derived-state changes. Preserve legitimate correction, historical attribution and sparse/clear/no-change meanings.

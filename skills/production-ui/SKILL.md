@@ -17,6 +17,8 @@ Classify option sets before changing loading: static enums, already available sm
 
 For picker, filter or async request work, read [Data interaction checks](references/data-interactions.md). Keep authorization and eligibility in their existing server/store owners; a UI flag or client filter cannot supply that proof.
 
+For protected loaders, pickers, counts, exports, files or changes to user-context caches, apply [authorization](../authorization/SKILL.md) if installed. Its read and field policy informs the controls and returned data; retain the local server-boundary checks when using this skill alone.
+
 ## Exercise real states and content
 
 Choose realistic accepted data at the actual boundary: zero, one, beyond-page results, long/missing labels, fractional/zero/unknown values, existing inactive selections and relevant role differences. Preserve meaning: missing, measured zero, withheld and incomplete are distinct states. Use supported formatting and business/time authorities rather than a second client derivation.

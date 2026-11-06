@@ -23,6 +23,8 @@ Trace every publication, not only the final callback. Before changing caches, cu
 
 A compensation is a separate guarded action that can fail. Preserve evidence and responsibility if only part of a reversal succeeds; do not bury a surviving valid occurrence because one local component rolled back. Define user/operator recovery and the point at which automatic work stops.
 
+When defining, changing or reviewing authority for jobs, recipients, bearer links or replay access, apply [authorization](../authorization/SKILL.md) if installed to establish whose authority applies and for how long. Retain the operation identity and delivery contract here.
+
 ## Policy and retention
 
 Derive recipient eligibility, authorization and preferences from their actual owners. Distinguish required documents or security delivery from optional notifications according to the product contract, without widening recipient scope. Avoid sensitive data in logs, push previews or retry artifacts.

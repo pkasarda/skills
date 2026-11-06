@@ -5,6 +5,7 @@ Reusable agent skills for source-grounded decisions, complete user flows and hon
 | Skill | Use it for |
 | --- | --- |
 | [product-discovery](skills/product-discovery/SKILL.md) | Shaping an unclear idea into a testable first user flow, scope and next decision. |
+| [authorization](skills/authorization/SKILL.md) | Defining and enforcing actor, action, resource and scope policy, with meaningful allow/refusal proof. |
 | [robust-architecture](skills/robust-architecture/SKILL.md) | Designing or challenging ownership, boundaries, invariants and failure contracts. |
 | [production-ui](skills/production-ui/SKILL.md) | Complete lists and pickers, coherent filters, realistic content and truthful asynchronous UI. |
 | [safe-state-changes](skills/safe-state-changes/SKILL.md) | Implementing bounded mutations through the existing owner with scope, state and coupled-effect guards. |
@@ -21,6 +22,8 @@ These are technology-neutral workflows. They use the project's actual framework,
 For an unclear idea, start with `product-discovery`: it identifies consequential questions, preserves accepted decisions, proposes a small complete flow and names the evidence needed for the next step. For example: “I want to build a reservation system. Help me shape the first useful version.”
 
 Once the product behavior is clear, use the architecture, UI or delivery procedure relevant to that flow. A sufficiently specified build request can proceed directly to implementation; discovery is not a mandatory approval gate. In an existing product, check the current workflow before proposing a new one.
+
+Changes to protected reads, writes, sharing or delegated work route to `authorization` from the relevant skill. It owns the detailed access-policy procedure; each skill keeps its local guards and remains usable alone. These pointers guide the model; enforcement belongs in application code and tests.
 
 ## Install with `npx skills`
 
@@ -105,7 +108,7 @@ Use one installation method per host. Standalone copies already present in a use
 
 See [validation scope and limits](VALIDATION.md) for the recorded structural checks and bounded reviews of additions to the library. These are not separate efficacy benchmarks.
 
-`robust-architecture` is v2. Its [evaluation record](skills/robust-architecture/evals/RESULTS.md) distinguishes the historical precise-task comparison, miniature repository discovery tests, the critical issue discovered there, and the targeted v2 regression/transfer checks. The v2 targeted set passed 10/12 criteria, including all 8 critical criteria; a complete paired v2 benchmark and production validation were not performed.
+The architecture [evaluation record](skills/robust-architecture/evals/RESULTS.md) distinguishes the historical precise-task comparison, miniature repository discovery tests, the critical issue discovered there, and the targeted v2 regression/transfer checks. The v2 targeted set passed 10/12 criteria, including all 8 critical criteria; a complete paired v2 benchmark and production validation were not performed. Those results describe the frozen v2 candidate; the current entrypoint also contains an authorization-routing addition that was not part of those runs.
 
 Evaluation fixture code intentionally contains defects. It is test input, not an implementation to copy or silently repair. Raw proposals, rubrics and failed runs are retained for inspection. Additional private-project checks are not included in this shared library.
 

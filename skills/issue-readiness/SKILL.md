@@ -21,6 +21,8 @@ Classify the remaining work: missing fact/ownership/contract, bypass of an adequ
 
 Check active work and exact PR state/head. Fixes, mentions, deferred work and shared prerequisites are different relationships. An open PR is not current-main delivery. An implemented path, merged proposal document and passing historical gate establish different things; none proves current live migration or acceptance status.
 
+For items about protected reads/writes, roles, grants or public links, use [authorization](../authorization/SKILL.md) if installed to identify required access decisions and proof. An unresolved product permission remains a readiness gap, not an invented implementation rule.
+
 ## Decide effective readiness
 
 A useful handoff names the current/desired outcome, owner/interface, affected callers, scope/state/effect consequences, acceptance proof, exclusions and concrete unknowns. Keep implementation details provisional where the model itself is unresolved. Ask only the missing choice; preserve already settled decisions.

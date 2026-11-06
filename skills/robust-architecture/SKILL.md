@@ -22,6 +22,8 @@ Calibrate the intervention:
 
 A large file, duplicate syntax, a missing pattern name, or a proposed package is not by itself evidence of a model gap.
 
+For designs or reviews involving access to protected resources, apply [authorization](../authorization/SKILL.md) if installed. It owns the access-policy walkthrough; keep the local ownership and trust rules below when using this skill alone.
+
 ## Give facts and rules a home
 
 Name the fact or invariant, its logical authority, and the operations allowed to change it. Authority can be a local function, file publisher, library handle, process or service; it need not be a server or a new module.

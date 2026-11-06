@@ -15,6 +15,8 @@ Ask only unanswered questions whose answers change the first flow, scope, author
 
 Resolve choices that determine correctness before implementing the dependent behavior: who may act, what is promised, when something becomes binding, and which scarce resource or irreversible effect is involved. Continue independent work while waiting. Use explicit, reversible working assumptions for lower-impact unknowns; mark them proposed rather than silently accepted. When the task is already clear enough, move directly to the first slice.
 
+When the first flow includes shared/private data or public capabilities, make allowed actors and actions explicit. If installed, use [authorization](../authorization/SKILL.md) when those product decisions are ready for policy design; keep unresolved business choices in discovery.
+
 ## Describe one real flow
 
 Choose one primary actor and job for the first slice without erasing other actors essential to completing it. Describe the trigger, necessary input, meaningful action, visible outcome and next legitimate step. Include the important refusal, correction or recovery that makes this flow honest. Name ambiguous business terms by their behavior rather than jumping to tables, screens or frameworks.
