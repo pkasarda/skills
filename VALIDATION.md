@@ -23,7 +23,7 @@ The 1.0.0 package uses one shared `skills/` tree, a portable root manifest for C
 
 - Claude Code strict manifest and marketplace validation passed without manifest warnings. Its local `--plugin-dir` component inventory discovered all six skills.
 - Codex native app-server `plugin/list` and `plugin/read` discovered the marketplace, parsed the portable manifest and exposed all six namespaced skills, with no marketplace load errors. These were read-only packaging checks; no model task or plugin installation was performed.
-- `npx skills add <local-repository> --list` discovered exactly six skills.
+- `npx skills add <local-repository> --list` discovered exactly six skills. A subsequent real install from the public `pkasarda/skills` repository into a fresh temporary project succeeded for both `claude-code` and `codex`; all six installed skill bodies and supporting reference/UI metadata matched the source bytes. Anonymous GitHub API access confirmed public visibility.
 - Shared manifest identity/version, local marketplace paths and unchanged skill-file hashes were checked.
 - A pattern scan of all 149 historical Git blobs found no credential-pattern, personal-home-path or private-project-reference matches before the public visibility change. This is a bounded check, not a complete security audit.
 
