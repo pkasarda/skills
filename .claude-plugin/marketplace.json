@@ -1,0 +1,14 @@
+{
+  "name": "pkasarda",
+  "owner": {
+    "name": "pkasarda"
+  },
+  "plugins": [
+    {
+      "name": "pkasarda-skills",
+      "source": "./",
+      "description": "Source-grounded engineering workflows for architecture, production UI, safe state changes, reliable effects, verification and issue readiness."
+    }
+  ],
+  "description": "Reusable engineering skills for architecture, production UI and safe delivery."
+}

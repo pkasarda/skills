@@ -1,0 +1,26 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "pkasarda-skills",
+  "version": "1.0.0",
+  "description": "Source-grounded engineering workflows for architecture, production UI, safe state changes, reliable effects, verification and issue readiness.",
+  "author": {
+    "name": "pkasarda",
+    "url": "https://github.com/pkasarda"
+  },
+  "homepage": "https://github.com/pkasarda/skills",
+  "repository": "https://github.com/pkasarda/skills",
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "Engineering Skills",
+        "shortDescription": "Architecture, complete UI flows and safe delivery",
+        "developerName": "pkasarda",
+        "category": "Productivity",
+        "capabilities": [
+          "Instructions"
+        ],
+        "websiteURL": "https://github.com/pkasarda/skills"
+      }
+    }
+  }
+}

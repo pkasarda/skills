@@ -1,0 +1,15 @@
+{
+  "name": "pkasarda",
+  "interface": {
+    "displayName": "pkasarda Skills"
+  },
+  "plugins": [
+    {
+      "name": "pkasarda-skills",
+      "source": {
+        "source": "local",
+        "path": "./"
+      }
+    }
+  ]
+}

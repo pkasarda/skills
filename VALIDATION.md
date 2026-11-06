@@ -16,3 +16,15 @@ Applies to `production-ui`, `safe-state-changes`, `reliable-effects`, `evidence-
 These checks establish valid structure and a reviewed, proportionate procedure with useful scope boundaries. The scenario review was a written reasoning check; no application was built or executed for it. There is no paired benchmark, quantified efficacy score or claim that these five skills prevent every defect. Runtime behavior and suitability for a particular project require that project's own evidence.
 
 The existing `robust-architecture` evaluation record is separate. Private-project source, raw model traces and customer data are not published here. Model IDs above are the requested identifiers; local CLI metadata warnings do not independently certify a backend model version.
+
+## Plugin packaging
+
+The 1.0.0 package uses one shared `skills/` tree, a portable root manifest for Codex, a Claude Code manifest and a marketplace catalog for each host.
+
+- Claude Code strict manifest and marketplace validation passed without manifest warnings. Its local `--plugin-dir` component inventory discovered all six skills.
+- Codex native app-server `plugin/list` and `plugin/read` discovered the marketplace, parsed the portable manifest and exposed all six namespaced skills, with no marketplace load errors. These were read-only packaging checks; no model task or plugin installation was performed.
+- `npx skills add <local-repository> --list` discovered exactly six skills.
+- Shared manifest identity/version, local marketplace paths and unchanged skill-file hashes were checked.
+- A pattern scan of all 149 historical Git blobs found no credential-pattern, personal-home-path or private-project-reference matches before the public visibility change. This is a bounded check, not a complete security audit.
+
+Public-directory submission was not performed. Claude's optional directory-submission checks flag the missing license and icon; those are separate from the successful installable-plugin validation. No license was selected on the author's behalf.
