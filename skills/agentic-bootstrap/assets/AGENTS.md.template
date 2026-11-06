@@ -1,0 +1,19 @@
+# {{project_name}}
+
+{{brief_verified_project_context}}
+
+## Working boundaries
+
+{{applicable_user_authority_and_local_completion_rules}}
+
+## Critical invariants
+
+{{small_set_of_non_obvious_root_wide_invariants_with_owner_pointers}}
+
+## Read when relevant
+
+{{conditional_actions_pointing_to_existing_documents_or_available_skills}}
+
+## Validation
+
+{{verified_project_commands_and_the_conditions_for_running_them_or_explicit_unknowns}}

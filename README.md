@@ -1,9 +1,12 @@
-# skills
+# Agentic Engineering Kit
 
-Reusable agent skills for source-grounded decisions, complete user flows and honest verification.
+From idea or existing codebase to an agent-ready project: specs, issues, context and guardrails.
+
+A set of reusable skills for source-grounded decisions, complete user flows and honest verification.
 
 | Skill | Use it for |
 | --- | --- |
+| [agentic-bootstrap](skills/agentic-bootstrap/SKILL.md) | Setting up a new project or onboarding an existing repository with specs, issue handoffs and progressively disclosed instructions. |
 | [product-discovery](skills/product-discovery/SKILL.md) | Shaping an unclear idea into a testable first user flow, scope and next decision. |
 | [authorization](skills/authorization/SKILL.md) | Defining and enforcing actor, action, resource and scope policy, with meaningful allow/refusal proof. |
 | [robust-architecture](skills/robust-architecture/SKILL.md) | Designing or challenging ownership, boundaries, invariants and failure contracts. |
@@ -18,6 +21,16 @@ Each skill lives under `skills/<name>/`. Start with its `SKILL.md`; supporting r
 These are technology-neutral workflows. They use the project's actual framework, store, design system and authority rules; they do not replace platform documentation or grant permission to publish, merge, migrate or deploy. They guide decisions and checks, without guaranteeing correct architecture or production readiness on every project. Visual design remains a separate concern from data completeness and successful persistence.
 
 ## From idea to delivery
+
+Start with `agentic-bootstrap` when setting up or onboarding a repository. It selects the relevant entry guide and engineering procedures, creates only the requested context/spec/issue/instruction artifacts, and checks the handoff. It can use the rest of the kit when installed and remains usable alone. It does not repeat project onboarding for a bounded edit.
+
+Example requests in a new agent session:
+
+- Codex: `$agentic-bootstrap Set up this new project with a first spec, issue drafts and progressively disclosed instructions. Documentation only.`
+- Existing repository: `Use agentic-bootstrap to onboard this package from its current code and accepted decisions. Preserve existing rules and prepare the next bounded handoff.`
+- Claude Code plugin: `/pkasarda-skills:agentic-bootstrap` followed by the repository scope and requested outcome.
+
+The skill includes conditional entry/instruction/spec guides and optional templates. It preserves the distinction between accepted intent, implemented behavior and executed proof. Publishing tracker items follows the authority of the current request; drafting them does not post them.
 
 For an unclear idea, start with `product-discovery`: it identifies consequential questions, preserves accepted decisions, proposes a small complete flow and names the evidence needed for the next step. For example: “I want to build a reservation system. Help me shape the first useful version.”
 
@@ -42,7 +55,7 @@ npx skills add pkasarda/skills --skill '*' --agent claude-code codex
 To install only one skill:
 
 ```sh
-npx skills add pkasarda/skills --skill production-ui --agent claude-code codex
+npx skills add pkasarda/skills --skill agentic-bootstrap --agent claude-code codex
 ```
 
 Add `--global` for use across projects. Preview the available skills without installing:

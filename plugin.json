@@ -1,8 +1,8 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "pkasarda-skills",
-  "version": "1.2.0",
-  "description": "Product discovery and source-grounded engineering workflows for architecture, authorization, production UI, safe state changes, reliable effects, verification and issue readiness.",
+  "version": "1.3.0",
+  "description": "Agentic Engineering Kit: project bootstrap, product discovery, architecture, authorization, production UI, safe state changes, reliable effects, verification and issue readiness.",
   "author": {
     "name": "pkasarda",
     "url": "https://github.com/pkasarda"
@@ -12,8 +12,8 @@
   "extensions": {
     "com.openai": {
       "interface": {
-        "displayName": "Engineering Skills",
-        "shortDescription": "Product discovery, authorization and robust delivery",
+        "displayName": "Agentic Engineering Kit",
+        "shortDescription": "Bootstrap projects with specs, context and guardrails",
         "developerName": "pkasarda",
         "category": "Productivity",
         "capabilities": [

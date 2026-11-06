@@ -1,0 +1,3 @@
+interface:
+  display_name: "Agentic Bootstrap"
+  short_description: "From idea or existing code to an agent-ready repo"

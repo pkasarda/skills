@@ -1,0 +1,25 @@
+# {{feature_or_flow}}
+
+Contract: {{accepted_or_proposed_with_decision_source}}
+Implementation: {{observed_state_and_revision_or_explicit_gap}}
+Verification: {{executed_evidence_or_unverified}}
+
+## Outcome and flow
+
+{{actor_problem_trigger_action_result_and_next_step}}
+
+## Rules and boundaries
+
+{{domain_rules_access_policy_owners_and_effect_or_recovery_contract}}
+
+## Scope
+
+{{included_outcome_and_explicit_exclusions}}
+
+## Acceptance
+
+{{observable_success_and_relevant_refusal_or_failure_evidence}}
+
+## Decisions and next step
+
+{{accepted_decisions_assumptions_blocking_choices_and_next_action}}

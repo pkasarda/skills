@@ -1,0 +1,20 @@
+# {{bounded_delivery_outcome}}
+
+Contract: {{canonical_spec_link_and_section}}
+Current evidence: {{relevant_source_revision_or_explicit_gap}}
+
+## Result
+
+{{current_to_desired_observable_behavior}}
+
+## Slice
+
+{{owner_interface_relevant_callers_scope_state_and_effect_consequences}}
+
+## Acceptance
+
+{{discriminating_checks_and_expected_results}}
+
+## Boundaries and dependencies
+
+{{explicit_exclusions_real_prerequisites_holds_and_unknowns}}

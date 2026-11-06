@@ -7,8 +7,8 @@
     {
       "name": "pkasarda-skills",
       "source": "./",
-      "description": "Product discovery and source-grounded engineering workflows for architecture, authorization, production UI, safe state changes, reliable effects, verification and issue readiness."
+      "description": "Agentic Engineering Kit: project bootstrap, product discovery, architecture, authorization, production UI, safe state changes, reliable effects, verification and issue readiness."
     }
   ],
-  "description": "Reusable skills from product discovery to authorization, architecture and safe delivery."
+  "description": "Agentic Engineering Kit: reusable workflows from idea to verified delivery."
 }

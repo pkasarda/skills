@@ -45,3 +45,13 @@ Public-directory submission was not performed. The initial 1.0.0 directory-submi
 - Original skill content is preserved outside the seven small routing paragraphs. Historical evaluation inputs/results remain byte-identical; their scores do not evaluate the new authorization routing. Optional sibling pointers require the sibling only when it is installed, preserving standalone use.
 
 These instructions guide a model. They do not enforce application permissions or establish that a project is secure. No efficacy benchmark or real-project security audit was performed for this release.
+
+## Agentic Engineering Kit / agentic-bootstrap: 1.3.0
+
+- Added the project-entry workflow, conditional new/existing/instruction/spec guides and optional artifact templates. The display name is now Agentic Engineering Kit; repository and plugin identifiers remain unchanged. Existing eight skill trees and historical evaluation artifacts are byte-identical to 1.2.0.
+- All nine skills passed structural validation. Internal guide/template links resolve. Claude strict manifest/catalog validation and both native plugin inventories discovered nine skills at 1.3.0, including the new display metadata.
+- Two independent evaluators were requested: gpt-6-luna/max for new-project documentation plus two response-only boundary probes, and gpt-6.1-terra/high for scoped existing-project documentation and a tracker-draft probe. Actual artifacts were written only in two synthetic repositories; original input bytes were preserved, written links resolved and emitted template tokens were absent.
+- The initial new-project pilot failed proportionality: it created a mandatory maintainer gate for routine runtime/storage choices. The responsible entry/spec guidance was clarified and only that pilot reran on a fresh equivalent fixture. The final artifact kept routine technical selection inside implementation and contained edge assumptions explicitly. Initial failed artifacts were retained locally.
+- Five final routing outcomes passed root inspection: new-project artifacts; an ordinary copy edit that skips bootstrap; unresolved medical-note permissions; scoped onboarding preserving current owners/root rules; and draft-only tracker reconciliation preserving delivered work and a programme hold.
+
+These are bounded artifact/routing checks, not an A/B efficacy benchmark. Fixture application code, live products, live tracker state and actual project-instruction loading inside Codex/Claude sessions were not executed. Native plugin discovery proves package loading, not generated-project runtime behavior or complete instruction compliance.

@@ -1,12 +1,13 @@
 {
   "name": "pkasarda-skills",
-  "version": "1.2.0",
-  "description": "Product discovery and source-grounded engineering workflows for architecture, authorization, production UI, safe state changes, reliable effects, verification and issue readiness.",
+  "version": "1.3.0",
+  "description": "Agentic Engineering Kit: project bootstrap, product discovery, architecture, authorization, production UI, safe state changes, reliable effects, verification and issue readiness.",
   "author": {
     "name": "pkasarda",
     "url": "https://github.com/pkasarda"
   },
   "homepage": "https://github.com/pkasarda/skills",
   "repository": "https://github.com/pkasarda/skills",
-  "license": "MIT"
+  "license": "MIT",
+  "displayName": "Agentic Engineering Kit"
 }
