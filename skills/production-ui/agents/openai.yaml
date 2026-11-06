@@ -1,0 +1,3 @@
+interface:
+  display_name: "Production UI"
+  short_description: "Data-complete UI beyond test fixtures"

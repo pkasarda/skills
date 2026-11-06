@@ -1,0 +1,3 @@
+interface:
+  display_name: "Issue Readiness"
+  short_description: "Turn current issue evidence into a ready decision"

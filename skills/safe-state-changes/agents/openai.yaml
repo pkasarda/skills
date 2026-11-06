@@ -1,0 +1,3 @@
+interface:
+  display_name: "Safe State Changes"
+  short_description: "Guard complete state changes at their owner"
