@@ -7,7 +7,7 @@
     {
       "name": "pkasarda-skills",
       "source": "./",
-      "description": "Agentic Engineering Kit: project bootstrap, product discovery, architecture, authorization, production UI, safe state changes, reliable effects, verification and issue readiness."
+      "description": "Agentic Engineering Kit: project bootstrap, discovery, architecture, authorization, test-first change delivery, production UI, reliable effects and verification."
     }
   ],
   "description": "Agentic Engineering Kit: reusable workflows from idea to verified delivery."

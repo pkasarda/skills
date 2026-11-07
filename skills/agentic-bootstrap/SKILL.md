@@ -33,6 +33,7 @@ Choose available skills by the work that remains:
 | Durable mutations and coupled effects | safe-state-changes |
 | Delivery, retries and uncertain external outcomes | reliable-effects |
 | Current issue decisions, overlap and effective readiness | issue-readiness |
+| A scoped implementation through tests, independent review and handoff | change-delivery, unless the project already owns delivery |
 | Evidence needed for a concrete claim | evidence-based-verification |
 
 Load only the relevant procedure and its conditional references. If a sibling skill is absent, use the entry/spec guides to state the product flow, owner, access/effect boundaries and acceptance evidence directly. Record unresolved choices rather than implying the missing review happened. This skill must remain usable on its own.

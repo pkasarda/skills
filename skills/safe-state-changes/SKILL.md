@@ -17,7 +17,7 @@ When designing, implementing or reviewing a protected mutation or its producers,
 
 ## Guard the real effect
 
-Use the store's appropriate atomicity or serialization mechanism when a reachable interleaving can invalidate scope, state, availability, revision or locks. Guard all coupled effects under the same winning operation, not merely the final parent row. Expected-state failure must not leave unrelated child, audit, quantity or derived-state changes. Preserve legitimate correction, historical attribution and sparse/clear/no-change meanings.
+Use the store's appropriate atomicity or serialization mechanism when a reachable interleaving can invalidate scope, state, availability, revision or locks. Guard all coupled effects under the same winning acceptance, not merely the final parent row or the existence of an older acceptance record. Expected-state failure must not leave unrelated child, audit, quantity or derived-state changes. Preserve legitimate correction, historical attribution and sparse/clear/no-change meanings.
 
 Validate the effective resulting state at its owner. Use the actual inserted/generated identity for dependent work. Keep one lifecycle rule and stable refusal contract across callers; do not create a second status writer or reconstruct ownership from today's projection. Respect intentionally separate operations and documented partial outcomes rather than forcing every batch into a new all-or-nothing framework.
 
@@ -29,8 +29,10 @@ Return whether the intended operation committed, refused, was a no-op, or remain
 
 ## Verify a vertical slice
 
-Test through the public owner and affected mounted adapters, using the actual compiled schema/store or equivalent real seam. Seed meaningful scope, ID and state decoys where the operation uses those distinctions. Assert setup and exact changed and unchanged records. Exercise a valid operation and a relevant refusal. Add no-op/repeat, controlled stale-state or failure-point checks when those are part of the contract or a reachable risk. For coupled effects, prove they follow the same winner and a rollback leaves the promised state.
+Before implementation, map the affected invariants to concrete tests and name the broken guard each should catch. Test through the public owner and affected mounted adapters, using the actual compiled schema/store or equivalent real seam. Seed meaningful scope, ID and state decoys where the operation uses those distinctions. Assert setup and exact changed and unchanged records. Exercise a valid operation and a relevant refusal.
+
+For competing attempts of one operation, or stale-state conflicts whose contract admits one winner, pause an execution before its authoritative write, let another win and advance state, then resume the loser. Assert every coupled record remains consistent with that admission, including audit and queued intent. Independent compatible commands may both commit in the promised serial order; test that outcome instead of imposing one winner. When accepting retries by request key, use reliable-effects' [request identity proof](../reliable-effects/references/request-identity-proof.md) if installed; alone, prove replay, mismatched intent and reachable overlap against the defined operation contract. Add rollback/failure checks when atomicity is promised.
 
 Run the project's appropriate SQL/query-plan, type/export and targeted behavior checks when their surfaces change. Preserve complete failure output and distinguish blocked-before-execution from failing assertions. Verify the mounted result when claiming user behavior works.
 
-Deliver the owner/interface, affected callers, implemented invariant, result semantics, checks and limits. A small scope does not waive its relevant gates. This procedure grants no authority to apply remote migrations, deploy, merge or alter unrelated data.
+Deliver the owner/interface, affected callers, result semantics, and each claimed invariant's test, observed result and sensitivity evidence. Mark missing proof unverified. A small scope does not waive its relevant gates. This procedure grants no authority to apply remote migrations, deploy, merge or alter unrelated data.

@@ -1,7 +1,7 @@
 {
   "name": "pkasarda-skills",
-  "version": "1.3.0",
-  "description": "Agentic Engineering Kit: project bootstrap, product discovery, architecture, authorization, production UI, safe state changes, reliable effects, verification and issue readiness.",
+  "version": "1.4.0",
+  "description": "Agentic Engineering Kit: project bootstrap, discovery, architecture, authorization, test-first change delivery, production UI, reliable effects and verification.",
   "author": {
     "name": "pkasarda",
     "url": "https://github.com/pkasarda"

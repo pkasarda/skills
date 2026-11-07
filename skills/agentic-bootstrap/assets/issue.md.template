@@ -15,6 +15,10 @@ Current evidence: {{relevant_source_revision_or_explicit_gap}}
 
 {{discriminating_checks_and_expected_results}}
 
+## Delivery and proof
+
+{{delivery_and_test_first_method_required_review_and_verification_boundary}}
+
 ## Boundaries and dependencies
 
 {{explicit_exclusions_real_prerequisites_holds_and_unknowns}}

@@ -1,0 +1,3 @@
+interface:
+  display_name: "Change Delivery"
+  short_description: "Implement, test, review and finish one scoped change"

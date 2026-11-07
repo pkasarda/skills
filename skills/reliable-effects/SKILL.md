@@ -33,6 +33,8 @@ Before cleaning work records, determine whether they are also deduplication, rep
 
 ## Prove the protocol
 
-Use controlled crashes/failures around commit, claim, send, acknowledgement and completion. Include accepted-send/lost-response ambiguity, duplicate/reordered input, stale claim, failed compensation and eventual valid progress where applicable. Verify actual state and external-effect identities using a faithful external seam; a mock send count alone proves little.
+When the operation deduplicates by request key, use [Request identity: required proof](references/request-identity-proof.md) before implementation or when reviewing that guarantee. It requires replay after downstream progress, mismatched-intent refusal and reachable overlapping-execution tests, including accepting paths with unchanged business fields. Map each guarantee to an executed test; missing proof remains unverified.
+
+Select other failure tests from the promised protocol: crash between commit and dispatch, accepted-send/lost-response ambiguity, stale claim, reordered input or failed compensation. Prove eventual valid progress as well as refusal. Verify actual state and external-effect identities using a faithful external seam; a mock send count alone proves little.
 
 Report exact guarantees and boundaries, recovery path, relevant operating limits and executed versus proposed proof. Provider, broker and storage semantics must be checked for the chosen platform. Live sends, infrastructure changes, data cleanup and deployment require the user's applicable authority.

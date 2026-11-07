@@ -1,8 +1,24 @@
 # Agentic Engineering Kit
 
-From idea or existing codebase to an agent-ready project: specs, issues, context and guardrails.
+From idea or existing codebase to scoped, tested and reviewed changes.
 
 Practical workflows for developers using coding agents to turn an idea or an existing codebase into scoped, reviewable and verifiable software changes.
+
+## Start here
+
+Install the skills into your project:
+
+```sh
+npx skills add pkasarda/skills
+```
+
+Then ask your agent for the next useful step:
+
+- **An unclear idea:** “Use product-discovery to work out the first useful flow for this idea.”
+- **Project setup:** “Use agentic-bootstrap to prepare project context, a spec and issue drafts. Documentation only.”
+- **A ready feature or bug:** “Use change-delivery to implement this change, test it and obtain independent review. Follow this repository's delivery procedure if it has one.”
+
+Use the relevant step; an ordinary edit does not need the entire workflow. See installation options below for both Codex and Claude Code.
 
 ## Who this is for
 
@@ -30,6 +46,7 @@ Use the relevant skills for the task. The kit is especially useful when establis
 | --- | --- |
 | [agentic-bootstrap](skills/agentic-bootstrap/SKILL.md) | Setting up a new project or onboarding an existing repository with specs, issue handoffs and progressively disclosed instructions. |
 | [product-discovery](skills/product-discovery/SKILL.md) | Shaping an unclear idea into a testable first user flow, scope and next decision. |
+| [change-delivery](skills/change-delivery/SKILL.md) | Taking a scoped change through test-first implementation, independent review, fixes and verified handoff. |
 | [authorization](skills/authorization/SKILL.md) | Defining and enforcing actor, action, resource and scope policy, with meaningful allow/refusal proof. |
 | [robust-architecture](skills/robust-architecture/SKILL.md) | Designing or challenging ownership, boundaries, invariants and failure contracts. |
 | [production-ui](skills/production-ui/SKILL.md) | Complete lists and pickers, coherent filters, realistic content and truthful asynchronous UI. |
@@ -44,7 +61,7 @@ These are technology-neutral workflows. They use the project's actual framework,
 
 ## From idea to delivery
 
-`agentic-bootstrap` connects the workflow when setting up a new project or onboarding an existing repository. Start at the first unresolved step: a clear feature or bug can enter directly at its spec, issue or implementation.
+`agentic-bootstrap` prepares project context and handoffs. `change-delivery` owns the implementation loop when the project has no delivery procedure of its own. Start at the first unresolved step: a clear feature or bug can enter directly at its spec, issue or implementation.
 
 ```mermaid
 flowchart TD
@@ -53,10 +70,14 @@ flowchart TD
     inspect --> spec["Spec"]
     brief --> spec
     spec --> issues["Small issues"]
-    issues --> implementation["Implementation"]
-    implementation --> evidence["Evidence"]
-    evidence -->|"Needs work"| implementation
-    evidence -->|"Verified change"| rules["Updated rules and context"]
+    issues --> red["Failing acceptance test"]
+    red --> implementation["Small implementation → green"]
+    implementation --> review["Independent review"]
+    review -->|"Finding"| red
+    review --> evidence["Verify the affected boundary"]
+    evidence -->|"Needs work"| red
+    evidence -->|"Verified change"| rules["Update lasting rules when changed"]
+    rules --> handoff["Complete the authorized handoff"]
     rules -->|"Next change"| spec
 ```
 
@@ -65,13 +86,23 @@ flowchart TD
 | Idea → brief | `product-discovery` | Actor, problem, first useful flow, scope, assumptions and open decisions. |
 | Brief → spec | `robust-architecture`, `authorization` where needed | Intended behavior, authoritative owners, access and failure contracts, exclusions and observable acceptance. |
 | Spec → small issues | `agentic-bootstrap`, `issue-readiness` | Bounded handoffs linked to the contract, with callers, acceptance, real dependencies and any activation holds. |
-| Issues → implementation | `production-ui`, `safe-state-changes`, `reliable-effects`, `authorization` as relevant | A complete user path or public operation through the existing owners. |
-| Implementation → evidence | `evidence-based-verification` | Executed checks, required reviews, observed outcomes and explicitly unverified boundaries. |
+| Issues → implementation | `change-delivery` plus the relevant contract skills | One complete slice, with a discriminating RED → GREEN cycle for behavior changes. |
+| Implementation → independent review | `change-delivery` using the project's reviewer or available review procedure | Findings checked against the contract/source, fixes or justified dispositions, and affected checks rerun. |
+| Review → evidence | `evidence-based-verification`, coordinated by `change-delivery` | Executed checks at the actual affected boundary, observed outcomes and explicitly unverified guarantees. |
 | Evidence → updated rules | The project's document owners, following bootstrap's disclosure guidance | Updated specs, domain/architecture/access rules and instruction pointers when the verified change establishes durable facts. |
+| Verified change → handoff | `change-delivery` | The requested local result, branch/PR or separately authorized release, with an accurate completion report. |
 
 Choose guidance by the affected contract. Access decisions can matter during design, implementation and verification. Failed checks return to implementation; a changed product decision also updates the spec. Keep temporary task notes with the issue or report, and maintain each lasting rule in one place.
 
-Application code and tests enforce the chosen rules. Bootstrap creates only requested artifacts, using conditional guides and optional templates; it remains usable alone and selects available sibling skills by need. Issue-ready drafts can remain held. Publishing tracker items, starting a held programme, merging or deploying follows the authority of the current request; producing a draft does not perform those actions.
+Application code and tests enforce the chosen rules. The diagram describes a substantive behavior change: direct artifact checks suffice for trivial prose/config edits, and a required independent review that could not run remains unmet. Bootstrap creates only requested artifacts. Issue-ready drafts can remain held. Publishing tracker items, starting a held programme, merging or deploying follows the authority of the current request; producing a draft does not perform those actions.
+
+### TDD, review and decisions
+
+The kit includes a standalone delivery loop; it does not bundle a second TDD library. `change-delivery` uses the test-first procedure selected by the existing workflow, such as Matt Pocock's `tdd` or Superpowers' `test-driven-development`. Without either, it supplies the RED → GREEN loop directly. Risk procedures determine the scenarios: test-first alone cannot catch an omitted retry, access or concurrency case.
+
+Use one delivery procedure per change. An established repository's procedure takes precedence; the kit supplies missing contract checks without starting a parallel planning/review system. Substantive changes require independent review. When an independent reviewer is unavailable, self-review is reported explicitly and does not satisfy that gate. No particular provider, model, tracker or test runner is required.
+
+Specs state the intended behavior; ADRs preserve consequential tradeoffs. Reuse the project's domain-modeling/ADR convention, or use bootstrap's [decision guidance](skills/agentic-bootstrap/references/specs-and-issues.md#preserve-decisions-and-language). Routine local choices need no separate ADR.
 
 Example requests in a new agent session:
 
