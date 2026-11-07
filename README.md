@@ -44,21 +44,40 @@ These are technology-neutral workflows. They use the project's actual framework,
 
 ## From idea to delivery
 
-Start with `agentic-bootstrap` when setting up or onboarding a repository. It selects the relevant entry guide and engineering procedures, creates only the requested context/spec/issue/instruction artifacts, and checks the handoff. It can use the rest of the kit when installed and remains usable alone. It does not repeat project onboarding for a bounded edit.
+`agentic-bootstrap` connects the workflow when setting up a new project or onboarding an existing repository. Start at the first unresolved step: a clear feature or bug can enter directly at its spec, issue or implementation.
+
+```mermaid
+flowchart TD
+    idea["Idea"] --> brief["Brief"]
+    existing["Existing repository"] --> inspect["Inspect code and accepted decisions"]
+    inspect --> spec["Spec"]
+    brief --> spec
+    spec --> issues["Small issues"]
+    issues --> implementation["Implementation"]
+    implementation --> evidence["Evidence"]
+    evidence -->|"Needs work"| implementation
+    evidence -->|"Verified change"| rules["Updated rules and context"]
+    rules -->|"Next change"| spec
+```
+
+| Transition | Relevant guidance | Concrete output |
+| --- | --- | --- |
+| Idea → brief | `product-discovery` | Actor, problem, first useful flow, scope, assumptions and open decisions. |
+| Brief → spec | `robust-architecture`, `authorization` where needed | Intended behavior, authoritative owners, access and failure contracts, exclusions and observable acceptance. |
+| Spec → small issues | `agentic-bootstrap`, `issue-readiness` | Bounded handoffs linked to the contract, with callers, acceptance, real dependencies and any activation holds. |
+| Issues → implementation | `production-ui`, `safe-state-changes`, `reliable-effects`, `authorization` as relevant | A complete user path or public operation through the existing owners. |
+| Implementation → evidence | `evidence-based-verification` | Executed checks, required reviews, observed outcomes and explicitly unverified boundaries. |
+| Evidence → updated rules | The project's document owners, following bootstrap's disclosure guidance | Updated specs, domain/architecture/access rules and instruction pointers when the verified change establishes durable facts. |
+
+Choose guidance by the affected contract. Access decisions can matter during design, implementation and verification. Failed checks return to implementation; a changed product decision also updates the spec. Keep temporary task notes with the issue or report, and maintain each lasting rule in one place.
+
+Application code and tests enforce the chosen rules. Bootstrap creates only requested artifacts, using conditional guides and optional templates; it remains usable alone and selects available sibling skills by need. Issue-ready drafts can remain held. Publishing tracker items, starting a held programme, merging or deploying follows the authority of the current request; producing a draft does not perform those actions.
 
 Example requests in a new agent session:
 
 - Codex: `$agentic-bootstrap Set up this new project with a first spec, issue drafts and progressively disclosed instructions. Documentation only.`
 - Existing repository: `Use agentic-bootstrap to onboard this package from its current code and accepted decisions. Preserve existing rules and prepare the next bounded handoff.`
 - Claude Code plugin: `/pkasarda-skills:agentic-bootstrap` followed by the repository scope and requested outcome.
-
-The skill includes conditional entry/instruction/spec guides and optional templates. It preserves the distinction between accepted intent, implemented behavior and executed proof. Publishing tracker items follows the authority of the current request; drafting them does not post them.
-
-For an unclear idea, start with `product-discovery`: it identifies consequential questions, preserves accepted decisions, proposes a small complete flow and names the evidence needed for the next step. For example: “I want to build a reservation system. Help me shape the first useful version.”
-
-Once the product behavior is clear, use the architecture, UI or delivery procedure relevant to that flow. A sufficiently specified build request can proceed directly to implementation; discovery is not a mandatory approval gate. In an existing product, check the current workflow before proposing a new one.
-
-Changes to protected reads, writes, sharing or delegated work route to `authorization` from the relevant skill. It owns the detailed access-policy procedure; each skill keeps its local guards and remains usable alone. These pointers guide the model; enforcement belongs in application code and tests.
 
 ## Install with `npx skills`
 
