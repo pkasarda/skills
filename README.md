@@ -100,6 +100,10 @@ Application code and tests enforce the chosen rules. The diagram describes a sub
 
 The kit includes a standalone delivery loop; it does not bundle a second TDD library. `change-delivery` uses the test-first procedure selected by the existing workflow, such as Matt Pocock's `tdd` or Superpowers' `test-driven-development`. Without either, it supplies the RED → GREEN loop directly. Risk procedures determine the scenarios: test-first alone cannot catch an omitted retry, access or concurrency case.
 
+The implementer owns feature code, unit/integration tests and self-checks. An independent reviewer challenges both the implementation and its tests; that reviewer may also perform runtime acceptance. Add separate specialists when risk, tooling or a project gate needs them. A fresh reviewer context helps avoid inheriting the implementation story, but a different model is not a correctness guarantee.
+
+This division follows [context-based agent decomposition](https://claude.com/resources/articles/building-multi-agent-systems-when-and-how-to-use-them) and [Google's review guidance](https://google.github.io/eng-practices/review/reviewer/looking-for.html). Anthropic's [long-running app harness experience](https://www.anthropic.com/research/harness-design-long-running-apps) also motivates checking the running product and calibrating the evaluator. These are design inputs; an optimal role split for every project has not been established.
+
 Use one delivery procedure per change. An established repository's procedure takes precedence; the kit supplies missing contract checks without starting a parallel planning/review system. Substantive changes require independent review. When an independent reviewer is unavailable, self-review is reported explicitly and does not satisfy that gate. No particular provider, model, tracker or test runner is required.
 
 Specs state the intended behavior; ADRs preserve consequential tradeoffs. Reuse the project's domain-modeling/ADR convention, or use bootstrap's [decision guidance](skills/agentic-bootstrap/references/specs-and-issues.md#preserve-decisions-and-language). Routine local choices need no separate ADR.

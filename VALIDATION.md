@@ -67,3 +67,13 @@ Date: 2026-11-07.
 - That implementation pilot used the frozen first candidate, before the two narrow review corrections; the final corrections received the separate reread/standalone probe above. The fixture used deterministic public prepare/commit phases on one SQLite connection and simulated downstream delivery, not a live provider or multi-process database race. Its three new regression tests were prepared together, so this was not a strict one-test-per-cycle TDD demonstration. As instructed by the fixture's available capabilities, the implementer reported its independent-review gate unmet rather than claiming review occurred.
 
 These checks do not establish comparative efficacy, automatic selection from the full skill catalog or production defect reduction. External TDD libraries are optional and were not bundled or re-evaluated. Project-specific delivery instructions and release authority remain authoritative.
+
+## Harness role ownership: 1.4.1
+
+Date: 2026-11-07.
+
+- Clarified implementer ownership of feature code, unit/integration tests and self-checks; independent review of both code and test expectations; optional reviewer/runtime-verifier consolidation; and preserved project-specific separate gate actors. Added contract-based correction of faulty tests/evaluators and final-revision evidence handling. The README links the primary harness/review sources informing these choices.
+- All ten public skills and two separately managed personal orchestrator drafts passed structural validation. Local links, manifest parity and unchanged historical evals were checked. Claude strict manifest validation passed; native Codex discovery exposed ten skills at 1.4.1. No packaging structure or external TDD libraries changed.
+- One fresh independent reviewer was requested as gpt-6.1-sol/medium. It found no material defect and performed four response-only probes: a small Python feature, a static title edit, existing separate project gates after a reviewer-authored production fix with unavailable browser access, and a payment retry contract with an unresolved business decision and only a fake provider. The responses preserved test ownership, independent approval, project gates, product-decision authority and evidence limits.
+
+These are source and response-only checks. No fixture application, live provider or benchmark was executed for 1.4.1; automatic catalog selection, general instruction compliance, optimal agent count and production efficacy remain unproven. Personal orchestrators are not bundled with this plugin.

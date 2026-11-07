@@ -7,6 +7,12 @@ description: Verify a change or claim with discriminating evidence at the actual
 
 Begin with a falsifiable claim: which actor, action, input/state, observable result and revision/environment are being tested? Choose the narrowest check that can disprove that claim. A verdict is no broader than the evidence that actually executed.
 
+## Establish what is being judged
+
+The implementer owns unit/integration tests and self-checks. When independent review or acceptance is required, its verdict comes from a fresh context that did not implement the affected production code. One reviewer can also verify runtime behavior unless project rules require separate actors. Give that reviewer the accepted contract, artifact and raw evidence; its job includes challenging the tests' expected results and missing cases. Another agent merely repeating the same weak test does not expand its coverage. A different model is optional diversification, not proof of independence.
+
+Derive expected outcomes from accepted requirements and independent fixtures before relying on the implementation's output. If observed behavior contradicts a green verdict, inspect the oracle, fixtures, mocks and harness before trusting the verdict or adding another judge. Correct a faulty test or criterion with an explicit contract-based reason; preserve unresolved product choices instead of silently redefining success.
+
 ## Choose the right seam
 
 Map the changed contract and its real consumers. Pure logic can use a focused unit check. Query, mutation, file and protocol claims need the relevant real engine or public boundary; fake query rows or a mocked domain command cannot prove their predicates and effects. For UI behavior, reach the named state through the mounted interaction and inspect the outcome, including reopening or stored state when relevant.
