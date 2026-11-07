@@ -2,7 +2,29 @@
 
 From idea or existing codebase to an agent-ready project: specs, issues, context and guardrails.
 
-A set of reusable skills for source-grounded decisions, complete user flows and honest verification.
+Practical workflows for developers using coding agents to turn an idea or an existing codebase into scoped, reviewable and verifiable software changes.
+
+## Who this is for
+
+- **Solo developers and small teams** moving from a prototype toward an application they can maintain.
+- **Developers learning to ship with AI agents** who need to surface product, access, failure and validation decisions earlier.
+- **Maintainers of established applications** onboarding agents and making bounded changes while preserving existing contracts and conventions.
+- **Engineering leads coordinating agents** through specs, issues, focused context and evidence-based handoffs.
+
+The intended users work with coding agents such as Codex and Claude Code. The skills guide the agent's work; the developer or team supplies product decisions and owns the result.
+
+## Problems it addresses
+
+- Vague ideas reaching implementation before the first useful user flow and its important rules are clear.
+- Business rules spread across callers, with unclear ownership or inconsistent failure outcomes.
+- Access checks that stop at login or button visibility instead of the resource, action, scope and fields.
+- UI that works on small demo data but silently omits results or mishandles loading, errors and stale responses.
+- Committed writes reported as failures, unsafe retries and external effects with no clear recovery contract.
+- Green checks that prove less than claimed, and specs or backlog items that drift from accepted decisions and current code.
+
+Use the relevant skills for the task. The kit is especially useful when establishing a project's foundations or evolving an existing system through small, verifiable slices.
+
+## Skills
 
 | Skill | Use it for |
 | --- | --- |
@@ -119,7 +141,7 @@ Use one installation method per host. Standalone copies already present in a use
 
 ## Validation
 
-See [validation scope and limits](VALIDATION.md) for the recorded structural checks and bounded reviews of additions to the library. These are not separate efficacy benchmarks.
+See [validation scope and limits](VALIDATION.md) for the recorded structural checks and bounded reviews of additions to the library. These are not separate efficacy benchmarks. Production defect reduction has not been measured; project-specific tests and review are still needed to establish actual outcomes.
 
 The architecture [evaluation record](skills/robust-architecture/evals/RESULTS.md) distinguishes the historical precise-task comparison, miniature repository discovery tests, the critical issue discovered there, and the targeted v2 regression/transfer checks. The v2 targeted set passed 10/12 criteria, including all 8 critical criteria; a complete paired v2 benchmark and production validation were not performed. Those results describe the frozen v2 candidate; the current entrypoint also contains an authorization-routing addition that was not part of those runs.
 
