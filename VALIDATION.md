@@ -77,3 +77,13 @@ Date: 2026-11-07.
 - One fresh independent reviewer was requested as gpt-6.1-sol/medium. It found no material defect and performed four response-only probes: a small Python feature, a static title edit, existing separate project gates after a reviewer-authored production fix with unavailable browser access, and a payment retry contract with an unresolved business decision and only a fake provider. The responses preserved test ownership, independent approval, project gates, product-decision authority and evidence limits.
 
 These are source and response-only checks. No fixture application, live provider or benchmark was executed for 1.4.1; automatic catalog selection, general instruction compliance, optimal agent count and production efficacy remain unproven. Personal orchestrators are not bundled with this plugin.
+
+## Findings outside the change: 1.4.2
+
+Date: 2026-11-25.
+
+- `change-delivery` now says what happens to a finding that exists independently of the change: it does not block the handoff or start its own delivery loop, such findings are triaged together once the change's gates are done, and approved follow-up fixes in one area share one change and one runtime acceptance.
+- The rule comes from one delivery session in which each small follow-up fix had its own runtime acceptance, each acceptance reported another finding already present in the base revision, and each finding became its own fix.
+- Both manifests carry 1.4.2. No other skill changed.
+
+No structural validator, plugin loader or model review was run for 1.4.2. Whether the paragraph changes agent behaviour is unproven.
